@@ -1,0 +1,21 @@
+import { ComponentPropsWithoutRef } from "react";
+
+const EditorItalicIcon = (props:ComponentPropsWithoutRef<'svg'>) => {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M14 8V11H16.21L12.79 19H10V22H18V19H15.79L19.21 11H22V8H14Z"
+        fill="#98A2B3"
+      />
+    </svg>
+  );
+};
+
+export default EditorItalicIcon;
