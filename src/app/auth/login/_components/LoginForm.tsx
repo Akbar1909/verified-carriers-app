@@ -39,7 +39,7 @@ const LoginForm = () => {
          </div>
 
          <div className='mt-8 flex items-center gap-1 justify-center'>
-             <span className='text-sm text-gray-500'>Don’t have an account?</span><Link href='#' className='text-sm-medium text-orange-700'>Sign up</Link>
+             <span className='text-sm text-gray-500'>Don’t have an account?</span><Link href='/auth/sign-up' className='text-sm-medium text-orange-700'>Sign up</Link>
          </div>
          </div>
     </form>
