@@ -1,5 +1,6 @@
 import Button from "@/components/Button";
 import Checkbox from "@/components/Checkbox";
+import PhoneField from "@/components/PhoneField";
 import RichText from "@/components/RichText";
 import Select from "@/components/Select";
 import CircleIcon, { HelpIcon, MailIcon } from "@/components/SvgIcons";
@@ -9,6 +10,10 @@ import TextField from "@/components/TextField/TextField";
 export default function Home() {
   return (
     <div className="p-6 flex flex-col gap-6">
+
+      <PhoneField/>
+
+      <TextField placeholder="Phone number" />
 
       <div className="flex items-center gap-2">
          <Checkbox helperText="Save my login details for next time." label="Remember me" size='md' shape='round' variant='radio' initialState='checked' />

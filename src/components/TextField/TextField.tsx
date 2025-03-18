@@ -39,7 +39,7 @@ const TextField = ({
     helperTextProps || {};
 
   return (
-    <div className={twMerge("w-fit flex flex-col gap-y-1.5", rootClassName)}>
+    <div className={twMerge("w-full flex flex-col gap-y-1.5", rootClassName)}>
       {label && (
         <FormLabel className={twMerge("", className)} {...computedLabelProps}>
           {label}

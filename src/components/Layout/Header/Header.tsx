@@ -63,7 +63,7 @@ const Header = () => {
           <li className="px-3 py-2.5">
             {" "}
             <Link
-              href="#"
+              href="/auth/login"
               className="text-md-medium text-gray-500 hover:text-gray-600"
             >
               Log in

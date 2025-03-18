@@ -1,0 +1,12 @@
+.flag-dropdown {
+    border-bottom-left-radius: 8px !important;
+    border-top-left-radius: 8px !important;
+    background-color: white !important;
+    border-color: #d0d5dd !important;
+}
+
+.selected-flag{
+    border-bottom-left-radius: 8px !important;
+    border-top-left-radius: 8px !important;
+    
+}

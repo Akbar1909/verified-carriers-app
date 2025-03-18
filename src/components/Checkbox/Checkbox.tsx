@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ComponentProps, ComponentPropsWithoutRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { CheckIcon, MinusIcon } from "../SvgIcons";
 
@@ -13,6 +13,7 @@ interface CheckboxProps {
   variant?: "checkbox" | "radio" | "circular";
   label?: string;
   helperText?: string;
+  labelProps?:ComponentPropsWithoutRef<'label'>
 }
 
 const Checkbox = ({
@@ -24,9 +25,12 @@ const Checkbox = ({
   variant = "checkbox",
   label,
   helperText,
+  labelProps
 }: CheckboxProps) => {
   const [state, setState] = useState(initialState);
   const [isFocused, setIsFocused] = useState(false);
+
+  const {className:labelClassName,...labelComputedProps} = labelProps || {};
 
   const handleClick = () => {
     // Cycle through states: unchecked -> checked -> indeterminate -> unchecked
@@ -95,8 +99,10 @@ const Checkbox = ({
             className={twMerge(
               "text-md-medium text-gray-700",
               disabled && "text-gray-300",
-              size === 'sm' && 'text-sm-medium'
+              size === 'sm' && 'text-sm-medium',
+              labelClassName
             )}
+            {...labelComputedProps}
           >
             {label}
           </label>
