@@ -19,7 +19,7 @@ const Header = () => {
       <TextField
         placeholder="Company name"
         startIcon={<SearchIcon />}
-        className="w-[492px]"
+        rootClassName="flex-1 max-w-[492px]"
       />
 
       <nav className="ml-auto">

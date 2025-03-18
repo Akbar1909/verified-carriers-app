@@ -5,7 +5,7 @@ import TruncatedText from "../TruncatedText";
 
 const ReviewView = () => {
   return (
-    <article className="border border-gray-200 bg-white w-70 rounded-lg shadow-[0px_1px_2px_rgba(16,24,40,0.06),0px_1px_3px_rgba(16,24,40,0.1)]">
+    <article className="border border-gray-200 bg-white min-w-70 w-fit rounded-lg shadow-[0px_1px_2px_rgba(16,24,40,0.06),0px_1px_3px_rgba(16,24,40,0.1)]">
       <header className="p-4 flex flex-col gap-3 border-b border-gray-200">
         <div className="flex items-center gap-2">
           <Avatar
