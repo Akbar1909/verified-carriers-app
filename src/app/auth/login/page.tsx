@@ -1,9 +1,10 @@
+"use client";
 import Image from "next/image";
 import LoginForm from "./_components/LoginForm";
 
 const LoginPage = () => {
   return (
-    <div className="grid grid-cols-2 w-screen h-screen">
+    <div className="grid grid-cols-2 w-auto h-full-screen">
       <div className="flex relative h-full items-center justify-center">
         <Image
           alt="Verified carriers logo"
@@ -12,6 +13,7 @@ const LoginPage = () => {
           src="/images/main-logo.png"
           className="absolute top-8 left-8"
         />
+
         <LoginForm />
       </div>
       <div className="relative">

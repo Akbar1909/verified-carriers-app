@@ -3,10 +3,12 @@ import Button from "@/components/Button";
 import { GoogleIcon } from "@/components/SvgIcons";
 import TextField from "@/components/TextField";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 const SignUpForm = () => {
   const { control, register, handleSubmit } = useForm();
+  const router=useRouter();
 
   const onSubmit = handleSubmit((values) => console.log(values));
 
@@ -39,8 +41,10 @@ const SignUpForm = () => {
         />
 
         <div className="mt-6 flex flex-col gap-4">
-          <Button fullWidth size="lg">
-            Sign in
+          <Button fullWidth size="lg" onClick={()=>{
+ router.push('/auth/complete-signup')
+          }}>
+            Sign up
           </Button>
           <Button
             startIcon={<GoogleIcon />}

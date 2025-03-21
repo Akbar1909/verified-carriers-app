@@ -435,4 +435,11 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter);
+  zoom: 0.88;
 }
+
+.h-full-screen{
+  height: 113.636vh !important;
+}
+
+
