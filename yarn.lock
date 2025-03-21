@@ -666,7 +666,7 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-bold/-/extension-bold-2.11.5.tgz#7fc13d835067fbee4ff2be83a694f5200ba50e41"
   integrity sha512-OAq03MHEbl7MtYCUzGuwb0VpOPnM0k5ekMbEaRILFU5ZC7cEAQ36XmPIw1dQayrcuE8GZL35BKub2qtRxyC9iA==
 
-"@tiptap/extension-bubble-menu@^2.11.5":
+"@tiptap/extension-bubble-menu@2.11.5", "@tiptap/extension-bubble-menu@^2.11.5":
   version "2.11.5"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-bubble-menu/-/extension-bubble-menu-2.11.5.tgz#75da9bcea2a6579cd3ad41cf82f7bc7369c1816d"
   integrity sha512-rx+rMd7EEdht5EHLWldpkzJ56SWYA9799b33ustePqhXd6linnokJCzBqY13AfZ9+xp3RsR6C0ZHI9GGea0tIA==

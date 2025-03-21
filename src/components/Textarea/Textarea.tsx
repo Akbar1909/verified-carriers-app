@@ -15,7 +15,6 @@ interface TextareaProps extends ComponentPropsWithoutRef<"textarea"> {
 const Textarea = ({
   rootClassName,
   className,
-
   label,
   labelProps,
   helperText,

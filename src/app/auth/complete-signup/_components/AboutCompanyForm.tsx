@@ -12,7 +12,7 @@ const AboutCompanyForm = ({nextStep}:AboutCompanyFormProps) => {
   const {handleSubmit, control} = useForm();
 
   const onSubmit=handleSubmit(()=>{
-    nextStep(2)
+    nextStep(3)
   })
 
   return (
