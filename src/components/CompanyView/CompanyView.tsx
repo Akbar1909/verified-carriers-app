@@ -64,7 +64,7 @@ const CompanyView = ({className}:CompanyViewProps) => {
         <div className="flex items-center gap-4">
           {["Cars", "Motorcycles", "Heavy Equipment", "Boats"].map(
             (item, i) => (
-              <div className="bg-gray-100 py-0.5 px-2 text-xs-medium" key={i}>
+              <div className="bg-gray-100 py-0.5 px-2 text-xs-medium rounded-xl" key={i}>
                 {item}
               </div>
             )

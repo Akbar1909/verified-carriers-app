@@ -1,5 +1,5 @@
 import Container from "@/components/Container";
-import CompanyView from "./CompanyView";
+import CompanyView from '@/components/CompanyView';
 
 const TopRatedCompanies = () => {
   return (
