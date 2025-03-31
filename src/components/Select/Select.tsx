@@ -11,6 +11,7 @@ interface SelectProps extends Props {
   hasError?: boolean;
   helperText?: string;
   helperTextProps?: Omit<ComponentProps<typeof HelperText>, "children">;
+  rootClassName?:string;
 }
 
 const Select = ({
@@ -19,6 +20,7 @@ const Select = ({
   hasError,
   helperText,
   helperTextProps,
+  rootClassName,
   ...computedProps
 }: SelectProps) => {
   const { className: labelClassName, ...computedLabelProps } = labelProps || {};
@@ -26,7 +28,7 @@ const Select = ({
     helperTextProps || {};
 
   return (
-    <div className="flex flex-col w-full relative gap-y-1.5">
+    <div className={twMerge("flex flex-col w-full relative gap-y-1.5", rootClassName)}>
       {label && (
         <FormLabel className={labelClassName} {...computedLabelProps}>
           {label}

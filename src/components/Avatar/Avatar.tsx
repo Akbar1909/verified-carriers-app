@@ -5,7 +5,7 @@ import Image from "next/image";
 type AvatarSizeType = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 
 interface AvatarProps extends ComponentPropsWithoutRef<"div"> {
-  size: AvatarSizeType;
+  size?: AvatarSizeType;
   url?: string;
   imageProps?: Partial<ComponentProps<typeof Image>>;
 }

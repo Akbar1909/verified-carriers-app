@@ -54,7 +54,7 @@ const CompanyView = ({className}:CompanyViewProps) => {
       <hr className="text-gray-200" />
       <div className="flex items-center gap-8">
         <Link
-          href="#"
+          href="/companies/1"
           className="text-sm-semibold text-gray-800 flex items-center gap-2 relative after after:content after:absolute after:h-5 after:w-0.25 after:bg-gray-300 after:-right-4"
         >
           View profile
