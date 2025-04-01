@@ -43,7 +43,7 @@ const Select = ({
             twMerge("!rounded-lg ", isFocused && "!shadow-input-focus"),
           control: ({ isFocused }) =>
             twMerge(
-              "!h-11 !shadow-xs !border !border-gray-300 !rounded-lg !pl-3.5 !py-2.5",
+              "!min-h-11 !shadow-xs !border !border-gray-300 !rounded-lg !pl-3.5 !py-2.5",
               isFocused && "!border-primary-300 "
             ),
           placeholder: () => "!text-gray-500 !text-md",
@@ -58,6 +58,7 @@ const Select = ({
               "h-11 text-gray-900 text-md px-3.5 py-2.5 hover:bg-gray-50"
             ),
         }}
+        
         {...computedProps}
       />
 
