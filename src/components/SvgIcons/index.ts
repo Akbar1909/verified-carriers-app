@@ -32,4 +32,6 @@ export {default as ShareIcon} from './ShareIcon'
 export {default as ChevronsRightIcon} from './ChevronsRightIcon'
 export {default as ThumbsIcon} from './ThumbsIcon'
 export {default as PhoneIcon} from './PhoneIcon'
-export {default as LinkedinIcon2} from './LinkedinIcon2'
+export {default as LinkedinIcon2} from './LinkedinIcon2';
+export {default as LinkIcon} from './LinkIcon';
+export {default as BookmarkIcon} from './BookmarkIcon'

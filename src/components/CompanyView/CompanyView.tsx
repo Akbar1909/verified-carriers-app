@@ -1,6 +1,6 @@
 import Avatar from "@/components/Avatar";
 import StarRating from "@/components/Stars";
-import { ArrowUpRightIcon, VerifiedIcon } from "@/components/SvgIcons";
+import { ArrowUpRightIcon, BookmarkIcon, VerifiedIcon } from "@/components/SvgIcons";
 import TruncatedText from "@/components/TruncatedText";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
@@ -8,9 +8,10 @@ import { twMerge } from "tailwind-merge";
 
 interface CompanyViewProps{
     className?:string;
+    saved?:boolean;
 }
 
-const CompanyView = ({className}:CompanyViewProps) => {
+const CompanyView = ({className, saved}:CompanyViewProps) => {
   return (
     <div className={twMerge("p-6 flex flex-col gap-4 border-t border-gray-300 border-r", className)}>
       <div className="flex gap-4">
@@ -20,10 +21,14 @@ const CompanyView = ({className}:CompanyViewProps) => {
           size="2xl"
         />
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 w-full">
+          <div className="flex items-center justify-between w-full">
           <h3 className="text-lg-semibold text-gray-900">
             Broadway Auto Transport
           </h3>
+
+          <BookmarkIcon className={twMerge(saved && 'fill-gray-700')} />
+          </div>
 
           <div className="flex items-center gap-2">
             <span className="text-md-medium text-gray-500">4.9</span>

@@ -1,5 +1,10 @@
 import { useState } from "react";
-import TDatepicker from "react-tailwindcss-datepicker";
+import TextField from "../TextField";
+
+interface DatepickerProps{
+  
+}
+
 
 const Datepicker = () => {
 
@@ -8,9 +13,8 @@ const Datepicker = () => {
 
   return (
     <div>
-         <TDatepicker 
-            value={value} 
-            onChange={newValue => setValue(newValue)}
+         <TextField 
+           
         /> 
     </div>
   )

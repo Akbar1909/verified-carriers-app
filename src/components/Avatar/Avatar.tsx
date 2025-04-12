@@ -32,6 +32,8 @@ const Avatar = ({
       {...computedProps}
     >
       {url && <Image className='absolute' fill objectFit='cover' src={url} alt="" {...imageProps} />}
+
+    
     </div>
   );
 };

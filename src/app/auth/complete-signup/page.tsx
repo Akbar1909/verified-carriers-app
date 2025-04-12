@@ -6,7 +6,7 @@ import CompanyInfoForm from "./_components/CompanyInfoForm";
 import { useState } from "react";
 import useAppConstants from "@/hooks/helpers/useAppConstants";
 import Show from "@/components/Show";
-import { motion } from "framer-motion";
+import { motion } from 'motion/react'
 import { MailIcon } from "@/components/SvgIcons";
 import AboutCompanyForm from "./_components/AboutCompanyForm";
 import ServiceForm from "./_components/ServiceForm";

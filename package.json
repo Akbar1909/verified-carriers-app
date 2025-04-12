@@ -26,6 +26,7 @@
     "@types/react-phone-number-input": "3.1.37",
     "dayjs": "1.11.13",
     "framer-motion": "12.5.0",
+    "motion": "12.6.5",
     "next": "15.2.2",
     "pretty-checkbox-react": "3.2.0",
     "react": "^19.0.0",
