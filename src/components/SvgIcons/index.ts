@@ -34,4 +34,6 @@ export {default as ThumbsIcon} from './ThumbsIcon'
 export {default as PhoneIcon} from './PhoneIcon'
 export {default as LinkedinIcon2} from './LinkedinIcon2';
 export {default as LinkIcon} from './LinkIcon';
-export {default as BookmarkIcon} from './BookmarkIcon'
+export {default as BookmarkIcon} from './BookmarkIcon';
+export {default as DownloadIcon} from './DownloadIcon'
+export {default as ArrowLeftIcon} from './ArrowLeftIcon'

@@ -14,6 +14,7 @@ import Show from "@/components/Show";
 import ReviewTab from "./_components/ReviewTab";
 import SavedTab from "./_components/SavedTab";
 import NotificationTab from "./_components/NotificationTab";
+import OrdersTab from "./_components/OrdersTab";
 
 
 const UserProfilePage = () => {
@@ -101,6 +102,9 @@ const UserProfilePage = () => {
           </Show>
           <Show when={tab === "notifications"}>
              <NotificationTab/>
+          </Show>
+          <Show when={tab === 'orders'}>
+             <OrdersTab/>
           </Show>
         </Container>
       </main>
