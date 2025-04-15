@@ -3,7 +3,7 @@ import CompanyView from '@/components/CompanyView';
 
 const TopRatedCompanies = () => {
   return (
-    <div className="border-y border-gray-300 bg-gray-50 py-24 px-20">
+    <div className="border-y border-gray-300 bg-gray-50 py-24">
       <Container className="flex flex-col gap-12">
         <h2 className="text-gray-900 text-d-lg-semibold text-center">
           Top Rated companies

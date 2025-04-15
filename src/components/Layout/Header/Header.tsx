@@ -1,13 +1,18 @@
+"use client";
 import TextField from "@/components/TextField";
 import { CornerUpRightIcon, SearchIcon } from "@/components/SvgIcons";
 import Link from "next/link";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Logo from "@/components/Logo";
+import useAppNavigation from "@/hooks/helpers/useAppNavigation";
+import { twMerge } from "tailwind-merge";
 
 const Header = () => {
+  const { pathname } = useAppNavigation();
+
   return (
-    <header className="py-4.5  border border-gray-200">
+    <header className={twMerge("py-4.5  border border-gray-200", pathname === "/about" && "bg-orange-50")}>
       <Container className="flex items-center gap-10">
         <Logo />
         <TextField

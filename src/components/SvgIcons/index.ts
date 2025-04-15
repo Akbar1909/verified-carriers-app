@@ -36,4 +36,5 @@ export {default as LinkedinIcon2} from './LinkedinIcon2';
 export {default as LinkIcon} from './LinkIcon';
 export {default as BookmarkIcon} from './BookmarkIcon';
 export {default as DownloadIcon} from './DownloadIcon'
-export {default as ArrowLeftIcon} from './ArrowLeftIcon'
+export {default as ArrowLeftIcon} from './ArrowLeftIcon';
+export {default as AwardIcon} from './AwardIcon'

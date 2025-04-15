@@ -1,4 +1,3 @@
-import Button from "@/components/Button";
 import Container from "@/components/Container";
 import { LinkedinIcon, MetaIcon, XIcon } from "@/components/SvgIcons";
 import Image from "next/image";
@@ -6,7 +5,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <div className="px-20 bg-gray-50 border border-gray-300">
+    <div className="bg-gray-50 border border-gray-300">
       <Container className="flex flex-col">
         <div className="border-x border-b border-gray-300 py-24 px-16.25 flex justify-between items-center">
           <h2 className="text-d-lg-semibold text-gray-900">
@@ -18,7 +17,6 @@ const Footer = () => {
               type="button"
               className="rounded-[999px] bg-black text-white text-lg-medium py-3.5 px-7"
             >
-              {" "}
               Get a Free Quote
             </button>
             <button
@@ -66,7 +64,7 @@ const Footer = () => {
 
              <ul className="flex flex-col gap-3 text-md-medium text-gray-400">
                  <li>
-                    <Link href='#'>About us</Link>
+                    <Link href='/about'>About us</Link>
                  </li>
                  <li>
                     <Link href='/companies'>Companies</Link>

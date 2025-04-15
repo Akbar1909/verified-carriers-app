@@ -34,7 +34,7 @@ const Insights = () => {
   ];
 
   return (
-    <div className="py-24 px-20 bg-white">
+    <div className="py-24 bg-white">
       <Container>
         <h2 className="text-d-lg-semibold text-gray-900 mb-16">
           Get more insights

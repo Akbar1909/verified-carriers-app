@@ -7,7 +7,7 @@ import React from "react";
 
 const ReviewSection = () => {
   return (
-    <div className="py-24 px-20 bg-gray-50 border border-gray-300">
+    <div className="py-24 bg-gray-50 border border-gray-300">
       <Container className="flex flex-col gap-y-12">
         <div className="flex justify-between">
           <h2 className="text-gray-900 text-d-lg-semibold">

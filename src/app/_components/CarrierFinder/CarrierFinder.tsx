@@ -6,7 +6,7 @@ import ReviewSlider from "./ReviewSlider";
 
 const CarrierFinder = () => {
   return (
-    <div className="bg-white py-24 px-20">
+    <div className="bg-white py-24">
       <Container className="flex flex-col gap-12">
         <div className="flex flex-col gap-3">
           <h2 className="text-gray-900 text-d-lg-semibold">

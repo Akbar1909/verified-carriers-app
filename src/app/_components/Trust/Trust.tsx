@@ -33,7 +33,7 @@ const Trust = () => {
   ];
 
   return (
-    <div className="bg-white py-24 px-20">
+    <div className="bg-white py-24">
       <Container>
         <h2 className="text-gray-900 text-d-lg-semibold mb-5">
           Learn about <br /> transparency and trust

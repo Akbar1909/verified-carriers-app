@@ -1,12 +1,15 @@
 import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
+import Show from "../Show";
 
 interface BadgeProps {
   color?: "primary" | 'gray' | 'error' | 'warning' | 'success';
   theme?: "light" | "medium" | "dark";
   badgeChildren?: ReactNode;
   helperChildren?: ReactNode;
-  size?:'md' | 'lg'
+  size?:'md' | 'lg';
+  wrapperClassName?:string;
+  badgeClassName?:string;
 }
 
 const Badge = ({
@@ -14,7 +17,9 @@ const Badge = ({
   theme = "light",
   badgeChildren,
   helperChildren,
-  size='md'
+  size='md',
+  wrapperClassName,
+  badgeClassName
 }: BadgeProps) => {
   return (
     <div
@@ -37,7 +42,8 @@ const Badge = ({
         color === 'warning' && theme ==='dark' && 'bg-warning-50',
         color === 'success' && theme === 'light' && 'bg-success-50',
         color === 'success' && theme === 'medium' && 'bg-success-100',
-        color === 'success' && theme ==='dark' && 'bg-success-50'
+        color === 'success' && theme ==='dark' && 'bg-success-50',
+        wrapperClassName
       )}
     >
       <div
@@ -58,13 +64,15 @@ const Badge = ({
           color === 'warning' && theme === 'dark' && 'bg-warning-600 text-white',
           color === 'success' && theme === 'light' && 'bg-white text-success-700',
           color === 'success' && theme === 'medium' && 'bg-error-50 text-success-700',
-          color === 'success' && theme === 'dark' && 'bg-success-600 text-white'
+          color === 'success' && theme === 'dark' && 'bg-success-600 text-white',
+          badgeClassName
         )}
       >
         {badgeChildren}
       </div>
 
-      <span
+     <Show when={Boolean(helperChildren)}>
+     <span
         className={twMerge(
           "text-xs-medium",
           size === 'lg' && 'text-sm-medium',
@@ -77,6 +85,7 @@ const Badge = ({
       >
         {helperChildren}
       </span>
+     </Show>
     </div>
   );
 };

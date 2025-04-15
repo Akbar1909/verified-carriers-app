@@ -1,7 +1,7 @@
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import MainLayout from "@/components/Layout/MainLayout";
-import { Favicon, SearchIcon } from "@/components/SvgIcons";
+import { SearchIcon } from "@/components/SvgIcons";
 import TextField from "@/components/TextField";
 import React from "react";
 import Image from "next/image";
@@ -51,12 +51,12 @@ const HomePage = () => {
           </div>
         </Container>
       </div>
-      <ReviewSection/>
-      <CarrierFinder/>
-      <TopRatedCompanies/>
-      <Trust/>
-      <Partners/>
-      <Insights/>
+      <ReviewSection />
+      <CarrierFinder />
+      <TopRatedCompanies />
+      <Trust />
+      <Partners />
+      <Insights />
     </MainLayout>
   );
 };

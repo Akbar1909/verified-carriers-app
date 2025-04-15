@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Partners = () => {
   return (
-    <div className="bg-gray-50 py-24 px-20">
+    <div className="bg-gray-50 py-24">
       <Container>
         <h2 className="text-d-lg-semibold text-gray-900 mb-16 text-center">
           Our key partners

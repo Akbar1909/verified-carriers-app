@@ -1,26 +1,20 @@
-import React from 'react'
-import Header from '../Header'
-import Footer from '../Footer'
-import Container from '@/components/Container'
+import Header from "../Header";
+import Footer from "../Footer";
 
-interface MainLayoutProps{
-    children:any
+interface MainLayoutProps {
+  children: any;
 }
 
-const MainLayout = ({children}:MainLayoutProps) => {
+const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div>
-         
-             <Header/>
-        
-            <div>
-                 {children}
-            </div>
-  
-       <Footer/>
-  
-    </div>
-  )
-}
+      <Header />
 
-export default MainLayout
+      <div>{children}</div>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default MainLayout;
