@@ -160,7 +160,6 @@ function DataTable<TData extends object>({
             const params = createQueryParams();
 
             const nextPage = preparedPage + 1;
-            debugger;
 
             params.set(
               pageKey,

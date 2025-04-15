@@ -13,9 +13,9 @@ const CheckIcon = (props:ComponentPropsWithoutRef<'svg'>) => {
       <path
         d="M10 3L4.5 8.5L2 6"
         stroke="#EC4A0A"
-        stroke-width="1.6666"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.6666"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

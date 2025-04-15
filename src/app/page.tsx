@@ -34,7 +34,7 @@ const HomePage = () => {
         />
         <Container maxWidth="lg">
           <div className="flex items-center flex-col gap-8">
-            <h1 className="text-d-lg-semibold text-gray-900 text-center">
+            <h1 className="text-d-lg-semibold  text-gray-900 text-center">
               Ship Smarter, Faster,and <br /> Confidence with Verified Carriers.
             </h1>
 

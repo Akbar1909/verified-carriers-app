@@ -13,9 +13,9 @@ const MinusIcon = (props:ComponentPropsWithoutRef<'svg'>) => {
       <path
         d="M2.5 6H9.5"
         stroke="#EC4A0A"
-        stroke-width="1.66666"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.66666"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

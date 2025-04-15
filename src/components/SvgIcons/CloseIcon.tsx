@@ -13,9 +13,9 @@ const CloseIcon = (props:ComponentPropsWithoutRef<'svg'>) => {
       <path
         d="M9 3L3 9M3 3L9 9"
         stroke="#667085"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

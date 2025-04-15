@@ -13,8 +13,8 @@ const ChevronsRightIcon = (props:ComponentPropsWithoutRef<'svg'>) => {
       <path
         d="M9.75 12.75L13.5 9L9.75 5.25M4.5 12.75L8.25 9L4.5 5.25"
         stroke="#667085"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

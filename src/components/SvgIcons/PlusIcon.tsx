@@ -13,9 +13,9 @@ const PlusIcon = (props:ComponentPropsWithoutRef<'svg'>) => {
       <path
         d="M10 4.16675V15.8334M4.16669 10.0001H15.8334"
         stroke="#C4320A"
-        stroke-width="1.67"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.67"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
