@@ -1,4 +1,4 @@
-import React from "react";
+'use client'
 import Avatar from "../Avatar/Avatar";
 import Stars from "../Stars";
 import TruncatedText from "../TruncatedText";
