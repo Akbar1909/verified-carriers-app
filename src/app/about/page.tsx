@@ -1,11 +1,11 @@
 import Badge from "@/components/Badge";
-import Container from "@/components/Container";
 import Image from "next/image";
 import MainLayout from "@/components/Layout/MainLayout";
 import Result from "./_components/Result";
 import Feedback from "./_components/Feedback";
 import EmpowerBusiness from "./_components/EmpowerBusiness";
 import Reviews from "./_components/Reviews";
+import { Suspense } from "react";
 const AboutPage = () => {
   return (
     <MainLayout>
@@ -28,10 +28,12 @@ const AboutPage = () => {
         </div>
       </div>
 
+   
       <Result/>
       <Feedback/>
       <EmpowerBusiness/>
       <Reviews/>
+    
     </MainLayout>
   );
 };
