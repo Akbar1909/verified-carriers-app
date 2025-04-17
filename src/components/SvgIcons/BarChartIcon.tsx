@@ -13,9 +13,9 @@ const BarChartIcon = (props:ComponentPropsWithoutRef<'svg'>) => {
       <path
         d="M12 20V10M18 20V4M6 20V16"
         stroke="#101828"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
