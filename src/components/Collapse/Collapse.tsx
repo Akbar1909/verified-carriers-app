@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { motion } from 'motion/react';
 import { twMerge } from 'tailwind-merge';
 import { ArrowDownIcon } from '../SvgIcons';
@@ -10,6 +10,9 @@ interface CollapseProps {
   className?: string;
   bodyClassName?: string;
   headerClassName?: string;
+  open?:boolean;
+  down?:ReactNode;
+  up?:ReactNode;
 }
 
 /**
@@ -32,8 +35,11 @@ const Collapse: React.FC<CollapseProps> = ({
   children,
   className,
   headerClassName,
+  open=true,
+  down,
+  up
 }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(open);
 
   const toggleCollapse = () => setIsOpen((prev) => !prev);
 
@@ -47,7 +53,7 @@ const Collapse: React.FC<CollapseProps> = ({
         )}
       >
         <div className='text-lg-semibold text-gray-900 pt-4 pl-4 pb-2'>{header}</div>
-        <span>{isOpen ? <ArrowDownIcon /> : <ArrowDownIcon className='rotate-180' />}</span>
+        <span>{isOpen ? down || <ArrowDownIcon /> : up || <ArrowDownIcon className='rotate-180' />}</span>
       </div>
       <motion.div
         initial={{ height: 0 }}

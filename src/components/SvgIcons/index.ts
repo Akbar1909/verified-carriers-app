@@ -37,4 +37,8 @@ export {default as LinkIcon} from './LinkIcon';
 export {default as BookmarkIcon} from './BookmarkIcon';
 export {default as DownloadIcon} from './DownloadIcon'
 export {default as ArrowLeftIcon} from './ArrowLeftIcon';
-export {default as AwardIcon} from './AwardIcon'
+export {default as AwardIcon} from './AwardIcon';
+export {default as BarChartIcon} from './BarChartIcon';
+export {default as PackageIcon} from './PackageIcon';
+export {default as PlusCircleIcon} from './PlusCircleIcon'
+export {default as MinusCircleIcon} from './MinusCircleIcon'
