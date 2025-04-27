@@ -11,6 +11,7 @@ import TopRatedCompanies from "./_components/TopRatedCompanies";
 import Trust from "./_components/Trust";
 import Partners from "./_components/Partners";
 import Insights from "./_components/Insights";
+import Link from "next/link";
 
 const HomePage = () => {
   return (
@@ -44,9 +45,12 @@ const HomePage = () => {
                 startIcon={<SearchIcon />}
                 placeholder="Find a trusted company"
               />
-              <Button fullWidth className="h-12 text-md-medium text-white">
+            <Link href='/get-quote'>
+              
+            <Button fullWidth className="h-12 text-md-medium text-white">
                 Get a Free Quote
               </Button>
+              </Link>
             </div>
           </div>
         </Container>

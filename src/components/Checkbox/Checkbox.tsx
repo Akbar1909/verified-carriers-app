@@ -13,7 +13,8 @@ interface CheckboxProps {
   variant?: "checkbox" | "radio" | "circular";
   label?: string;
   helperText?: string;
-  labelProps?:ComponentPropsWithoutRef<'label'>
+  labelProps?:ComponentPropsWithoutRef<'label'>;
+  className:string;
 }
 
 const Checkbox = ({
@@ -25,7 +26,8 @@ const Checkbox = ({
   variant = "checkbox",
   label,
   helperText,
-  labelProps
+  labelProps,
+  className
 }: CheckboxProps) => {
   const [state, setState] = useState(initialState);
   const [isFocused, setIsFocused] = useState(false);
@@ -62,7 +64,8 @@ const Checkbox = ({
             "disabled:bg-gray-100 disabled:border-gray-200",
             shape === "round" && "rounded-full",
             state === "checked" && variant === "radio" && "bg-primary-600",
-            size === "md" && "w-5 h-5"
+            size === "md" && "w-5 h-5",
+            className
           )}
           aria-checked={state === "checked" || state === "indeterminate"}
           disabled={disabled}

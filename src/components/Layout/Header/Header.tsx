@@ -12,7 +12,7 @@ const Header = () => {
   const { pathname } = useAppNavigation();
 
   return (
-    <header className={twMerge("py-4.5  border border-gray-200", pathname === "/about" && "bg-orange-50")}>
+    <header className={twMerge("py-4.5  border border-gray-200", (pathname === "/about" || pathname === '/get-quote') && "bg-orange-50",)}>
       <Container className="flex items-center gap-10">
         <Logo />
         <TextField

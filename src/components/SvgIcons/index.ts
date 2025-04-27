@@ -42,3 +42,4 @@ export {default as BarChartIcon} from './BarChartIcon';
 export {default as PackageIcon} from './PackageIcon';
 export {default as PlusCircleIcon} from './PlusCircleIcon'
 export {default as MinusCircleIcon} from './MinusCircleIcon'
+export {default as ArrowUpIcon2} from './ArrowUpIcon2';

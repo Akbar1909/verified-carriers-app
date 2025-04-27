@@ -74,3 +74,5 @@ export const joinStrings = (
       return typeof preparedStr === 'string' && preparedStr.trim() !== '';
     })
     .join(separator);
+
+    export const returnArray = (arg: any) => (Array.isArray(arg) ? arg : []);

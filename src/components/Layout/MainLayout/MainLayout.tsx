@@ -1,5 +1,6 @@
 import Header from "../Header";
 import Footer from "../Footer";
+import MainLayoutClient from "./MainLayout.client";
 
 interface MainLayoutProps {
   children: any;
@@ -7,13 +8,13 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <div>
+    <MainLayoutClient>
       <Header />
 
-      <div>{children}</div>
+      <div id='children-container'>{children}</div>
 
       <Footer />
-    </div>
+    </MainLayoutClient>
   );
 };
 
