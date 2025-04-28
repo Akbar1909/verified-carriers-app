@@ -1,28 +1,25 @@
 import SelectionOption from "@/components/SelectionOption";
 import {  useFormContext } from "react-hook-form";
 
-const PickCategory = () => {
+const CarConditionStep = () => {
   const { handleSubmit, setValue, watch } = useFormContext();
 
   const onSubmit = handleSubmit((values) => {});
 
   const categories = [
     {
-      label: "Car shipping",
+      label: "Yes, it starts and drives",
       value: "CAR_SHIPPING",
     },
     {
-      label: "Motorcycle shipping",
+      label: "No, it starts but doesn't drive.",
       value: "MOTORCYCLE_SHIPPING",
     },
     {
-      label: "Boat shipping",
+      label: "No, it doesn't start.",
       value: "BOAT_SHIPPING",
     },
-    {
-      label: "Heavy equipment shipping",
-      value: "HEAVY_EQUIPMENT_SHIPPING",
-    },
+   
   ];
 
   const category = watch("category");
@@ -31,17 +28,16 @@ const PickCategory = () => {
     <div className="flex flex-col gap-20 2xl:gap-30">
       <div className="flex-col gap-2.5">
         <h2 className="text-d-sm-medium text-gray-900">
-          Select the trailer type
+        Can you drive your MB <br/> C350?
         </h2>
         <p className="text-sm text-gray-500">
-          Choose whether you want Enclosed or Open trailer for your <br />{" "}
-          transportation.
+        This will help carrier choose the best auto truck for your <br/> delivery.
         </p>
       </div>
 
       <form
         onSubmit={onSubmit}
-        className="grid grid-cols-2 gap-y-2.5 gap-x-3 w-fit ml-auto"
+        className="grid grid-cols-1 gap-y-2.5 gap-x-3 w-fit ml-auto"
       >
         {categories.map(({ label, value }, i) => (
           <SelectionOption
@@ -58,4 +54,4 @@ const PickCategory = () => {
   );
 };
 
-export default PickCategory;
+export default CarConditionStep;

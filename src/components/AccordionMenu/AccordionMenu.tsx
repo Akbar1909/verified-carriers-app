@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ArrowDownIcon } from "../SvgIcons";
 import Show from "../Show";
 import { returnArray } from "@/utils/common";
@@ -19,6 +19,7 @@ interface MenuSection {
   open?: boolean;
   active?: boolean;
   items?: MenuItem[];
+  onClick?:()=>void;
 }
 
 // Define props interface for the component
@@ -29,11 +30,18 @@ interface AccordionMenuProps {
 const AccordionMenu: React.FC<AccordionMenuProps> = ({ menuItems }) => {
   // Initialize open state based on the 'open' property in the data
   const [openSections, setOpenSections] = useState<Record<string, boolean>>(
-    menuItems.reduce<Record<string, boolean>>((acc, item) => {
-      acc[item.title] = item.open || false;
-      return acc;
-    }, {})
+   {}
   );
+
+
+  useEffect(()=>{
+    setOpenSections(
+      menuItems.reduce<Record<string, boolean>>((acc, item) => {
+        acc[item.title] = item.open || false;
+        return acc;
+      }, {})
+    )
+  },[menuItems])
 
   // Refs for measuring content heights
   const contentRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -54,7 +62,17 @@ const AccordionMenu: React.FC<AccordionMenuProps> = ({ menuItems }) => {
               "px-3 bg-white group py-2 hover:bg-orange-25 flex items-center justify-between w-full text-left text-gray-600 focus:outline-none",
               section.active && "bg-orange-50"
             )}
-            onClick={() => toggleSection(section.title)}
+            onClick={() => {
+
+
+              if(typeof section.onClick === 'function'){
+                section.onClick();
+              }
+
+              
+
+              toggleSection(section.title);
+            }}
           >
             <span
               className={twMerge(
