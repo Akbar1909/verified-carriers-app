@@ -9,7 +9,7 @@ interface SelectProps extends Props {
   label?: string;
   labelProps?: Omit<ComponentProps<typeof FormLabel>, "children">;
   hasError?: boolean;
-  helperText?: string;
+  helperText?: any;
   helperTextProps?: Omit<ComponentProps<typeof HelperText>, "children">;
   rootClassName?:string;
 }
@@ -40,11 +40,12 @@ const Select = ({
         unstyled
         classNames={{
           container: ({ isFocused }) =>
-            twMerge("!rounded-lg ", isFocused && "!shadow-input-focus"),
+            twMerge("!rounded-lg ", isFocused && "!shadow-input-focus", hasError && '!shadow-input-destructive-focus'),
           control: ({ isFocused }) =>
             twMerge(
               "!min-h-11 !shadow-xs !border !border-gray-300 !rounded-lg !pl-3.5 !py-2.5",
-              isFocused && "!border-primary-300 "
+              isFocused && "!border-primary-300 ",
+              hasError && '!border-error-300'
             ),
           placeholder: () => "!text-gray-500 !text-md",
           indicatorsContainer: () => "pr-3.5",
@@ -65,7 +66,7 @@ const Select = ({
       {helperText && (
         <HelperText
           
-          className={twMerge('absolute top-[100%] -bottom-1.5',helperTextClassName)}
+          className={twMerge('absolute top-[100%] -bottom-1.5',      hasError && "text-error-500",helperTextClassName)}
           {...computedHelperTextProps}
         >
           {helperText}

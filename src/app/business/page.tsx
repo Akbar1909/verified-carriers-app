@@ -11,7 +11,7 @@ import Reviews from "./_components/Reviews";
 const BusinessPage = () => {
   return (
     <MainLayout>
-      <div className="bg-black py-24 px-20 2xl:h-[50vh] md:h-[70vh] overflow-hidden">
+      <div className="bg-black py-24 2xl:h-[50vh] md:h-[70vh] overflow-hidden">
         <Container className="grid grid-cols-2">
           <div>
             <h1 className="text-d-lg-semibold text-white mb-4">

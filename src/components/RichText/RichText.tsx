@@ -22,12 +22,19 @@ import Text from "@tiptap/extension-text";
 import Placeholder from "@tiptap/extension-placeholder";
 // import BubbleMenu from '@tiptap/extension-bubble-menu'
 import "./RichText.styles.css";
+import { UseFormTrigger } from "react-hook-form";
+import Show from "../Show";
 
 interface RichTextProps {
   contentProps?: Partial<EditorContentProps>;
+  name:string;
+  setValue:(name:string, value:string)=>void;
+  trigger:UseFormTrigger<any>;
+  hasError?:boolean;
+  helperText?:any;
 }
 
-const RichText = ({ contentProps }: RichTextProps) => {
+const RichText = ({ contentProps, name,setValue, trigger, hasError, helperText }: RichTextProps) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -41,6 +48,12 @@ const RichText = ({ contentProps }: RichTextProps) => {
         placeholder:'Enter placeholder'
       }),
     ],
+    onUpdate:({editor})=>{
+      console.log(editor.getJSON())
+
+      setValue(name, editor.getHTML());
+      trigger(name)
+    }
   });
 
   return (
@@ -50,18 +63,26 @@ const RichText = ({ contentProps }: RichTextProps) => {
           // TIPTAP DOCUMENT styles
           "w-full [&_.tiptap]:min-h-[314px]",
           "[&_.tiptap]:bg-white [&_.tiptap]:border [&_.tiptap]:border-gray-300 [&_.tiptap]:py-[10px] [&_.tiptap]:px-3.5 [&_.tiptap]:rounded-lg [&_.tiptap]:focus:outline-none [&_.tiptap]:focus:border-orange-300 [&_.tiptap]:focus:shadow-input-focus",
-          "[&_.tiptap:first-child]:mt-0"
+          "[&_.tiptap:first-child]:mt-0",
+          hasError && '[&_.tiptap]:outline-none [&_.tiptap]:border-error-300 [&_.tiptap]:shadow-input-destructive-focus'
         )}
       >
-        <EditorContent placeholder="Enter about your company" editor={editor} {...contentProps} />
+        <EditorContent placeholder="Enter about your company" editor={editor}   />
 
-        <p className="mt-1.5 text-sm text-gray-500">275/5000 characters left</p>
+       <Show when={helperText}>
+             <p className={twMerge("mt-1.5 text-sm text-gray-500", hasError && 'text-error-500')}>
+            {
+              helperText
+            }
+        </p>
+       </Show>
 
         <div role="group" className="flex items-center mt-3">
           <button
             onClick={() => {
               editor?.chain().focus().toggleBold().run();
             }}
+            type="button"
             className={twMerge(
               "w-8 h-8 flex items-center justify-center rounded-lg",
               editor?.isActive("bold") && "bg-primary-200"
@@ -71,6 +92,7 @@ const RichText = ({ contentProps }: RichTextProps) => {
           </button>
 
           <button
+            type='button'
             onClick={() => {
               editor?.chain().focus().toggleItalic().run();
             }}
@@ -83,6 +105,7 @@ const RichText = ({ contentProps }: RichTextProps) => {
           </button>
 
           <button
+            type='button'
             onClick={() => {
               editor?.chain().focus().toggleBulletList().run();
             }}
@@ -95,6 +118,7 @@ const RichText = ({ contentProps }: RichTextProps) => {
           </button>
 
           <button
+            type='button'
             onClick={() => {
               editor?.chain().focus().toggleOrderedList().run();
             }}

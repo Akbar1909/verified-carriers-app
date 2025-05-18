@@ -11,8 +11,15 @@ import { twMerge } from "tailwind-merge";
 const Header = () => {
   const { pathname } = useAppNavigation();
 
+  console.log({ pathname });
+
   return (
-    <header className={twMerge("py-4.5  border border-gray-200", (pathname === "/about" || pathname === '/get-quote') && "bg-orange-50",)}>
+    <header
+      className={twMerge(
+        "py-4.5  border border-gray-200",
+        (pathname === "/about" || pathname === "/get-quote") && "bg-orange-50"
+      )}
+    >
       <Container className="flex items-center gap-10">
         <Logo />
         <TextField
@@ -62,14 +69,24 @@ const Header = () => {
             <li className="px-3 py-2.5">
               {" "}
               <Link
-                href="/auth/login"
+                href={
+                  pathname === "/business"
+                    ? "/auth/login?mode=company"
+                    : "/auth/login?mode=user"
+                }
                 className="text-md-medium text-gray-500 hover:text-gray-600"
               >
                 Log in
               </Link>
             </li>
             <li>
-              <Link href="#">
+              <Link
+                href={
+                  pathname === "/business"
+                    ? "/auth/sign-up?mode=company"
+                    : "/auth/sign-up?mode=user"
+                }
+              >
                 <Button
                   size="lg"
                   startIcon={<CornerUpRightIcon />}

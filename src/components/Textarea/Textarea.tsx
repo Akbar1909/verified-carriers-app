@@ -46,7 +46,7 @@ const Textarea = ({
             "focus:border focus:border-orange-300 focus:shadow-input-focus",
             "disabled:border-gray-300 disabled:bg-gray-50 disabled:placeholder:text-gray-500 disabled:text-gray-500",
             hasError &&
-              "border-error-300 focus:border-error-300 shadow-input-destructive-focus",
+              "border-error-300 focus:border-error-300 !shadow-input-destructive-focus",
             className
           )}
           {...computedProps}
@@ -55,7 +55,7 @@ const Textarea = ({
         {helperText && (
           <HelperText
             className={twMerge(
-              "absolute top-12.5 left-0",
+              "absolute top-34 left-0",
               hasError && "text-error-500",
               className
             )}

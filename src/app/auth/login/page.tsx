@@ -3,6 +3,9 @@ import Image from "next/image";
 import LoginForm from "./_components/LoginForm";
 
 const LoginPage = () => {
+
+
+
   return (
     <div className="grid grid-cols-2 w-auto h-full-screen">
       <div className="flex relative h-full items-center justify-center">

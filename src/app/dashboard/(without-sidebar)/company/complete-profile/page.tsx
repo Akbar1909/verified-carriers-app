@@ -6,23 +6,136 @@ import CompanyInfoForm from "./_components/CompanyInfoForm";
 import { useState } from "react";
 import useAppConstants from "@/hooks/helpers/useAppConstants";
 import Show from "@/components/Show";
-import { motion } from 'motion/react'
+import { motion } from "motion/react";
 import { MailIcon } from "@/components/SvgIcons";
 import AboutCompanyForm from "./_components/AboutCompanyForm";
 import ServiceForm from "./_components/ServiceForm";
 import ContactForm from "./_components/ContactForm";
+import { FormProvider, useForm } from "react-hook-form";
+import { array, object } from "yup";
+import useAppValidations from "@/hooks/helpers/useAppValidations";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const CompleteSignUpPage = () => {
   const [step, setStep] = useState(0);
 
   const { containerVariants } = useAppConstants();
+  const {
+    getStringValidation,
+    getEmailValidation,
+    getSelectValidation,
+    getFilesValidation,
+  } = useAppValidations();
 
-  const nextStep = (nextStep?: number) => {
+  const generalValidationSchema = object().shape({
+    firstName: getStringValidation(),
+    lastName: getStringValidation(),
+    workEmail: getEmailValidation(),
+  });
+
+  const infoValidationSchema = object().shape({
+    name: getStringValidation(),
+    website: getStringValidation(),
+    salesEmail: getEmailValidation(),
+    contactPhone: getStringValidation(),
+    mcNumber: getStringValidation(),
+    usdotNumber: getStringValidation(),
+    foundingYear: getSelectValidation(),
+    totalEmployees: getSelectValidation(),
+    companyLogos: getFilesValidation(1, 1),
+  });
+
+  const servicesValidationSchema = object().shape({
+    services: array().of(
+      object().shape({
+        serviceName: getSelectValidation(),
+        description: getStringValidation(),
+      })
+    ),
+  });
+
+  const aboutValidationSchema = object().shape({
+    aboutCompany: getStringValidation(),
+  });
+
+  const contactValidationSchema=object().shape({
+    contactInformation:array().of(
+      object().shape({
+        phone:getStringValidation(),
+        email:getEmailValidation(),
+        address:getStringValidation()
+      })
+    )
+  })
+
+  const generalMethods = useForm({
+    // resolver: yupResolver(generalValidationSchema),
+  });
+
+  const infoMethods = useForm({
+    // resolver:yupResolver(infoValidationSchema)
+  });
+
+  const aboutMethods = useForm({
+    // resolver:yupResolver(aboutValidationSchema)
+  });
+
+  const servicesMethods = useForm({
+    defaultValues: {
+      services: [{}],
+    },
+    // resolver:yupResolver(servicesValidationSchema)
+  });
+
+  const contactMethods=useForm({
+    defaultValues:{
+      contactInformation:[{}]
+    },
+    resolver:yupResolver(contactValidationSchema)
+  })
+
+  const nextStep = async (nextStep?: number) => {
+    if (step === 0) {
+      const isValid = await generalMethods.trigger();
+
+      if (!isValid) {
+        return;
+      }
+    }
+    if (step === 1) {
+      const isValid = await infoMethods.trigger();
+
+      if (!isValid) {
+        return;
+      }
+    }
+    if (step === 2) {
+      const isValid = await aboutMethods.trigger();
+
+      if (!isValid) {
+        return;
+      }
+    }
+    if (step === 3) {
+      const isValid = await servicesMethods.trigger();
+
+      if (!isValid) {
+        return;
+      }
+    }
+    if (step === 4) {
+      const isValid = await contactMethods.trigger();
+
+      if (!isValid) {
+        return;
+      }
+    }
+
     setStep(nextStep ?? step + 1);
   };
 
   return (
-    <div className="flex flex-col h-full-screen">
+    <div className="flex flex-col min-h-screen">
       <header className="w-full h-24 bg-white">
         <Image
           alt="Verified carriers logo"
@@ -52,7 +165,9 @@ const CompleteSignUpPage = () => {
                 </Link>
               </div>
             </div>
-            <JoinForm nextStep={nextStep} />
+            <FormProvider {...generalMethods}>
+              <JoinForm nextStep={nextStep} />
+            </FormProvider>
           </div>
         </Show>
 
@@ -75,7 +190,9 @@ const CompleteSignUpPage = () => {
                 </p>
               </div>
             </div>
-            <CompanyInfoForm nextStep={nextStep} />
+            <FormProvider {...infoMethods}>
+              <CompanyInfoForm nextStep={nextStep} />
+            </FormProvider>
           </motion.div>
         </Show>
 
@@ -98,7 +215,9 @@ const CompleteSignUpPage = () => {
                 </p>
               </div>
             </div>
-            <AboutCompanyForm nextStep={nextStep} />
+            <FormProvider {...aboutMethods}>
+              <AboutCompanyForm nextStep={nextStep} />
+            </FormProvider>
           </motion.div>
         </Show>
 
@@ -121,7 +240,9 @@ const CompleteSignUpPage = () => {
                 </p>
               </div>
             </div>
-            <ServiceForm nextStep={nextStep} />
+            <FormProvider {...servicesMethods}>
+              <ServiceForm nextStep={nextStep} />
+            </FormProvider>
           </motion.div>
         </Show>
 
@@ -136,15 +257,17 @@ const CompleteSignUpPage = () => {
           >
             <div className="flex flex-col gap-3 mb-8">
               <h1 className="text-center text-d-sm-semibold text-gray-900">
-              Contact information
+                Contact information
               </h1>
               <div className="flex items-center justify-center gap-1">
                 <p className="text-sm text-gray-500">
-                Include your contact information for customers.
+                  Include your contact information for customers.
                 </p>
               </div>
             </div>
-            <ContactForm nextStep={nextStep} />
+            <FormProvider {...contactMethods}>
+               <ContactForm nextStep={nextStep} />
+            </FormProvider>
           </motion.div>
         </Show>
       </div>

@@ -1,5 +1,6 @@
 import { ComponentPropsWithoutRef, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
+import Spinner from "../Spinner";
 
 type ButtonSizeType = "sm" | "md" | "lg" | "xl" | "2xl";
 type ButtonColorType =
@@ -19,6 +20,7 @@ interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   withStartDotIcon?: boolean;
   iconButton?: boolean;
   fullWidth?: boolean;
+  isPending?: boolean;
 }
 
 const Button = ({
@@ -33,6 +35,7 @@ const Button = ({
   withStartDotIcon = false,
   iconButton,
   fullWidth,
+  isPending,
   ...computedProps
 }: ButtonProps) => {
   const buttonSizesStyles: Record<ButtonSizeType, string> = {
@@ -189,6 +192,16 @@ const Button = ({
       )}
       {...computedProps}
     >
+      {isPending && (
+        <Spinner
+          className={twMerge(
+            "border-2 absolute",
+            size === "lg" && "size-6",
+            size === "md" && "size-6",
+            size === "sm" && "size-5"
+          )}
+        />
+      )}
       {withStartDotIcon && (
         <span
           className={twMerge(
@@ -199,15 +212,33 @@ const Button = ({
         />
       )}
       {startIcon && (
-        <span className={twMerge(iconSizeStyles[size], iconColorStyles[color])}>
+        <span
+          className={twMerge(
+            iconSizeStyles[size],
+            iconColorStyles[color],
+            isPending && "opacity-0"
+          )}
+        >
           {startIcon}
         </span>
       )}
-      <span className={twMerge(iconSizeStyles[size], iconColorStyles[color])}>
+      <span
+        className={twMerge(
+          iconSizeStyles[size],
+          iconColorStyles[color],
+          isPending && "opacity-0"
+        )}
+      >
         {children}
       </span>
       {endIcon && (
-        <span className={twMerge(iconSizeStyles[size], iconColorStyles[color])}>
+        <span
+          className={twMerge(
+            iconSizeStyles[size],
+            iconColorStyles[color],
+            isPending && "opacity-0"
+          )}
+        >
           {endIcon}
         </span>
       )}

@@ -10,7 +10,7 @@ const CircleIcon = (props: ComponentPropsWithoutRef<"svg">) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g clip-path="url(#clip0_8802_1690)">
+      <g clipPath="url(#clip0_8802_1690)">
         <path
           d="M10.0001 18.3334C14.6025 18.3334 18.3334 14.6024 18.3334 10C18.3334 5.39765 14.6025 1.66669 10.0001 1.66669C5.39771 1.66669 1.66675 5.39765 1.66675 10C1.66675 14.6024 5.39771 18.3334 10.0001 18.3334Z"
           stroke="white"

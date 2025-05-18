@@ -76,3 +76,67 @@ export const joinStrings = (
     .join(separator);
 
     export const returnArray = (arg: any) => (Array.isArray(arg) ? arg : []);
+
+  /**
+ * Extracts all numeric characters from a given input string.
+ * If the input is null or undefined, an empty string is returned.
+ *
+ * @param {string|null|undefined} input - The input string from which to extract numbers.
+ * @returns {string} A string containing only the numeric characters from the input.
+ *                  If the input is null or undefined, returns an empty string.
+ */
+export const extractNumbers = (input: string | null | undefined): string => {
+  if (!input) {
+    return '';
+  }
+  return input.replace(/\D/g, '');
+};
+
+
+/**
+ * Cleans and formats a user-provided phone number string by:
+ * - Removing all non-numeric characters.
+ * - Removing the leading '8' if it exists.
+ *
+ * @param {string} phoneNumber - The phone number string to clean.
+ * @returns {string} - The cleaned phone number string, with all non-numeric characters removed and the leading '8' removed (if present).
+ */
+export const cleanPhoneNumber = (phone: string) =>
+  phone.replace(/[^\d]/g, '').replace(/^8/, '');
+
+export const formatBytes = (bytes: number) => {
+  if (bytes === 0) return '0 Bytes';
+
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(1024));
+  const formattedBytes = parseFloat((bytes / Math.pow(1024, i)).toFixed(2));
+
+  return `${formattedBytes} ${sizes[i]}`;
+};
+
+/**
+ * Generates an array containing a range of years from startYear to endYear (inclusive).
+ *
+ * @param {number} startYear - The first year in the range.
+ * @param {number} endYear - The last year in the range.
+ * @returns {number[]} An array of numbers representing all years in the range.
+ * If startYear is greater than endYear, returns an empty array.
+ * 
+ * @example
+ * // Returns [2020, 2021, 2022, 2023]
+ * const years = generateYearRange(2020, 2023);
+ * 
+ * @example
+ * // Returns []
+ * const emptyRange = generateYearRange(2023, 2020);
+ */
+export const generateYearRange = (startYear: number, endYear: number): number[] => {
+  if (startYear > endYear) {
+    return [];
+  }
+  
+  return Array.from(
+    { length: endYear - startYear + 1 },
+    (_, index) => startYear + index
+  );
+};

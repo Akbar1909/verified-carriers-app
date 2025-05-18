@@ -10,8 +10,6 @@ const ReviewSlider = () => {
     <Swiper
       spaceBetween={24}
       slidesPerView={3}
-      onSlideChange={() => console.log("slide change")}
-      onSwiper={(swiper) => console.log(swiper)}
       autoplay
     //   modules={[Navigation, Pagination, Scrollbar, A11y]}
     >

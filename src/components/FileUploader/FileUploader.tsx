@@ -1,16 +1,27 @@
-import { ComponentProps, useRef } from "react";
+import { ChangeEvent, ComponentProps, useRef, useState } from "react";
 import FormLabel from "../FormLabel";
 import { twMerge } from "tailwind-merge";
 import HelperText from "../HelperText";
 import { UploadCloudIcon } from "../SvgIcons";
+import useAppMutation from "@/hooks/helpers/useAppMutation";
+import { request } from "@/services/request";
+import FileList from "./FileList";
+import { FileModel } from "./File.types";
+import { AxiosProgressEvent } from "axios";
+import {  UseFormTrigger } from "react-hook-form";
+import Show from "../Show";
 
 interface FileUploaderProps {
   rootClassName?: string;
   labelProps?: Omit<ComponentProps<typeof FormLabel>, "children">;
   label?: string;
-  helperText?: string;
+  helperText?: any;
   helperTextProps?: Omit<ComponentProps<typeof HelperText>, "children">;
   hasError?: boolean;
+  maxFilesCount?: number;
+  setValue: (name: string, ids: string[]) => void;
+  name: string;
+  trigger?:UseFormTrigger<any>
 }
 
 const FileUploader = ({
@@ -20,19 +31,107 @@ const FileUploader = ({
   helperTextProps,
   rootClassName,
   hasError,
+  maxFilesCount = Infinity,
+  setValue,
+  name,
+  trigger
 }: FileUploaderProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { className: labelClassName, ...computedLabelProps } = labelProps || {};
   const { className: helperTextClassName, ...computedHelperTextProps } =
     helperTextProps || {};
+  const [files, setFiles] = useState<Record<string, File>>({});
 
-  const handleChange = (e) => {};
+  const { mutate } = useAppMutation({
+    mutationFn: (formData: any) =>
+      request.post("/files/upload", formData, {
+        headers: {
+          "Content-Type":
+            "multipart/form-data; boundary=<calculated when request is sent>",
+        },
+        onUploadProgress: (event: AxiosProgressEvent) => {
+          const percent = Math.round((event.loaded * 100) / event.total);
 
+          const currentIndex = Object.keys(files).length - 1;
+
+          console.log({percent})
+
+          setFiles((prev) => ({
+            ...prev,
+            [currentIndex]: { ...prev?.[currentIndex], percent },
+          }));
+        },
+      }),
+
+    onSuccess: ({ data }: { data: FileModel }) => {
+      const currentIndex = Object.keys(files).length - 1;
+
+      const updatedFiles = {
+        ...files,
+        [currentIndex]: {
+          ...files?.[currentIndex],
+          serverFile: data,
+          status: "success",
+          percent:100
+        },
+      };
+
+      setValue(
+        name,
+        Object.values(updatedFiles).map((item) => item?.serverFile)
+      );
+
+      if(typeof trigger === 'function'){
+        trigger(name)
+      }
+
+      setFiles(updatedFiles);
+    },
+    onError: (e) => {
+      console.log(e);
+    },
+  });
+
+  console.log(files)
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    const formData = new FormData();
+
+    const nextIndex = Object.keys(files).length;
+
+    setFiles((prev) => ({
+      ...prev,
+      [nextIndex]: {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        bytes: file.bytes,
+        lastModified: file.lastModified,
+        percent: 0,
+        status: "loading",
+      },
+    }));
+
+    formData.set("file", file);
+
+    mutate(formData);
+  };
+
+
+  const filesList=Object.values(files);
+
+  console.log(files);
   return (
     <section
       role="region"
       className={twMerge(
-        "flex w-full flex-col gap-y-1.5 shadow-xs",
+        "flex w-full flex-col gap-y-1.5 shadow-xs relative",
         rootClassName
       )}
       aria-label="File Uploader"
@@ -66,7 +165,7 @@ const FileUploader = ({
       {helperText && (
         <HelperText
           className={twMerge(
-            "absolute top-12.5 left-0",
+            "absolute top-32 left-0",
             hasError && "text-error-500",
             helperTextClassName
           )}
@@ -75,6 +174,10 @@ const FileUploader = ({
           {helperText}
         </HelperText>
       )}
+
+     <Show when={filesList.length > 0}>
+     <FileList files={filesList} className="mt-4" />
+     </Show>
     </section>
   );
 };

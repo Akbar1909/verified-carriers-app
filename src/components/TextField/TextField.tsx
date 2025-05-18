@@ -11,9 +11,10 @@ interface TextFieldProps extends ComponentPropsWithoutRef<"input"> {
   endIconProps?: ComponentPropsWithoutRef<"div">;
   label?: string;
   labelProps?: Omit<ComponentProps<typeof FormLabel>, "children">;
-  helperText?: string;
+  helperText?: any;
   helperTextProps?: Omit<ComponentProps<typeof HelperText>, "children">;
-  hasError?:boolean;
+  hasError?: boolean;
+  isUrl?: boolean;
 }
 
 const TextField = ({
@@ -28,6 +29,7 @@ const TextField = ({
   helperText,
   helperTextProps,
   hasError,
+  isUrl,
   ...computedProps
 }: TextFieldProps) => {
   const { className: startIconClassName, ...computedStartIconProps } =
@@ -46,7 +48,7 @@ const TextField = ({
         </FormLabel>
       )}
       <div className="w-full relative">
-        {startIcon && (
+        {startIcon && !isUrl && (
           <div
             className={twMerge(
               "absolute left-3.5 top-1/2 -translate-y-1/2 z-50",
@@ -57,10 +59,24 @@ const TextField = ({
             {startIcon}
           </div>
         )}
+
+        {isUrl && (
+          <div
+            className={twMerge(
+              "absolute top-1/2 h-full -translate-y-1/2 z-50 flex items-center justify-center",
+              "text-md text-gray-500 pl-3.5 pr-2.5 border-r border-gray-300",
+              startIconClassName
+            )}
+            {...computedStartIconProps}
+          >
+            https://
+          </div>
+        )}
+
         <input
           placeholder={"Enter name here"}
           className={twMerge(
-            'transition-all duration-300 h-full text-md text-gray-900',
+            "transition-all duration-300 h-full text-md text-gray-900",
             "h-11 pl-[14px] py-2.5 shadow-xs w-full",
             "border border-gray-300 bg-white rounded-lg",
             "placeholder:text-gray-500 placeholder:text-md",
@@ -69,7 +85,9 @@ const TextField = ({
             "disabled:border-gray-300 disabled:bg-gray-50 disabled:placeholder:text-gray-500 disabled:text-gray-500",
             startIcon && "pl-10.5",
             endIcon && "pr-10.5",
-            hasError && 'border-error-300 focus:border-error-300 shadow-input-destructive-focus',
+            isUrl && "pl-23.5",
+            hasError &&
+              "border-error-300 focus:border-error-300 !shadow-input-destructive-focus",
             className
           )}
           {...computedProps}
@@ -79,7 +97,7 @@ const TextField = ({
           <div
             className={twMerge(
               "absolute right-3.5 top-1/2 -translate-y-1/2 z-50",
-              hasError && '[&_path]:stroke-error-500 [&_path]:circle-error-500',
+              hasError && "[&_path]:stroke-error-500 [&_path]:circle-error-500",
               endIconClassName
             )}
             {...computedEndIconProps}
@@ -90,7 +108,11 @@ const TextField = ({
 
         {helperText && (
           <HelperText
-            className={twMerge('absolute top-12.5 left-0', hasError && 'text-error-500', className)}
+            className={twMerge(
+              "absolute top-12.5 left-0",
+              hasError && "text-error-500",
+              helperTextClassName
+            )}
             {...computedHelperTextProps}
           >
             {helperText}

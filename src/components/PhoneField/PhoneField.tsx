@@ -11,7 +11,7 @@ interface PhoneFieldProps extends PhoneInputProps {
   hasError?: boolean;
   label?: string;
   labelProps?: ComponentProps<typeof FormLabel>;
-  helperText?: string;
+  helperText?: any;
   helperTextProps?: ComponentProps<typeof HelperText>;
 }
 
@@ -62,6 +62,7 @@ const PhoneField = ({
         <HelperText
           className={twMerge(
             "absolute top-[100%] -bottom-1.5",
+            hasError && "text-error-500",
             helperTextClassName
           )}
           {...computedHelperTextProps}
