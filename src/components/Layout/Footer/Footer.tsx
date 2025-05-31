@@ -15,8 +15,8 @@ const Footer = () => {
   return (
     <div className="bg-gray-50 border border-gray-300">
       <Container className="flex flex-col">
-        <div className="border-x border-b border-gray-300 py-24 px-16.25 flex justify-between items-center">
-          <h2 className="text-d-lg-semibold text-gray-900">
+        <div className="border-x border-b border-gray-300 py-18 px-10 lg:py-24 lg:px-16.25 flex flex-col lg:flex-row lg:justify-between lg:items-center">
+          <h2 className="text-d-xs-semibold mb-4 lg:mb-0 lg:text-d-lg-semibold text-gray-900">
             Find the perfect carrier <br /> Find with us
           </h2>
 
@@ -35,8 +35,8 @@ const Footer = () => {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-5">
-          <div className="py-12 border-x col-span-2 border-gray-300 px-20">
+        <div className="grid grid-cols-1 lg:grid-cols-5">
+          <div className="py-12 border-b lg:border-x col-span-1 lg:col-span-2 border-gray-300 px-10 lg:px-20">
             <Image
               alt="Verified carriers logo"
               width={116}
@@ -73,7 +73,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="py-12 border-r border-gray-300 px-12">
+          <div className="py-12 border-b lg:border-r border-gray-300 px-10 lg:px-12">
             <h3 className="text-md-semibold text-gray-500 mb-4">Company</h3>
 
             <ul className="flex flex-col gap-3 text-md-medium text-gray-400">
@@ -91,7 +91,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="py-12 border-r border-gray-300 px-12">
+          <div className="py-12 border-b lg:border-r border-gray-300 px-10 lg:px-12">
             <h3 className="text-md-semibold text-gray-500 mb-4">Services</h3>
 
             <ul className="flex flex-col gap-3 text-md-medium text-gray-400">
@@ -122,7 +122,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="py-12 border-r border-gray-300 px-12">
+          <div className="py-12 border-b lg:border-r border-gray-300 px-10 lg:px-12">
             <h3 className="text-md-semibold text-gray-500 mb-4">Resources</h3>
 
             <ul className="flex flex-col gap-3 text-md-medium text-gray-400">

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextFetchEvent, NextRequest } from "next/server";
 import { CustomMiddleware } from "./chain";
-import { cookies } from "next/headers";
 import { getToken } from "next-auth/jwt";
 
 export function authMiddleware(middleware: CustomMiddleware) {
@@ -24,6 +23,8 @@ export function authMiddleware(middleware: CustomMiddleware) {
     const role = session?.role as "user" | "company";
     const baseUrl = `${req.nextUrl.protocol}/${req.nextUrl.host}`;
 
+    console.log({isAuthenticated, pathname, role, registrationStatus})
+
     if (
       isAuthenticated &&
       pathname === "/auth/login" &&
@@ -41,6 +42,25 @@ export function authMiddleware(middleware: CustomMiddleware) {
     ) {
       return NextResponse.redirect(
         new URL("/dashboard/user/complete-profile", baseUrl)
+      );
+    }
+    if (
+      isAuthenticated &&
+      pathname === "/auth/login" &&
+      session?.role === "company" &&
+      registrationStatus === "COMPLETE"
+    ) {
+      return NextResponse.redirect(new URL("/business", baseUrl));
+    }
+
+    if (
+      isAuthenticated &&
+      role === "company" &&
+      pathname === "/auth/login" &&
+      registrationStatus === "INITIAL"
+    ) {
+      return NextResponse.redirect(
+        new URL("/dashboard/company/complete-profile", baseUrl)
       );
     }
 

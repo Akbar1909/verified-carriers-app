@@ -1,40 +1,44 @@
 import Container from "@/components/Container";
-import { BarChartIcon, MessageCircleIcon, PackageIcon } from "@/components/SvgIcons";
+import {
+  BarChartIcon,
+  MessageCircleIcon,
+  PackageIcon,
+} from "@/components/SvgIcons";
 import Image from "next/image";
 
 const Features = () => {
   const statistics = [
     {
-      icon: <BarChartIcon/>,
+      icon: <BarChartIcon />,
       title: "Years of Experience",
       description: `With over 10 years of combined experience in the vehicle transportation industry, our team brings a wealth of knowledge and expertise to the table.`,
     },
     {
-      icon: <MessageCircleIcon/>,
+      icon: <MessageCircleIcon />,
       title: "Number of Transporters",
       description: `We partner with a vast network of over 500 licensed vehicle transporters. Our users have access to a wide range of service providers.`,
     },
     {
-      icon: <PackageIcon/>,
+      icon: <PackageIcon />,
       title: `Community Engagement`,
       description: `Over 5,000 users participating in discussions and contributing to the transparency and accountability of the industry.`,
     },
   ];
 
   return (
-    <div className="bg-white py-24">
-      <Container className="flex flex-col gap-16">
+    <div className="bg-white py-16 lg:py-24">
+      <Container className="flex flex-col gap-12.5 lg:gap-16">
         <div className="flex flex-col gap-5 items-center">
-          <h2 className="text-d-md-semibold text-gray-900">
+          <h2 className="text-d-sm-semibold text-center lg:text-d-md-semibold text-gray-900">
             Cutting-edge features
           </h2>
-          <p className="text-xl text-gray-600 text-center">
+          <p className=" text-lg lg:text-xl text-gray-600 text-center">
             User-friendly, informative interface that will allow you to monitor
             and directly <br /> influence the success of your business
           </p>
         </div>
 
-        <div className="flex items-center justify-center">
+        <div className="items-center justify-center hidden lg:flex">
           <div className="relative border-[4px] border-gray-900 rounded-[10px]">
             <Image
               width={512}
@@ -58,7 +62,18 @@ const Features = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-8 mt-20">
+        <div className="relative h-[50vh] w-full block lg:hidden">
+          <Image
+            fill
+            objectFit="contain"
+            className="absolute"
+            src="/images/iphone-12-Pro-mockup-5.png"
+            alt="banner"
+            priority
+          />
+        </div>
+
+        <div className="grid grid-cols-1 gap-y-12 lg:gap-y-8 lg:grid-cols-3 gap-8 mt-20">
           {statistics.map(({ icon, title, description }, i) => (
             <article key={i} className="flex flex-col items-center">
               <div className="mb-5 border border-gray-300 px-3.5 py-3 rounded-lg text-d-xs-semibold text-gray-900">

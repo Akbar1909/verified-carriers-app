@@ -2,33 +2,32 @@ import Button from "@/components/Button";
 import PhoneField from "@/components/PhoneField";
 import { MailIcon, PlusIcon, Trash2Icon } from "@/components/SvgIcons";
 import TextField from "@/components/TextField";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm, useFormContext } from "react-hook-form";
 
 interface ContactFormProps {
   nextStep: (step?: number) => void;
+  isPending?:boolean;
 }
 
-const ContactForm = ({ nextStep }: ContactFormProps) => {
+const ContactForm = ({ nextStep, isPending }: ContactFormProps) => {
   const {
     control,
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      addresses: [{}],
-    },
-  });
+  } = useFormContext();
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "addresses",
+    name: "contactInformation",
   });
 
-  const onSubmit = handleSubmit(() => {});
+  const onSubmit = handleSubmit(() => {
+    nextStep()
+  });
 
   return (
-    <form className="flex flex-col gap-6">
+    <form onSubmit={onSubmit} className="flex flex-col gap-6">
       <div className="flex flex-col gap-6">
         {fields.map((field, index: number) => (
           <div className="flex flex-col gap-6" key={field.id}>
@@ -91,7 +90,7 @@ const ContactForm = ({ nextStep }: ContactFormProps) => {
         </button>
       </div>
 
-      <Button fullWidth size="lg">
+      <Button fullWidth size="lg" isPending={isPending}>
         Create account
       </Button>
     </form>

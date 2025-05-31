@@ -1,9 +1,9 @@
 import { request } from "@/services/request";
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 
-const useGetMe = (options?:Partial<UseQueryOptions<any,any>>) => {
+const useGetCurrentCompany = (options?:Partial<UseQueryOptions<any,any>>) => {
   
-  const url = "/users/me";
+  const url = "/companies/me";
   const queryKey = [url];
 
 
@@ -14,14 +14,14 @@ const useGetMe = (options?:Partial<UseQueryOptions<any,any>>) => {
     ...options
   });
 
-  const user=state.data || {}
+  const company=state.data || {}
 
 
 
   return {
     ...state,
-    user
+    company
   };
 };
 
-export default useGetMe;
+export default useGetCurrentCompany;

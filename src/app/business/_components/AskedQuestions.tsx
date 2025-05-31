@@ -35,19 +35,20 @@ const AskedQuestions = () => {
   ];
 
   return (
-    <div className="bg-white py-24">
-      <Container className="flex flex-col gap-16">
+    <div className="bg-white py-16 lg:py-24">
+      <Container className="flex flex-col gap-12 lg:gap-16">
         <div className="flex flex-col gap-5 items-center">
-          <h2 className="text-d-md-semibold text-gray-900">
+          <h2 className="text-d-sm-semibold text-center lg:text-d-md-semibold text-gray-900">
             Frequently asked questions
           </h2>
-          <p className="text-xl text-gray-600">Everything you need to know.</p>
+          <p className="text-lg text-center lg:text-xl text-gray-600">
+            Everything you need to know.
+          </p>
         </div>
 
-        <div className="max-w-192 w-192 m-auto [&>div]:w-full flex items-center flex-col">
+        <div className="max-w-192 w-full lg:w-192 m-auto [&>div]:w-full flex items-center flex-col">
           {collapseItems.map(({ title, content }, i) => (
             <Collapse
-              
               up={
                 <button>
                   <PlusCircleIcon />
@@ -67,18 +68,32 @@ const AskedQuestions = () => {
           ))}
         </div>
 
-        <article className='bg-gray-50 py-8 rounded-2xl flex flex-col items-center gap-8'>
-             <div className='relative w-34 h-14'>
-                 <Avatar  url="/images/avatar-1.png" className="h-14 w-14 absolute left-0 z-5" />
-                 <Avatar url="/images/avatar.png" className="h-14 w-14 absolute z-10 left-1/2 -translate-x-1/2" />
-                 <Avatar url="/images/avatar-2.png" className="h-14 w-14 absolute z-5 right-0" />
-             </div>
+        <article className="bg-gray-50 py-8 rounded-2xl flex flex-col items-center gap-8">
+          <div className="relative w-34 h-14">
+            <Avatar
+              url="/images/avatar-1.png"
+              className="h-14 w-14 absolute left-0 z-5"
+            />
+            <Avatar
+              url="/images/avatar.png"
+              className="h-14 w-14 absolute z-10 left-1/2 -translate-x-1/2"
+            />
+            <Avatar
+              url="/images/avatar-2.png"
+              className="h-14 w-14 absolute z-5 right-0"
+            />
+          </div>
 
-             <div className="flex flex-col gap-2 items-center">
-                  <h3 className='text-xl-medium text-gray-900'>Still have questions?</h3>
-                  <p className="text-lg text-gray-600">Can’t find the answer you’re looking for? Please chat to our friendly team.</p>
-             </div>
-             <Button size='lg'>Get in touch</Button>
+          <div className="flex flex-col gap-2 items-center">
+            <h3 className="text-xl-medium text-center text-gray-900">
+              Still have questions?
+            </h3>
+            <p className="text-md lg:text-lg text-center text-gray-600">
+              Can’t find the answer you’re looking for? Please chat to our
+              friendly team.
+            </p>
+          </div>
+          <Button size="lg">Get in touch</Button>
         </article>
       </Container>
     </div>

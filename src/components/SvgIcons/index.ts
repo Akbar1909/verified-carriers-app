@@ -43,4 +43,6 @@ export {default as PackageIcon} from './PackageIcon';
 export {default as PlusCircleIcon} from './PlusCircleIcon'
 export {default as MinusCircleIcon} from './MinusCircleIcon'
 export {default as ArrowUpIcon2} from './ArrowUpIcon2';
-export {default as FileUploadDocIcon} from './FileUploadDocIcon'
+export {default as FileUploadDocIcon} from './FileUploadDocIcon';
+export {default as BurgerIcon} from './BurgerIcon';
+export {default as GlobIcon} from './GlobIcon'

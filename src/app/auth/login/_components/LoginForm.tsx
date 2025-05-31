@@ -7,28 +7,12 @@ import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
 import useAppNavigation from "@/hooks/helpers/useAppNavigation";
 import useAppMutation from "@/hooks/helpers/useAppMutation";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
 
 const LoginForm = () => {
   const { searchParams, router } = useAppNavigation();
   const mode = searchParams.get("mode") ?? "user";
-  const { data: session, status: sessionStatus } = useSession();
-
-
-
-  useEffect(() => {
-    if (sessionStatus === "authenticated") {
-      if (session?.registrationStatus === "COMPLETE") {
-        router.push("/");
-      }
-
-      if (session?.registrationStatus === "INITIAL") {
-        router.push("/dashboard/user/complete-profile");
-      }
-    }
-  }, [sessionStatus, session]);
 
   const { control, register, handleSubmit } = useForm();
 
@@ -38,11 +22,18 @@ const LoginForm = () => {
         redirect: false,
         email: data?.email,
         password: data?.password,
+        role: mode,
       }),
     onSuccess: (res) => {
       console.log(res);
       if (res?.ok) {
         toast.success("Login successfully");
+
+        if (mode === "company") {
+          router.replace("/business");
+        } else {
+          router.replace("/");
+        }
       }
     },
   });

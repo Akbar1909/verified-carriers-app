@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import JoinForm from "./_components/JoinForm";
 import CompanyInfoForm from "./_components/CompanyInfoForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAppConstants from "@/hooks/helpers/useAppConstants";
 import Show from "@/components/Show";
 import { motion } from "motion/react";
@@ -15,9 +15,15 @@ import { FormProvider, useForm } from "react-hook-form";
 import { array, object } from "yup";
 import useAppValidations from "@/hooks/helpers/useAppValidations";
 import { yupResolver } from "@hookform/resolvers/yup";
+import useGetCurrentCompany from "@/hooks/endpoints/companies/useGetCurrentCompany";
+import { returnArray } from "@/utils/common";
+import useAppMutation from "@/hooks/helpers/useAppMutation";
+import { request } from "@/services/request";
+import toast from "react-hot-toast";
 
 const CompleteSignUpPage = () => {
   const [step, setStep] = useState(0);
+  const { company } = useGetCurrentCompany();
 
   const { containerVariants } = useAppConstants();
   const {
@@ -26,6 +32,14 @@ const CompleteSignUpPage = () => {
     getSelectValidation,
     getFilesValidation,
   } = useAppValidations();
+
+  const { mutate, isPending } = useAppMutation({
+    mutationFn: (body) => request.patch("/companies/complete-profile", body),
+    mutationKey: ["company-complete-profile"],
+    onSuccess: () => {
+      toast.success("Company has been created successfully");
+    },
+  });
 
   const generalValidationSchema = object().shape({
     firstName: getStringValidation(),
@@ -58,41 +72,50 @@ const CompleteSignUpPage = () => {
     aboutCompany: getStringValidation(),
   });
 
-  const contactValidationSchema=object().shape({
-    contactInformation:array().of(
+  const contactValidationSchema = object().shape({
+    contactInformation: array().of(
       object().shape({
-        phone:getStringValidation(),
-        email:getEmailValidation(),
-        address:getStringValidation()
+        phone: getStringValidation(),
+        email: getEmailValidation(),
+        address: getStringValidation(),
       })
-    )
-  })
+    ),
+  });
 
   const generalMethods = useForm({
-    // resolver: yupResolver(generalValidationSchema),
+    resolver: yupResolver(generalValidationSchema),
   });
+
+  useEffect(() => {
+    generalMethods.setValue("workEmail", company?.workEmail);
+  }, [generalMethods, company]);
+
 
   const infoMethods = useForm({
-    // resolver:yupResolver(infoValidationSchema)
+    resolver: yupResolver(infoValidationSchema),
   });
 
+  useEffect(() => {
+    infoMethods.setValue("name", company?.name);
+  }, [infoMethods, company]);
+
   const aboutMethods = useForm({
-    // resolver:yupResolver(aboutValidationSchema)
+    resolver: yupResolver(aboutValidationSchema),
   });
 
   const servicesMethods = useForm({
     defaultValues: {
       services: [{}],
     },
-    // resolver:yupResolver(servicesValidationSchema)
+    resolver: yupResolver(servicesValidationSchema),
   });
 
-  const contactMethods=useForm({
-    defaultValues:{
-      contactInformation:[{}]
+  const contactMethods = useForm({
+    defaultValues: {
+      contactInformation: [{}],
     },
-    resolver:yupResolver(contactValidationSchema)
-  })
+    resolver: yupResolver(contactValidationSchema),
+  });
 
   const nextStep = async (nextStep?: number) => {
     if (step === 0) {
@@ -129,6 +152,45 @@ const CompleteSignUpPage = () => {
       if (!isValid) {
         return;
       }
+
+      const generalValues = generalMethods.getValues();
+      const infoValues = infoMethods.getValues();
+      const aboutValues = aboutMethods.getValues();
+      const servicesValues = servicesMethods.getValues();
+      const contactValues = contactMethods.getValues();
+
+      const body = {
+        website: infoValues.website,
+        mcNumber: infoValues.mcNumber,
+        usdotNumber: infoValues.usdotNumber,
+        contactPhone: infoValues.contactPhone,
+        salesEmail: infoValues.salesEmail,
+        foundingYear: infoValues.foundingYear?.value,
+        totalEmployees: infoValues.totalEmployees?.value,
+        logoFileIds: returnArray(infoValues.companyLogos).map(
+          (item) => item.id
+        ),
+        firstName: generalValues?.firstName,
+        lastName: generalValues?.lastName,
+        workEmail: generalValues?.workEmail,
+        aboutCompany: aboutValues?.aboutCompany,
+        services: returnArray(servicesValues?.services).map((service) => ({
+          serviceName: service?.serviceName?.value,
+          description: service?.description,
+        })),
+        contactInformation: returnArray(contactValues?.contactInformation).map(
+          (item) => ({
+            officeAddress: item?.address,
+            email: item?.email,
+            phone: item?.phone,
+            contactType: "DISPATCH",
+          })
+        ),
+      };
+
+      mutate(body);
+
+      return;
     }
 
     setStep(nextStep ?? step + 1);
@@ -137,6 +199,7 @@ const CompleteSignUpPage = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="w-full h-24 bg-white">
+        <Link href='/business'>
         <Image
           alt="Verified carriers logo"
           width={116}
@@ -144,6 +207,7 @@ const CompleteSignUpPage = () => {
           src="/images/main-logo.png"
           className="absolute top-8 left-8"
         />
+        </Link>
       </header>
 
       <div className="flex-1 flex items-center justify-center">
@@ -266,7 +330,7 @@ const CompleteSignUpPage = () => {
               </div>
             </div>
             <FormProvider {...contactMethods}>
-               <ContactForm nextStep={nextStep} />
+              <ContactForm nextStep={nextStep} isPending={isPending} />
             </FormProvider>
           </motion.div>
         </Show>

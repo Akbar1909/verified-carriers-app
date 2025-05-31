@@ -5,10 +5,10 @@ const Partners = () => {
   return (
     <div className="bg-gray-50 py-24">
       <Container>
-        <h2 className="text-d-lg-semibold text-gray-900 mb-16 text-center">
+        <h2 className="text-d-sm-bold lg:text-d-lg-semibold text-gray-900 mb-16 text-center">
           Our key partners
         </h2>
-        <div className='grid grid-cols-8 gap-x-8 gap-y-8'>
+        <div className='grid grid-cols-4 gap-x-4 gap-y-4 lg:grid-cols-8 lg:gap-x-8 lg:gap-y-8'>
           {[
             { url: "/images/notion.png" },
             { url: "/images/slack.png" },

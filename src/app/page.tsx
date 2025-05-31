@@ -20,7 +20,7 @@ const HomePage = () => {
         <Image
           alt=""
           src={"/images/comment-1.png"}
-          className="absolute bottom-6.5 left-0"
+          className="absolute bottom-6.5 left-0 hidden lg:block"
           width={315}
           height={258}
           objectFit="contain"
@@ -28,20 +28,20 @@ const HomePage = () => {
         <Image
           alt=""
           src={"/images/comment-2.png"}
-          className="absolute top-1/2 right-0 -translate-y-1/2"
+          className="absolute top-1/2 right-0 -translate-y-1/2 hidden lg:block"
           width={315}
           height={258}
           objectFit="contain"
         />
         <Container maxWidth="lg">
-          <div className="flex items-center flex-col gap-8">
-            <h1 className="text-d-lg-semibold  text-gray-900 text-center">
+          <div className="flex items-center flex-col gap-8 w-full lg:w-auto">
+            <h1 className="text-d-md-semibold lg:text-d-lg-semibold  text-gray-900 text-center">
               Ship Smarter, Faster,and <br /> Confidence with Verified Carriers.
             </h1>
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 w-full lg:w-auto">
               <TextField
-                className="w-160 h-12"
+                className="w-full max-w-160 lg:w-160 h-12"
                 startIcon={<SearchIcon />}
                 placeholder="Find a trusted company"
               />

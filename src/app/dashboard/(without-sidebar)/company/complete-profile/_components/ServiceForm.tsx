@@ -5,7 +5,6 @@ import Textarea from "@/components/Textarea";
 import {
   Controller,
   useFieldArray,
-  useForm,
   useFormContext,
 } from "react-hook-form";
 
@@ -41,8 +40,8 @@ const ServiceForm = ({ nextStep }: ServiceFormProps) => {
                 <Select
                   options={[
                     {
-                      label: "1",
-                      value: "1",
+                      label: "FULL_TRUCKLOAD",
+                      value: "FULL_TRUCKLOAD",
                     },
                   ]}
                   helperText={errors?.services?.[index]?.serviceName?.message}

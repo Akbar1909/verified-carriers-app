@@ -1,5 +1,8 @@
-import Container from "@/components/Container";
+"use client";
 import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { Autoplay } from "swiper/modules";
 
 const Partners = () => {
   const partners = [
@@ -22,13 +25,37 @@ const Partners = () => {
 
   return (
     <div className="bg-gray-50 py-16">
-      <Container className='grid grid-cols-5 justify-between'>
-        {partners.map(({ src }, i) => (
-          <div className='relative h-12'>
-             <Image objectFit='contain' fill className='absolute' src={src} alt="company logo" />
-          </div>
+      <Swiper
+        breakpoints={{
+          0: {
+            slidesPerView: "auto",
+          },
+          1024: {
+            slidesPerView: 5,
+          },
+        }}
+        slidesPerView="auto"
+        spaceBetween={4}
+        className="w-full"
+        loop
+        modules={[Autoplay]}
+        speed={5000}
+      >
+        {partners.map((partner, i) => (
+          <SwiperSlide key={i} className="w-fit">
+            <div className="relative h-12">
+              <Image
+                objectFit="contain"
+                fill
+                className="absolute"
+                src={partner.src}
+                alt="company logo"
+              />
+            </div>
+          </SwiperSlide>
         ))}
-      </Container>
+      </Swiper>
+    
     </div>
   );
 };

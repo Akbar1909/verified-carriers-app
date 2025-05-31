@@ -35,16 +35,25 @@ const Trust = () => {
   return (
     <div className="bg-white py-24">
       <Container>
-        <h2 className="text-gray-900 text-d-lg-semibold mb-5">
+        <h2 className="text-gray-900 hidden lg:block lg:text-d-lg-semibold mb-5">
           Learn about <br /> transparency and trust
         </h2>
 
-        <p className="text-xl text-gray-500">
+        <p className="hidden lg:block lg:text-xl text-gray-500">
           Join our community-driven platform revolutionizing transportation{" "}
           <br /> reviews. At Verified Carriers, we're changing the game.
         </p>
 
-        <div className="grid grid-cols-2 gap-x-8 gap-y-8 mt-16">
+        <h2 className="text-gray-900 text-center text-d-xs-semibold block lg:hidden mb-5">
+          Learn about transparency and trust
+        </h2>
+
+        <p className="text-md block text-center lg:hidden text-gray-500">
+          Join our community-driven platform revolutionizing transportation{" "}
+           reviews. At Verified Carriers, we're changing the game.
+        </p>
+
+        <div className="grid grid-cols-1 gap-y-6 lg:grid-cols-2 lg:gap-x-8 lg:gap-y-8 mt-12 lg:mt-16">
           {services.map(({ icon, link, description, title }, i) => (
             <div className="flex flex-col bg-gray-50 border border-gray-300 rounded-lg p-6" key={i}>
               <Button color='secondary-gray' iconButton className="mb-8">{icon}</Button>

@@ -36,14 +36,14 @@ const Insights = () => {
   return (
     <div className="py-24 bg-white">
       <Container>
-        <h2 className="text-d-lg-semibold text-gray-900 mb-16">
+        <h2 className="text-d-xs-semibold text-center lg:text-start lg:text-d-lg-semibold text-gray-900 mb-16">
           Get more insights
         </h2>
 
-        <div className="flex items-center gap-8">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-8">
           {articles.map(({ url, tag, minutes, title, description }, i) => (
             <article key={i}>
-              <div className="relative rounded-lg overflow-hidden w-[384px] h-60 mb-8">
+              <div className="relative rounded-lg overflow-hidden w-auto max-w-[384px] lg:w-[384px] h-60 mb-8">
                 <Image
                   className="absolute"
                   src={url}

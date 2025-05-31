@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode, CSSProperties } from 'react';
 
 /**
  * Size options for the container's maximum width
@@ -21,7 +21,7 @@ interface ContainerProps {
   className?: string;
   customWidth?: string;
   fluid?: boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
 /**

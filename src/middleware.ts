@@ -1,7 +1,7 @@
 import {chain} from './middlewares/chain';
 import {authMiddleware} from './middlewares/authMiddleware';
 
-export default chain([]);
+export default chain([authMiddleware]);
 
 export const config = {
   // Skip all paths that should not be internationalized. This example skips

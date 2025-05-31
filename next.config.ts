@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
       {
         protocol:'https',
         hostname:'t3.ftcdn.net'
+      },
+      {
+        protocol:'http',
+        hostname:'localhost'
       }
     ]
   },

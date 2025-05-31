@@ -7,11 +7,17 @@ import Container from "@/components/Container";
 import Logo from "@/components/Logo";
 import useAppNavigation from "@/hooks/helpers/useAppNavigation";
 import { twMerge } from "tailwind-merge";
+import { useSession } from "next-auth/react";
+import Show from "@/components/Show";
+import useTabletOrMobile from "@/hooks/helpers/useTabletOrMobile";
+import MobileHeader from "./MobileHeader";
+
 
 const Header = () => {
+  const { status } = useSession();
   const { pathname } = useAppNavigation();
+  const {isTabletOrMobile} = useTabletOrMobile()
 
-  console.log({ pathname });
 
   return (
     <header
@@ -21,6 +27,11 @@ const Header = () => {
       )}
     >
       <Container className="flex items-center gap-10">
+        <Show when={isTabletOrMobile}>
+            <MobileHeader/>
+        </Show>
+        <Show when={!isTabletOrMobile}>
+        <>
         <Logo />
         <TextField
           placeholder="Company name"
@@ -49,7 +60,6 @@ const Header = () => {
               </Link>
             </li>
             <li className="px-3 py-2.5">
-              {" "}
               <Link
                 href="#"
                 className="text-md-medium text-gray-500 hover:text-gray-600"
@@ -58,7 +68,6 @@ const Header = () => {
               </Link>
             </li>
             <li className="px-3 py-2.5">
-              {" "}
               <Link
                 href="business"
                 className="text-md-medium text-gray-500 hover:text-gray-600"
@@ -66,39 +75,44 @@ const Header = () => {
                 For business
               </Link>
             </li>
-            <li className="px-3 py-2.5">
-              {" "}
-              <Link
-                href={
-                  pathname === "/business"
-                    ? "/auth/login?mode=company"
-                    : "/auth/login?mode=user"
-                }
-                className="text-md-medium text-gray-500 hover:text-gray-600"
-              >
-                Log in
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={
-                  pathname === "/business"
-                    ? "/auth/sign-up?mode=company"
-                    : "/auth/sign-up?mode=user"
-                }
-              >
-                <Button
-                  size="lg"
-                  startIcon={<CornerUpRightIcon />}
-                  color="secondary-gray"
-                  className="rounded-[999px]"
+            <Show when={status === "unauthenticated"}>
+              <li className="px-3 py-2.5">
+                <Link
+                  href={
+                    pathname === "/business"
+                      ? "/auth/login?mode=company"
+                      : "/auth/login?mode=user"
+                  }
+                  className="text-md-medium text-gray-500 hover:text-gray-600"
                 >
-                  Sign up
-                </Button>
-              </Link>
-            </li>
+                  Log in
+                </Link>
+              </li>
+            </Show>
+            <Show when={status === "unauthenticated"}>
+              <li>
+                <Link
+                  href={
+                    pathname === "/business"
+                      ? "/auth/sign-up?mode=company"
+                      : "/auth/sign-up?mode=user"
+                  }
+                >
+                  <Button
+                    size="lg"
+                    startIcon={<CornerUpRightIcon />}
+                    color="secondary-gray"
+                    className="rounded-[999px]"
+                  >
+                    Sign up
+                  </Button>
+                </Link>
+              </li>
+            </Show>
           </ul>
         </nav>
+        </>
+        </Show>
       </Container>
     </header>
   );

@@ -12,7 +12,7 @@ interface AvatarProps extends ComponentPropsWithoutRef<"div"> {
 
 const Avatar = ({
   className,
-  size,
+  size='md',
   url,
   imageProps,
   ...computedProps
@@ -28,12 +28,23 @@ const Avatar = ({
 
   return (
     <div
-      className={twMerge("rounded-full overflow-hidden relative", sizesStyles[size], className)}
+      className={twMerge(
+        "rounded-full overflow-hidden relative",
+        sizesStyles[size],
+        className
+      )}
       {...computedProps}
     >
-      {url && <Image className='absolute' fill objectFit='cover' src={url} alt="" {...imageProps} />}
-
-    
+      {url && (
+        <Image
+          className="absolute"
+          fill
+          objectFit="cover"
+          src={url}
+          alt=""
+          {...imageProps}
+        />
+      )}
     </div>
   );
 };

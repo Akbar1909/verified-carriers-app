@@ -4,19 +4,19 @@ import Collapse from "@/components/Collapse";
 import CompanyView from "@/components/CompanyView";
 import Container from "@/components/Container";
 import { CloseIcon, XIcon } from "@/components/SvgIcons";
+import useGetCompanies from "@/hooks/endpoints/companies/useGetCompanies";
 import React, { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 
 const CompanyList = () => {
   const scrollableDivRef = useRef<HTMLDivElement>(null);
-  const { ref, inView, entry } = useInView({
+
+  const { companies } = useGetCompanies();
+
+  const { ref } = useInView({
     /* Optional options */
     threshold: 0,
   });
-
-
-
- 
 
   const tags = [
     {
@@ -378,8 +378,8 @@ const CompanyList = () => {
             <div className="py-5" ref={ref}></div>
           </div>
           <div ref={scrollableDivRef} className="flex-1 flex flex-col">
-            {new Array(15).fill({}).map((item, i) => (
-              <CompanyView className="border-r-0 first:border-t-0" key={i} />
+            {companies.map((company, i) => (
+              <CompanyView company={company} className="border-r-0 first:border-t-0" key={i} />
             ))}
           </div>
         </div>

@@ -6,8 +6,9 @@ interface UserLayoutProps {
 }
 
 const UserLayout = ({ children }: UserLayoutProps) => {
- const {isLoading, user} =  useGetMe();
+ useGetMe();
 
+ 
 
 
   return <>{children}</>;

@@ -140,13 +140,15 @@ const CompleteSignUpPage = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="w-full h-24 bg-white">
-        <Image
+       <Link href='/'>
+       <Image
           alt="Verified carriers logo"
           width={116}
           height={32}
           src="/images/main-logo.png"
           className="absolute top-8 left-8"
         />
+         </Link>
       </header>
 
       <div className="flex-1 flex items-center justify-center">
