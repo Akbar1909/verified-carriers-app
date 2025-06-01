@@ -19,7 +19,15 @@ const nextConfig: NextConfig = {
       {
         protocol:'https',
         hostname:'45.153.186.89'
-      }
+      },
+      {
+        protocol:'https',
+        hostname:'verifiedcarriers.com'
+      },
+      {
+        protocol:'http',
+        hostname:'verifiedcarriers.com'
+      },
     ]
   },
   eslint:{
