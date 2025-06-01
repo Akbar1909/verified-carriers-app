@@ -25,7 +25,6 @@ const LoginForm = () => {
         role: mode,
       }),
     onSuccess: (res) => {
-      console.log(res);
       if (res?.ok) {
         toast.success("Login successfully");
 
