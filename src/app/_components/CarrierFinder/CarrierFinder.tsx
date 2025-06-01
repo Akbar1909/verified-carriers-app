@@ -102,7 +102,7 @@ const CarrierFinder = () => {
               </Link>
             </div>
           </div>
-          <div className="col-span-1 lg:col-span-2 relative   border  flex flex-col border-gray-300 rounded-2xl h-95 bg-gradient-to-t from-[#F7F8FA] via-[#F9FAFB] to-[#FAFAFA]">
+          <div className="col-span-1 h-auto lg:col-span-2 relative   border  flex flex-col border-gray-300 rounded-2xl bg-gradient-to-t from-[#F7F8FA] via-[#F9FAFB] to-[#FAFAFA]">
             <div className="flex flex-col p-8">
               <h3 className="text-lg-medium text-gray-900">
                 Discover Top Rated transporters
@@ -184,7 +184,7 @@ const CarrierFinder = () => {
               Discover Companies
             </Button>
           </div>
-          <div className="col-span-1 lg:col-span-4 border relative flex flex-col gap-6.5 border-gray-300 rounded-2xl h-auto lg:h-95 bg-gradient-to-t from-[#F7F8FA] via-[#F9FAFB] to-[#FAFAFA] py-6 pl-4">
+          <div className="col-span-1 lg:col-span-4 border relative flex flex-col gap-6.5 border-gray-300 rounded-2xl h-auto  bg-gradient-to-t from-[#F7F8FA] via-[#F9FAFB] to-[#FAFAFA] py-6 pl-4">
             <div className="pb-6 flex-col gap-2 flex lg:hidden">
               <h2 className="text-gray-900 text-lg-medium">
                 Book your Transport and Leave a Review.
