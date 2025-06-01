@@ -1,15 +1,25 @@
-'use client'
+"use client";
+import { twMerge } from "tailwind-merge";
 import Avatar from "../Avatar/Avatar";
 import Stars from "../Stars";
 import TruncatedText from "../TruncatedText";
 import Link from "next/link";
 
-const ReviewView = () => {
+interface ReviewViewProps {
+  className?: string;
+}
+
+const ReviewView = ({ className }: ReviewViewProps) => {
   return (
-    <article className="border border-gray-200 bg-white min-w-70 w-fit rounded-lg shadow-[0px_1px_2px_rgba(16,24,40,0.06),0px_1px_3px_rgba(16,24,40,0.1)]">
+    <article
+      className={twMerge(
+        "border border-gray-200 bg-white min-w-70 w-fit rounded-lg shadow-[0px_1px_2px_rgba(16,24,40,0.06),0px_1px_3px_rgba(16,24,40,0.1)]",
+        className
+      )}
+    >
       <header className="p-4 flex flex-col gap-3 border-b border-gray-200">
         <div className="flex items-center gap-2">
-          <Link href='/users/2'>
+          <Link href="/users/2">
             <Avatar
               size="sm"
               url="https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg"

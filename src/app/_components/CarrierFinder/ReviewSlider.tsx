@@ -21,7 +21,7 @@ const ReviewSlider = () => {
       modules={[Autoplay, A11y]}
     >
       <SwiperSlide>
-        <ReviewView />
+        <ReviewView/>
       </SwiperSlide>
       <SwiperSlide>
         <ReviewView />

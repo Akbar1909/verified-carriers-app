@@ -102,7 +102,7 @@ const CarrierFinder = () => {
               </Link>
             </div>
           </div>
-          <div className="col-span-1 h-auto lg:col-span-2 relative   border  flex flex-col border-gray-300 rounded-2xl bg-gradient-to-t from-[#F7F8FA] via-[#F9FAFB] to-[#FAFAFA]">
+          <div className="col-span-1 h-auto overflow-hidden lg:overflow-auto lg:col-span-2 relative   border  flex flex-col border-gray-300 rounded-2xl bg-gradient-to-t from-[#F7F8FA] via-[#F9FAFB] to-[#FAFAFA]">
             <div className="flex flex-col p-8">
               <h3 className="text-lg-medium text-gray-900">
                 Discover Top Rated transporters
@@ -123,7 +123,7 @@ const CarrierFinder = () => {
             </div>
 
             <div className="grid grid-cols-3 flex-1">
-              <div className="relative w-25 h-25 left-4.5">
+              <div className="relative w-27.5 h-27.5 left-4.5" style={{aspectRatio:1}}>
                 <Image
                   fill
                   className="absolute"
@@ -131,7 +131,7 @@ const CarrierFinder = () => {
                   src="/images/component-1.png"
                 />
               </div>
-              <div className="relative w-25 h-25 top-6 left-5">
+              <div className="relative w-27.5 h-27.5 top-6 left-5" style={{aspectRatio:1}}>
                 <Image
                   fill
                   className="absolute"
@@ -139,7 +139,7 @@ const CarrierFinder = () => {
                   src="/images/component-3.png"
                 />
               </div>
-              <div className="relative w-25 h-25 -top-2 -right-2">
+              <div className="relative w-27.5 h-27.5 -top-2 -right-2" style={{aspectRatio:1}}>
                 <Image
                   fill
                   className="absolute"
@@ -147,7 +147,7 @@ const CarrierFinder = () => {
                   src="/images/component-5.png"
                 />
               </div>
-              <div className="relative w-25 h-25 left-4.5">
+              <div className="relative w-27.5 h-27.5 left-4.5" style={{aspectRatio:1}}>
                 <Image
                   fill
                   className="absolute"
@@ -155,7 +155,7 @@ const CarrierFinder = () => {
                   src="/images/component-2.png"
                 />
               </div>
-              <div className="relative w-25 h-25 top-6 left-5">
+              <div className="relative w-27.5 h-27.5 top-3 left-5" style={{aspectRatio:1}}>
                 <Image
                   fill
                   className="absolute"
@@ -163,7 +163,7 @@ const CarrierFinder = () => {
                   src="/images/component-4.png"
                 />
               </div>
-              <div className="relative w-25 h-25 -top-2 -right-2">
+              <div className="relative w-27.5 h-27.5 -top-1 -right-2" style={{aspectRatio:1}}>
                 <Image
                   fill
                   className="absolute"
