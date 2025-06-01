@@ -27,7 +27,7 @@ const Filter = ({
 }: FilterProps) => {
   const { searchParams, pushToRouter, createQueryParams } = useAppNavigation();
 
-  const selectedExperience = searchParams.get("experience");
+  const selectedExperience = Number(searchParams.get("experience") ?? 0);
   const serviceIds = jsonParse(searchParams.get("serviceIds")) || [];
 
   const [filterDto, setFilterDto] = useState({
@@ -296,7 +296,7 @@ const Filter = ({
                     if (!withSave) {
                       const params = createQueryParams();
                       params.set("experience", String(value));
-                      pushToRouter(params);
+                      pushToRouter(params, {scroll:false});
                     }
                   }}
                 />
