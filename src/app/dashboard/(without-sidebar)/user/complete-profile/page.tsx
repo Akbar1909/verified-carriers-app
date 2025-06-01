@@ -19,12 +19,13 @@ import { request } from "@/services/request";
 import toast from "react-hot-toast";
 import { returnArray } from "@/utils/common";
 import {omit} from 'lodash';
+import useAppNavigation from "@/hooks/helpers/useAppNavigation";
 
 const CompleteSignUpPage = () => {
   const [step, setStep] = useState(0);
   const { user, isSuccess } = useGetMe();
   const [values, setValues] = useState({});
-
+  const { router }= useAppNavigation()
   const { containerVariants } = useAppConstants();
 
   const {
@@ -40,6 +41,8 @@ const CompleteSignUpPage = () => {
     mutationFn:(data)=>request.patch('/users/complete-profile',data),
     onSuccess:()=>{
       toast.success('Success')
+
+      router.replace('/')
     },
     
   })

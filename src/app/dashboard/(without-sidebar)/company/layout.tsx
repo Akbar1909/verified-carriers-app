@@ -1,4 +1,5 @@
 "use client";
+import Container from "@/components/Container";
 import useGetCurrentCompany from "@/hooks/endpoints/companies/useGetCurrentCompany";
 
 interface CompanyLayoutProps {
@@ -8,7 +9,7 @@ interface CompanyLayoutProps {
 const CompanyLayout = ({ children }: CompanyLayoutProps) => {
   useGetCurrentCompany();
 
-  return <>{children}</>;
+  return <Container>{children}</Container>;
 };
 
 export default CompanyLayout;

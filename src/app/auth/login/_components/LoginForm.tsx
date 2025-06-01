@@ -42,8 +42,8 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={onSubmit} className="w-90">
-      <h1 className="text-d-md-semibold text-gray-900 mb-3">Log in</h1>
-      <p className="text-md text-gray-500">
+      <h1 className="text-d-xs-semibold text-center lg:text-start lg:text-d-md-semibold text-gray-900 mb-3">Log in</h1>
+      <p className="text-center lg:text-start text-md text-gray-500">
         Welcome back! Please enter your details.
       </p>
 

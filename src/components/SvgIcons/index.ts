@@ -46,3 +46,5 @@ export {default as ArrowUpIcon2} from './ArrowUpIcon2';
 export {default as FileUploadDocIcon} from './FileUploadDocIcon';
 export {default as BurgerIcon} from './BurgerIcon';
 export {default as GlobIcon} from './GlobIcon'
+export {default as FilterIcon} from './FilterIcon';
+export {default as CircleCloseIcon} from './CircleCloseIcon';

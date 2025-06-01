@@ -1,4 +1,5 @@
 'use client'
+import Container from "@/components/Container";
 import useGetMe from "@/hooks/endpoints/users/useGetMe";
 
 interface UserLayoutProps {
@@ -11,7 +12,7 @@ const UserLayout = ({ children }: UserLayoutProps) => {
  
 
 
-  return <>{children}</>;
+  return <Container>{children}</Container>;
 };
 
 export default UserLayout;

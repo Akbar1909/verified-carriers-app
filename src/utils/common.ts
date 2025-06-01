@@ -140,3 +140,37 @@ export const generateYearRange = (startYear: number, endYear: number): number[] 
     (_, index) => startYear + index
   );
 };
+
+/**
+ * Safely parses a JSON string into a JavaScript object.
+ *
+ * @param {string} value - The JSON string to be parsed.
+ * @returns {Object|null} - The parsed JavaScript object, or `null` if parsing fails.
+ * @throws {SyntaxError} - If the JSON string is invalid, an error is logged, and `null` is returned.
+ */
+export const jsonParse = (value: string) => {
+  try {
+    return JSON.parse(value);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error parsing JSON:', error);
+    return null;
+  }
+};
+
+/**
+ * Safely converts a JavaScript object or value to a JSON string.
+ *
+ * @param {any} value - The JavaScript value to be stringified (object, array, number, string, etc.).
+ * @returns {string|null} - The JSON string representation of the value, or `null` if stringification fails.
+ * @throws {TypeError} - If the value cannot be converted to JSON, an error is logged, and `null` is returned.
+ */
+export const jsonStringify = (value: any) => {
+  try {
+    return JSON.stringify(value);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error parsing JSON:', error);
+    return null;
+  }
+};

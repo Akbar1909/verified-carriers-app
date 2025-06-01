@@ -27,7 +27,7 @@ const CompanyInfoForm = ({ nextStep }: CompanyInfoFormProps) => {
   const onSubmit = handleSubmit((values) => nextStep());
 
   return (
-    <form onSubmit={onSubmit} className="grid grid-cols-2 gap-x-5 gap-y-5">
+    <form onSubmit={onSubmit} className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-x-5 gap-y-5">
       <TextField
         {...register("name")}
         label="Company name"
@@ -127,7 +127,7 @@ const CompanyInfoForm = ({ nextStep }: CompanyInfoFormProps) => {
         trigger={trigger}
         helperText={errors?.companyLogos?.message}
         hasError={Boolean(errors?.companyLogos?.message)}
-        rootClassName="col-span-2"
+        rootClassName="lg:col-span-2"
       />
 
       <Button fullWidth className="col-span-2 mt-1" size="lg">

@@ -20,10 +20,12 @@ import { returnArray } from "@/utils/common";
 import useAppMutation from "@/hooks/helpers/useAppMutation";
 import { request } from "@/services/request";
 import toast from "react-hot-toast";
+import useAppNavigation from "@/hooks/helpers/useAppNavigation";
 
 const CompleteSignUpPage = () => {
   const [step, setStep] = useState(0);
   const { company } = useGetCurrentCompany();
+  const {router} = useAppNavigation()
 
   const { containerVariants } = useAppConstants();
   const {
@@ -38,6 +40,8 @@ const CompleteSignUpPage = () => {
     mutationKey: ["company-complete-profile"],
     onSuccess: () => {
       toast.success("Company has been created successfully");
+
+      router.replace('/business')
     },
   });
 
@@ -175,7 +179,7 @@ const CompleteSignUpPage = () => {
         workEmail: generalValues?.workEmail,
         aboutCompany: aboutValues?.aboutCompany,
         services: returnArray(servicesValues?.services).map((service) => ({
-          serviceName: service?.serviceName?.value,
+          serviceId: service?.serviceName?.value,
           description: service?.description,
         })),
         contactInformation: returnArray(contactValues?.contactInformation).map(
@@ -198,23 +202,23 @@ const CompleteSignUpPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="w-full h-24 bg-white">
+      <header className="w-full h-24 flex items-center justify-center bg-white">
         <Link href='/business'>
         <Image
           alt="Verified carriers logo"
           width={116}
           height={32}
           src="/images/main-logo.png"
-          className="absolute top-8 left-8"
+          className="lg:absolute lg:top-8 lg:left-8"
         />
         </Link>
       </header>
 
       <div className="flex-1 flex items-center justify-center">
         <Show when={step === 0}>
-          <div className="w-105 m-auto">
+          <div className="w-full max-w-105 lg:w-105 lg:m-auto">
             <div className="flex flex-col gap-3 mb-8">
-              <h1 className="text-center text-d-sm-semibold text-gray-900">
+              <h1 className="text-center text-d-xs-medium lg:text-d-sm-semibold text-gray-900">
                 Join Verified Carriers
               </h1>
               <div className="flex items-center justify-center gap-1">
@@ -242,10 +246,10 @@ const CompleteSignUpPage = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="w-180 m-auto"
+            className="w-full lg:w-180 m-auto"
           >
             <div className="flex flex-col gap-3 mb-8">
-              <h1 className="text-center text-d-sm-semibold text-gray-900">
+              <h1 className="text-center text-d-xs-medium lg:text-d-sm-semibold text-gray-900">
                 Add Company Information
               </h1>
               <div className="flex items-center justify-center gap-1">

@@ -2,6 +2,7 @@ import Button from "@/components/Button";
 import Select from "@/components/Select";
 import { PlusIcon, Trash2Icon } from "@/components/SvgIcons";
 import Textarea from "@/components/Textarea";
+import useGetServices from "@/hooks/endpoints/services/useGetServices";
 import {
   Controller,
   useFieldArray,
@@ -13,6 +14,9 @@ interface ServiceFormProps {
 }
 
 const ServiceForm = ({ nextStep }: ServiceFormProps) => {
+
+  const {isLoading:servicesLoading, options:serviceOptions} = useGetServices()
+
   const {
     handleSubmit,
     formState: { errors },
@@ -38,12 +42,8 @@ const ServiceForm = ({ nextStep }: ServiceFormProps) => {
               name={`services.${index}.serviceName`}
               render={({ field }) => (
                 <Select
-                  options={[
-                    {
-                      label: "FULL_TRUCKLOAD",
-                      value: "FULL_TRUCKLOAD",
-                    },
-                  ]}
+                  isLoading={servicesLoading}
+                  options={serviceOptions}
                   helperText={errors?.services?.[index]?.serviceName?.message}
                   hasError={Boolean(
                     errors?.services?.[index]?.serviceName?.message

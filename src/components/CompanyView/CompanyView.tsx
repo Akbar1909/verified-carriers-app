@@ -3,6 +3,7 @@ import StarRating from "@/components/Stars";
 import {
   ArrowUpRightIcon,
   BookmarkIcon,
+  CircleCloseIcon,
   GlobIcon,
   VerifiedIcon,
 } from "@/components/SvgIcons";
@@ -22,8 +23,7 @@ interface CompanyViewProps {
 
 const CompanyView = ({ className, saved, company = {} }: CompanyViewProps) => {
   const companyLogo = returnArray(company.companyLogos).at(0);
-  const {isTabletOrMobile} = useTabletOrMobile()
-
+  const { isTabletOrMobile } = useTabletOrMobile();
 
   return (
     <div
@@ -35,11 +35,11 @@ const CompanyView = ({ className, saved, company = {} }: CompanyViewProps) => {
       <div className="flex gap-4">
         <Avatar
           url={`${process?.env?.NEXT_PUBLIC_API_URL}/files/download/${companyLogo?.file?.id}`}
-          className="w-18 h-18 rounded-lg"
+          className="w-12 h-12 lg:w-18 lg:h-18 rounded-lg"
           size="2xl"
         />
 
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex flex-col gap-1.5 lg:gap-2 w-full">
           <div className="flex items-center justify-between w-full">
             <h3 className="text-lg-semibold text-gray-900">{company.name}</h3>
 
@@ -54,10 +54,12 @@ const CompanyView = ({ className, saved, company = {} }: CompanyViewProps) => {
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <div className="px-3.5 py-1 text-orange-700 text-sm-medium bg-orange-50 rounded-sm">
-              Top Rated
-            </div>
+          <div className="lg:flex hidden items-center gap-2">
+            <Show when={true}>
+              <div className="px-3.5 py-1 text-orange-700 text-sm-medium bg-orange-50 rounded-sm">
+                Top Rated
+              </div>
+            </Show>
             <Show when={company.isVerified}>
               <div className="flex items-center gap-0.5">
                 <VerifiedIcon />
@@ -66,8 +68,40 @@ const CompanyView = ({ className, saved, company = {} }: CompanyViewProps) => {
                 </span>
               </div>
             </Show>
+            <Show when={!company.isVerified}>
+              <div className="flex items-center gap-0.5">
+                <CircleCloseIcon />
+                <span className="text-sm-medium text-gray-500">
+                  Unverified company
+                </span>
+              </div>
+            </Show>
           </div>
         </div>
+      </div>
+
+      <div className="flex lg:hidden items-center gap-2">
+        <Show when={true}>
+          <div className="px-3.5 py-1 text-orange-700 text-sm-medium bg-orange-50 rounded-sm">
+            Top Rated
+          </div>
+        </Show>
+        <Show when={company.isVerified}>
+          <div className="flex items-center gap-0.5">
+            <VerifiedIcon />
+            <span className="text-sm-medium text-gray-500">
+              Verified company
+            </span>
+          </div>
+        </Show>
+        <Show when={!company.isVerified}>
+          <div className="flex items-center gap-0.5">
+            <CircleCloseIcon />
+            <span className="text-sm-medium text-gray-500">
+              Unverified company
+            </span>
+          </div>
+        </Show>
       </div>
 
       <div dangerouslySetInnerHTML={{ __html: company?.aboutCompany }}></div>
@@ -87,15 +121,26 @@ const CompanyView = ({ className, saved, company = {} }: CompanyViewProps) => {
               className="bg-gray-100 py-0.5 px-2 text-xs-medium rounded-xl"
               key={i}
             >
-              {service?.serviceName}
+              {service?.service?.serviceLabel}
             </div>
           ))}
         </div>
       </div>
       <hr className="text-gray-200 block lg:hidden" />
       <div className="flex lg:hidden w-full items-center justify-between gap-4">
-          <Button className="flex-1" endIcon={<GlobIcon/>} color='secondary-gray'>Visit website</Button>
-          <Button className="flex-1" endIcon={<ArrowUpRightIcon className="[&_path]:stroke-white" />}>View profile</Button>
+        <Button
+          className="flex-1"
+          endIcon={<GlobIcon />}
+          color="secondary-gray"
+        >
+          Visit website
+        </Button>
+        <Button
+          className="flex-1"
+          endIcon={<ArrowUpRightIcon className="[&_path]:stroke-white" />}
+        >
+          View profile
+        </Button>
       </div>
     </div>
   );

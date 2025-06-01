@@ -54,7 +54,6 @@ const FileUploader = ({
 
           const currentIndex = Object.keys(files).length - 1;
 
-          console.log({percent})
 
           setFiles((prev) => ({
             ...prev,
@@ -88,11 +87,9 @@ const FileUploader = ({
       setFiles(updatedFiles);
     },
     onError: (e) => {
-      console.log(e);
     },
   });
 
-  console.log(files)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -126,7 +123,6 @@ const FileUploader = ({
 
   const filesList=Object.values(files);
 
-  console.log(files);
   return (
     <section
       role="region"
