@@ -48,3 +48,17 @@ export {default as BurgerIcon} from './BurgerIcon';
 export {default as GlobIcon} from './GlobIcon'
 export {default as FilterIcon} from './FilterIcon';
 export {default as CircleCloseIcon} from './CircleCloseIcon';
+export {default as InboxIcon} from './InboxIcon';
+export {default as HomeIcon} from './HomeIcon';
+export {default as SettingsIcon} from './SettingsIcon';
+export {default as AnalyticsIcon} from './AnalyticsIcon';
+export {default as StarIcon} from './StarIcon';
+export {default as OrdersIcon} from './OrdersIcon';
+export {default as TransactionIcon} from './TransactionIcon';
+export {default as FolderIcon} from './FolderIcon';
+export { default as UserIcon } from './UserIcon';
+export { default as BroadcastIcon } from './BroadcastIcon';
+export {default as DocPlusIcon} from './DocPlusIcon'
+export {default as ReportsIcon} from './ReportsIcon'
+export {default as EmployeeIcon} from './EmployeeIcon'
+export {default as MoreVerticalIcon} from './MoreVerticalIcon'

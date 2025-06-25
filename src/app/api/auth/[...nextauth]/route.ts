@@ -9,14 +9,18 @@ const authOptions: AuthOptions = {
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "text" },
-        role:{label:'Mode', type:'text'}
+        role: { label: "Mode", type: "text" },
       },
       async authorize(credentials) {
         const { email, password, role } = credentials;
         try {
           // Make a request to your standalone backend API
           const response = await fetch(
-          role === 'user'?   `${process.env.NEXT_PUBLIC_API_URL}/auth/login`:`${process.env.NEXT_PUBLIC_API_URL}/auth/company/login`,
+            role === "user"
+              ? `${process.env.NEXT_PUBLIC_API_URL}/auth/login`
+              : role === "moderator"
+              ? `${process.env.NEXT_PUBLIC_API_URL}/auth/moderator/login`
+              : `${process.env.NEXT_PUBLIC_API_URL}/auth/company/login`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -33,10 +37,10 @@ const authOptions: AuthOptions = {
             throw new Error(data.message || "Authentication failed");
           }
 
-
           // Return the user object with role to be saved in the JWT
           return {
             token: data?.token,
+            ...data?.moderator,
             ...data?.company,
             ...data?.user, // Assuming your API returns a 'user' object
             role, // Add the role
@@ -56,22 +60,19 @@ const authOptions: AuthOptions = {
         token.id = user.id;
         token.token = user?.token;
         token.email = user.email;
-        token.registrationStatus=user.registrationStatus
+        token.registrationStatus = user.registrationStatus;
         // Add any other user/company data you need
       }
       return token;
     },
     async session({ session, token }) {
-
-
       // Make sure EVERY property is explicitly copied
 
       session.id = token.id;
       session.role = token.role;
       session.token = token.token;
       session.email = token.email;
-      session.registrationStatus=token.registrationStatus
-
+      session.registrationStatus = token.registrationStatus;
 
       return session;
     },

@@ -28,6 +28,11 @@ const LoginForm = () => {
       if (res?.ok) {
         toast.success("Login successfully");
 
+        if(mode === "moderator") {
+          router.replace("/dashboard/home");
+          return;
+        }
+
         if (mode === "company") {
           router.replace("/business");
         } else {

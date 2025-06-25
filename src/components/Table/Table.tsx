@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect } from "react";
 import {
   ColumnDef,
   flexRender,
@@ -18,6 +18,7 @@ export type DataTableProps<TData extends object> = {
   pageCount: number;
   totalCount: number;
   prefix?: string;
+  variant?: "variant1" | "variant2";
 };
 
 const getCommonPinningStyles = (column: any): React.CSSProperties => {
@@ -40,7 +41,6 @@ const getCommonPinningStyles = (column: any): React.CSSProperties => {
     width: column.getSize(),
     minWidth: column.getSize(), // Avoid shrinking columns
     zIndex: isPinned ? 2 : 0,
-    background: "white",
   };
 };
 
@@ -50,6 +50,7 @@ function DataTable<TData extends object>({
   pageCount,
   totalCount,
   prefix,
+  variant = "variant1",
 }: DataTableProps<TData>) {
   const { createQueryParams, pushToRouter } = useAppNavigation();
   const { computedPrefix, preparedPage, pageKey } = usePagination({ prefix });
@@ -63,7 +64,7 @@ function DataTable<TData extends object>({
   });
 
   // Pin the last column (actions) to the right
-  React.useEffect(() => {
+  useEffect(() => {
     const lastColumn = table.getAllLeafColumns().at(-1);
     if (lastColumn) {
       lastColumn.pin("right");
@@ -71,7 +72,13 @@ function DataTable<TData extends object>({
   }, [table]);
 
   return (
-    <div className="shadow-[0_2px_4px_-2px_rgba(16,24,40,0.06),_0_4px_8px_-2px_rgba(16,24,40,0.1)] border border-gray-200">
+    <div
+      className={twMerge(
+        variant === "variant1" && "border border-gray-200",
+        variant === "variant1" &&
+          "shadow-[0_2px_4px_-2px_rgba(16,24,40,0.06),_0_4px_8px_-2px_rgba(16,24,40,0.1)]"
+      )}
+    >
       <div className="overflow-x-auto relative   w-full min-w-full ">
         {" "}
         {/* Added min-w-full */}
@@ -88,7 +95,12 @@ function DataTable<TData extends object>({
                         key={header.id}
                         colSpan={header.colSpan}
                         className={twMerge(
-                          "px-6 py-4 text-left font-medium text-gray-700 border-b border-gray-200 bg-white"
+                          "px-6 py-4 text-left font-medium text-gray-700 border-b border-gray-200 bg-white",
+                          variant === 'variant2' && 'py-2.5 text-stone-500 text-xs-semibold h-9',
+                          variant === "variant2" &&
+                            "!bg-stone-100 border-y !border-stone-200",
+                          variant === "variant2" &&
+                            "first:rounded-tl-lg first:border-l last:border-r first:rounded-bl-lg last:rounded-br-lg"
                         )}
                         style={getCommonPinningStyles(column)}
                       >
@@ -163,7 +175,7 @@ function DataTable<TData extends object>({
 
             params.set(
               pageKey,
-              String(nextPage >= pageCount ? pageCount-1 : nextPage)
+              String(nextPage >= pageCount ? pageCount - 1 : nextPage)
             );
 
             pushToRouter(params, { scroll: false });
