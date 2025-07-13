@@ -2,14 +2,25 @@ import { CheckCircleIcon } from "@/components/SvgIcons";
 import React from "react";
 import Features from "./Features";
 import CompanyShortView from "@/components/CompanyShortView";
+import useAppNavigation from "@/hooks/helpers/useAppNavigation";
+import useGetCompanyById from "@/hooks/endpoints/companies/useGetCompanyById";
+import { returnArray } from "@/utils/common";
 
 const ServicesTab = () => {
+
+  const {params } = useAppNavigation()
+  const {companyId} = params;
+
+  const {company} = useGetCompanyById(companyId)
+
+  const services=returnArray(company.services)
+
   return (
     <section>
       <h2 className="text-xl-medium text-gray-900 mb-4">Services</h2>
 
       <div className="grid grid-cols-3 gap-x-4 gap-y-4 mb-6">
-        {new Array(7).fill({}).map((_, i) => (
+        {services.map(({description, ...rest}, i) => (
           <article
             key={i}
             className="w-full rounded-lg p-6 bg-white shadow-[0px_1px_2px_0px_rgba(16,16,40,0.06),0px_1px_3px_0px_rgba(16,16,40,0.1)]"
@@ -19,9 +30,9 @@ const ServicesTab = () => {
 
              
             </span>
-            <h3 className="mb-2 text-lg-medium text-gray-900">Transparent pricing and reviews</h3>
+            <h3 className="mb-2 text-lg-medium text-gray-900">{rest?.service?.serviceLabel}</h3>
               <p className='text-md text-gray-700'> 
-              Get access to genuine reviews and ratings from real customers. Make decisions based on the experience of other platform members.
+              {description}
               </p>
           </article>
         ))}

@@ -1,10 +1,14 @@
 import SelectionOption from "@/components/SelectionOption";
+import useAppNavigation from "@/hooks/helpers/useAppNavigation";
 import {  useFormContext } from "react-hook-form";
 
 const PickCategory = () => {
+  const {searchParams, createQueryParams, pushToRouter} = useAppNavigation()
   const { handleSubmit, setValue, watch } = useFormContext();
 
   const onSubmit = handleSubmit((values) => {});
+
+  
 
   const categories = [
     {
@@ -41,7 +45,7 @@ const PickCategory = () => {
 
       <form
         onSubmit={onSubmit}
-        className="grid grid-cols-2 gap-y-2.5 gap-x-3 w-fit ml-auto"
+        className="grid w-full grid-cols-1 lg:grid-cols-2 gap-y-2.5 gap-x-3 lg:w-fit lg:ml-auto"
       >
         {categories.map(({ label, value }, i) => (
           <SelectionOption
@@ -49,7 +53,14 @@ const PickCategory = () => {
             label={label}
             value={value}
             name="category"
-            onChange={setValue}
+            className="w-full lg:w-[306px]"
+            onChange={(name,value)=>{
+              setValue(name,value);
+
+              const params=createQueryParams();
+              params.set(name, value);
+              pushToRouter(params);
+            }}
             isSelected={value === category}
           />
         ))}

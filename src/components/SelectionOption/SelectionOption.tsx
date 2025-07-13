@@ -7,6 +7,7 @@ interface SelectionOptionProps {
   label: string;
   isSelected?: boolean;
   onChange:(name:string, value:string)=>void;
+  className?:string;
 }
 
 const SelectionOption = ({
@@ -14,13 +15,15 @@ const SelectionOption = ({
   isSelected = false,
   label,
   value,
-  onChange
+  onChange,
+  className
 }: SelectionOptionProps) => {
   return (
     <div
       className={twMerge(
         "border group border-gray-200 hover:border-gray-400 rounded-lg group cursor-pointer bg-white p-4 w-[306px]",
-        isSelected && "bg-gray-50"
+        isSelected && "bg-gray-50",
+        className
       )}
       onClick={()=>onChange(name,value)}
     >

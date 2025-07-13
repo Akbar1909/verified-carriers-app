@@ -6,7 +6,7 @@ import Show from "@/components/Show";
 import useAppNavigation from "@/hooks/helpers/useAppNavigation";
 import PickCategory from "./_components/PickCategory";
 import Button from "@/components/Button";
-import {  ArrowUpIcon2 } from "@/components/SvgIcons";
+import { ArrowUpIcon2 } from "@/components/SvgIcons";
 import PickSubCategory from "./_components/PickSubCategory";
 import { FormProvider, useForm } from "react-hook-form";
 import AboutCarStep from "./_components/AboutCarStep";
@@ -15,37 +15,72 @@ import PickUpStep from "./_components/PickUpStep";
 import DeliveryStep from "./_components/DeliveryStep";
 import TrailerTypeStep from "./_components/TrailerTypeStep";
 import PersonalInfoStep from "./_components/PersonalInfoStep";
+import { jsonParse } from "@/utils/common";
+import useTabletOrMobile from "@/hooks/helpers/useTabletOrMobile";
 
 const GetQuotePage = () => {
+  const { isTabletOrMobile } = useTabletOrMobile();
   const { searchParams, createQueryParams, pushToRouter } = useAppNavigation();
 
   const step = searchParams.get("step") || "category";
+  const category = searchParams.get("category") || "CAR_SHIPPING";
+  const subCategory =
+    searchParams.get("subCategory") || "ENCLOSED_AUTO_SHIPPING";
+  const carCondition = searchParams.get("carCondition");
+  const shipViaId = searchParams.get("shipViaId");
+  const carManufactureYear = searchParams.has("carManufactureYear")
+    ? jsonParse(searchParams.get("carManufactureYear"))
+    : null;
+  const carMake = searchParams.has("carMake")
+    ? jsonParse(searchParams.get("carMake"))
+    : null;
+  const carModel = searchParams.has("carModel")
+    ? jsonParse(searchParams.get("carModel"))
+    : null;
+  const pickup = searchParams.has("pickup")
+    ? jsonParse(searchParams.get("pickup"))
+    : null;
+  const dropOff = searchParams.has("dropOff")
+    ? jsonParse(searchParams.get("dropOff"))
+    : null;
 
   const categoryFormMethods = useForm({
     defaultValues: {
-      category: "CAR_SHIPPING",
+      category,
     },
   });
   const subCategoryFormMethods = useForm({
     defaultValues: {
-      category: "ENCLOSED_AUTO_SHIPPING",
+      subCategory,
     },
   });
 
   const aboutCarFormMethods = useForm({
-    defaultValues: {},
+    defaultValues: {
+      carMake,
+      carManufactureYear,
+      carModel,
+    },
   });
   const carConditionFormMethods = useForm({
-    defaultValues: {},
+    defaultValues: {
+      carCondition,
+    },
   });
   const pickUpStateFormMethods = useForm({
-    defaultValues: {},
+    defaultValues: {
+      pickup,
+    },
   });
   const deliveryFormMethods = useForm({
-    defaultValues: {},
+    defaultValues: {
+      dropOff,
+    },
   });
   const trailerTypeFormMethods = useForm({
-    defaultValues: {},
+    defaultValues: {
+      shipViaId,
+    },
   });
   const personalInfoFormMethods = useForm({
     defaultValues: {},
@@ -105,9 +140,9 @@ const GetQuotePage = () => {
 
   return (
     <MainLayout>
-      <div className="pt-6 bg-orange-50 h-full">
-        <Container className="grid grid-cols-[360px_1fr]  h-full   overflow-hidden">
-          <aside className="bg-gray-25 h-full rounded-tl-lg">
+      <div className="p-0 lg:pt-6 bg-orange-50 h-full">
+        <Container fluid={isTabletOrMobile} className="grid grid-cols-1 px-0 bg-white lg:bg-orange-50 lg:px-4 lg:grid-cols-[360px_1fr]  h-full  overflow-hidden">
+          <aside className="hidden lg:block bg-gray-25 h-full rounded-tl-lg">
             <section className="pt-12 flex flex-col gap-4">
               <header className="flex flex-col gap-2 px-10 py-6">
                 <h1 className="text-d-xs-semibold text-gray-900">
@@ -193,10 +228,10 @@ const GetQuotePage = () => {
                 />
               </div>
             </section>
-            <footer></footer>
+     
           </aside>
-          <section className="bg-white relative h-full rounded-tr-lg pt-24">
-            <div className=" px-[87.5px]">
+          <section className="bg-white relative h-full rounded-tr-lg pt-8 lg:pt-24">
+            <div className="px-4 pb-24 lg:pb-0 lg:px-[87.5px]">
               <Show when={step === "category"}>
                 <FormProvider {...categoryFormMethods}>
                   <PickCategory />
@@ -239,53 +274,57 @@ const GetQuotePage = () => {
               </Show>
             </div>
 
-            <footer className="p-6 border-t w-full absolute bottom-0 border-gray-200 flex items-center gap-3">
-              <Button
-                size="md"
-                startIcon={<ArrowUpIcon2 />}
-                color="secondary-gray"
-                className="ml-auto"
-                onClick={() => {
-                  const params = createQueryParams();
-
-                  params.set("step", getPrevStep());
-
-                  pushToRouter(params);
-                }}
-              >
-                Previous
-              </Button>
-              <Show when={step !== "personal-info"}>
+            <footer className="w-full fixed lg:absolute bottom-0">
+              <div className="p-4 lg:p-6 border-t bg-gray-50 lg:bg-white border-gray-200 flex items-center gap-3">
                 <Button
                   size="md"
+                  startIcon={<ArrowUpIcon2 />}
+                  color="secondary-gray"
+                  className="ml-auto flex-1 lg:flex-none"
                   onClick={() => {
                     const params = createQueryParams();
 
-                    params.set("step", getNextStep());
-
-                    pushToRouter(params);
-                  }}
-                  endIcon={
-                    <ArrowUpIcon2 className="rotate-180 [&_path]:stroke-white" />
-                  }
-                >
-                  Next
-                </Button>
-              </Show>
-              <Show when={step === "personal-info"}>
-                <Button
-                  size="md"
-                  onClick={() => {
-                    const params = createQueryParams();
-
-                    params.set("step", getNextStep());
+                    params.set("step", getPrevStep());
 
                     pushToRouter(params);
                   }}
                 >
-                  Get an Estimate
+                  Previous
                 </Button>
-              </Show>
+                <Show when={step !== "personal-info"}>
+                  <Button
+                    size="md"
+                    onClick={() => {
+                      const params = createQueryParams();
+
+                      params.set("step", getNextStep());
+
+                      pushToRouter(params);
+                    }}
+                    className="flex-1 lg:flex-none"
+                    endIcon={
+                      <ArrowUpIcon2 className="rotate-180 [&_path]:stroke-white" />
+                    }
+                  >
+                    Next
+                  </Button>
+                </Show>
+                <Show when={step === "personal-info"}>
+                  <Button
+                    size="md"
+                    className="flex-1 lg:flex-none"
+                    onClick={() => {
+                      const params = createQueryParams();
+
+                      params.set("step", getNextStep());
+
+                      pushToRouter(params);
+                    }}
+                  >
+                    Get an Estimate
+                  </Button>
+                </Show>
+              </div>
             </footer>
           </section>
         </Container>

@@ -5,8 +5,20 @@ const useAppConstants = () => {
     exit: { opacity: 0, y: -20, transition: { duration: 0.3 } },
   };
 
+  const employeeCountOptions = [
+    {
+      label: "1+",
+      value: 1,
+    },
+    {
+      label: "10+",
+      value: 10,
+    },
+  ];
+
   return {
     containerVariants,
+    employeeCountOptions,
   };
 };
 

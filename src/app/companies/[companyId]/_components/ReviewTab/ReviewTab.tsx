@@ -1,12 +1,17 @@
 import Select from "@/components/Select";
-import Link from "next/link";
 import ReviewList from "./ReviewList";
 import AboutCompany from "./AboutCompany";
 import Services from "./Services";
 import OtherReviews from "./OtherReviews";
 import SimilarCompanies from "./SimilarCompanies";
 
-const ReviewTab = () => {
+interface ReviewTabProps {
+  companyId: string;
+}
+
+const ReviewTab = ({ companyId }: ReviewTabProps) => {
+
+
   return (
     <div className="grid grid-cols-[1fr_352px] gap-8">
       <section>
@@ -18,15 +23,14 @@ const ReviewTab = () => {
           <Select options={[]} rootClassName="w-40" />
         </div>
 
-      
-        <ReviewList/>
+        <ReviewList />
       </section>
       <section>
         <aside className="flex flex-col gap-6">
-           <AboutCompany/>
-           <Services/>
-           <OtherReviews/>
-           <SimilarCompanies/>
+          <AboutCompany companyId={companyId} />
+          <Services companyId={companyId} />
+          <OtherReviews />
+          <SimilarCompanies />
         </aside>
       </section>
     </div>

@@ -1,10 +1,20 @@
 import Select from "@/components/Select";
+import useGetZipCodes from "@/hooks/endpoints/zip-codes/useGetZipCodes";
+import useAppDebounce from "@/hooks/helpers/useAppDebounce";
+import useAppNavigation from "@/hooks/helpers/useAppNavigation";
+import { jsonStringify } from "@/utils/common";
 import { Controller, useFormContext } from "react-hook-form";
 
 const DeliveryStep = () => {
-  const { handleSubmit, control } = useFormContext();
+  const { createQueryParams, pushToRouter } = useAppNavigation();
+  const { handleSubmit, control, watch, setValue } = useFormContext();
 
   const onSubmit = handleSubmit((values) => {});
+
+    const dropOffInput = watch("dropOffInput");
+    const debouncedDropOffInput = useAppDebounce(dropOffInput);
+
+  const { options, isLoading } = useGetZipCodes({ q: debouncedDropOffInput });
 
   return (
     <div className="flex flex-col gap-20 2xl:gap-30">
@@ -21,18 +31,33 @@ const DeliveryStep = () => {
 
       <form
         onSubmit={onSubmit}
-        className="grid grid-cols-1 gap-y-2.5 gap-x-3 w-fit ml-auto"
+        className="grid grid-cols-1 gap-y-2.5 gap-x-3 w-full lg:w-fit ml-auto"
       >
         <Controller
           control={control}
-          name=""
+          name="dropOff"
           render={({ field }) => (
             <Select
               {...field}
-              options={[]}
+              options={options}
+              isLoading={isLoading}
               components={{ DropdownIndicator: null }}
               placeholder="ZIP or City"
-              rootClassName="w-80"
+              rootClassName="w-full lg:w-80"
+                inputValue={dropOffInput}
+              onInputChange={(e) => setValue("dropOffInput", e)}
+              onChange={(e) => {
+                field.onChange(e);
+
+                const params = createQueryParams();
+                if (e) {
+                  params.set(field.name, jsonStringify(e));
+                } else {
+                  params.delete(field.name);
+                }
+
+                pushToRouter(params);
+              }}
             />
           )}
         />
@@ -44,7 +69,7 @@ const DeliveryStep = () => {
               {...field}
               options={[]}
               placeholder="Choose type"
-              rootClassName="w-80"
+              rootClassName="w-full lg:w-80"
             />
           )}
         />

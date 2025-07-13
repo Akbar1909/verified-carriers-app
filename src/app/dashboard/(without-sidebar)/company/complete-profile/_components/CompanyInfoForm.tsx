@@ -6,6 +6,7 @@ import { generateYearRange } from "@/utils/common";
 import { Controller, useForm, useFormContext } from "react-hook-form";
 import {dayjs} from '@/services/time';
 import PhoneField from "@/components/PhoneField";
+import useAppConstants from "@/hooks/helpers/useAppConstants";
 
 interface CompanyInfoFormProps {
   nextStep: (nextStep?: number) => void;
@@ -23,6 +24,7 @@ const CompanyInfoForm = ({ nextStep }: CompanyInfoFormProps) => {
     setValue,
     trigger,
   } = useFormContext();
+  const {employeeCountOptions} = useAppConstants()
 
   const onSubmit = handleSubmit((values) => nextStep());
 
@@ -102,16 +104,7 @@ const CompanyInfoForm = ({ nextStep }: CompanyInfoFormProps) => {
         control={control}
         render={({ field }) => (
           <Select
-            options={[
-              {
-                label:'1+',
-                value:1
-              },
-              {
-                label:'10+',
-                value:10
-              }
-            ]}
+            options={employeeCountOptions}
             labelProps={{ required: true }}
             label="Total employees"
             helperText={errors?.totalEmployees?.message}

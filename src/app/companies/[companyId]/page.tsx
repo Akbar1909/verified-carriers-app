@@ -14,11 +14,19 @@ import useAppNavigation from "@/hooks/helpers/useAppNavigation";
 import Show from "@/components/Show";
 import InfoTab from "./_components/InfoTab";
 import ServicesTab from "./_components/ServicesTab";
+import useGetCompanyById from "@/hooks/endpoints/companies/useGetCompanyById";
+import { returnArray } from "@/utils/common";
 
 const CompanyProfilePage = () => {
+  const { params } = useAppNavigation();
   const { searchParams } = useAppNavigation();
+  const companyId = params?.companyId as string;
 
   const tab = searchParams.get("tab") || "reviews";
+
+  const { company } = useGetCompanyById(companyId);
+
+  const companyLogo = returnArray(company.companyLogos).at(0);
 
   return (
     <MainLayout>
@@ -26,13 +34,19 @@ const CompanyProfilePage = () => {
         <Container maxWidth="xl">
           <article className="flex items-start gap-6">
             <div>
-              <Avatar className="w-24 h-24" url="/images/broadway.png" />
+              <Avatar
+                url={`${process?.env?.NEXT_PUBLIC_API_URL}/files/download/${companyLogo?.file?.id}`}
+                className="w-24 h-24"
+              />
             </div>
             <div className="flex gap-4 flex-1">
               <div>
-                <h1 className="text-d-sm-medium text-gray-900">
-                  Broadway Auto Transport
-                </h1>
+                <Link
+                  href={`${params.companyId}/dashboard`}
+                  className="text-d-sm-medium text-gray-900"
+                >
+                  {company.name}
+                </Link>
 
                 <div className="flex items-center gap-2 mt-1 mb-2">
                   <span className="text-md-medium text-gray-500">4.9</span>
@@ -45,12 +59,14 @@ const CompanyProfilePage = () => {
                   <div className="px-3.5 py-1 text-orange-700 text-sm-medium bg-orange-50 rounded-sm">
                     Top Rated
                   </div>
-                  <div className="flex items-center gap-0.5">
-                    <VerifiedIcon />
-                    <span className="text-sm-medium text-gray-500">
-                      Verified company
-                    </span>
-                  </div>
+                  <Show when={company.isVerified}>
+                    <div className="flex items-center gap-0.5">
+                      <VerifiedIcon />
+                      <span className="text-sm-medium text-gray-500">
+                        Verified company
+                      </span>
+                    </div>
+                  </Show>
                 </div>
               </div>
 
@@ -61,7 +77,7 @@ const CompanyProfilePage = () => {
                     startIcon={<ExternalLinkIcon />}
                     color="secondary-gray"
                   >
-                    broadways.com
+                    {company.website}
                   </Button>
                 </Link>
                 <Button size="md">Write a review</Button>
@@ -99,10 +115,10 @@ const CompanyProfilePage = () => {
       <main className="bg-gray-50 pt-8 pb-24">
         <Container maxWidth="xl">
           <Show when={tab === "reviews"}>
-            <ReviewTab />
+            <ReviewTab companyId={companyId} />
           </Show>
           <Show when={tab === "info"}>
-            <InfoTab />
+            <InfoTab  companyId={companyId}/>
           </Show>
           <Show when={tab === "services"}>
             <ServicesTab />

@@ -1,10 +1,10 @@
 import SelectionOption from "@/components/SelectionOption";
-import {  useFormContext } from "react-hook-form";
+import useAppNavigation from "@/hooks/helpers/useAppNavigation";
+import { useFormContext } from "react-hook-form";
 
 const PickCategory = () => {
-  const { handleSubmit, setValue, watch } = useFormContext(
-    
-  );
+  const { createQueryParams, pushToRouter } = useAppNavigation();
+  const { handleSubmit, setValue, watch } = useFormContext();
 
   const onSubmit = handleSubmit((values) => {});
 
@@ -49,28 +49,34 @@ const PickCategory = () => {
       label: "VAN transportation",
       value: "VAN_TRANSPORTATION",
     },
-    
   ];
 
-  const category=watch('category')
+  const category = watch("subCategory");
 
   return (
     <div className="flex flex-col gap-18 2xl:gap-30">
       <div className="flex-col gap-2.5">
-        <h2 className="text-d-sm-medium text-gray-900">
-        Choose subcategory
-        </h2>
-      
+        <h2 className="text-d-sm-medium text-gray-900">Choose subcategory</h2>
       </div>
 
-      <form onSubmit={onSubmit} className="grid grid-cols-2 gap-y-2.5 gap-x-3 w-fit ml-auto">
+      <form
+        onSubmit={onSubmit}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-y-2.5 gap-x-3 w-full lg:w-fit ml-auto"
+      >
         {categories.map(({ label, value }, i) => (
           <SelectionOption
             key={i}
             label={label}
             value={value}
-            name="category"
-            onChange={setValue}
+            className="w-full lg:w-[306px]"
+            name="subCategory"
+            onChange={(name, value) => {
+              setValue(name, value);
+
+              const params = createQueryParams();
+              params.set(name, value);
+              pushToRouter(params);
+            }}
             isSelected={value === category}
           />
         ))}

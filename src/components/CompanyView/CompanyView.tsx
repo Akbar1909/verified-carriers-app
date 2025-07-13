@@ -13,7 +13,6 @@ import { twMerge } from "tailwind-merge";
 import Show from "../Show";
 import { returnArray } from "@/utils/common";
 import Button from "../Button";
-import useTabletOrMobile from "@/hooks/helpers/useTabletOrMobile";
 
 interface CompanyViewProps {
   className?: string;
@@ -23,7 +22,6 @@ interface CompanyViewProps {
 
 const CompanyView = ({ className, saved, company = {} }: CompanyViewProps) => {
   const companyLogo = returnArray(company.companyLogos).at(0);
-  const { isTabletOrMobile } = useTabletOrMobile();
 
   return (
     <div
