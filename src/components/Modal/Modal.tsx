@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react'
+import Button from '../Button';
+import { CloseIcon } from '../SvgIcons';
 
 
 interface ModalProps {
@@ -107,7 +109,7 @@ const Modal: React.FC<ModalProps> = ({
           
           {/* Modal Content */}
           <motion.div
-            className={`relative bg-white rounded-lg shadow-xl w-full ${getSizeClasses()} max-h-[90vh] overflow-hidden`}
+            className={`relative bg-white rounded-[42px] shadow-xl w-full ${getSizeClasses()} max-h-[90vh] overflow-hidden`}
             variants={modalVariants}
             initial="hidden"
             animate="visible"
@@ -123,13 +125,15 @@ const Modal: React.FC<ModalProps> = ({
                   </h2>
                 )}
                 {showCloseButton && (
-                  <button
+                  <Button
+                    iconButton
                     onClick={onClose}
-                    className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
                     aria-label="Close modal"
+                    color='tertiary'
+                    destructive
                   >
-                    X
-                  </button>
+                    <CloseIcon  className='[&_path]:stroke-gray-900' />
+                  </Button>
                 )}
               </div>
             )}

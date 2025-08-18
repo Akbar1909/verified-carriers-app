@@ -20,8 +20,10 @@ import {
 } from "@/components/SvgIcons";
 import Link from "next/link";
 import { useState } from "react";
+import useAppNavigation from "@/hooks/helpers/useAppNavigation";
 
 const Sidebar = () => {
+  const { pathname} = useAppNavigation()
   const [dropdownOpen, setDropdownOpen] = useState(true);
 
   const commonMenuItems = [
@@ -164,19 +166,28 @@ const Sidebar = () => {
                   </button>
                   {dropdownOpen && (
                     <ul className="pl-6">
-                      {item.items.map((subItem, subIndex) => (
+                      {item.items.map((subItem, subIndex) => {
+
+                        const isActive= `/dashboard/${subItem.href}` === pathname 
+
+                        return (
                         <li key={subIndex}>
                           <Link
                             href={`/dashboard${
                               item.href
                             }/${subItem.label.toLowerCase()}`}
-                            className="flex items-center gap-x-2 px-[6px] py-1 text-sm-medium text-stone-600"
+                            className={
+                              twMerge("flex items-center gap-x-2 px-[6px] py-1 text-sm-medium text-stone-600", isActive && 'text-primary-500' )
+                            }
                           >
-                            <subItem.icon className="w-4 h-4" />
-                            {subItem.label}
+                            <subItem.icon className={
+                              twMerge('w-4 h-4',isActive && '[&_path]:stroke-primary-500')
+                            } />
+                            {subItem.label} 
                           </Link>
                         </li>
-                      ))}
+                      )
+                      })}
                     </ul>
                   )}
                 </li>

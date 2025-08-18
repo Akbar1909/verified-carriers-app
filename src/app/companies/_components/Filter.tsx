@@ -4,9 +4,8 @@ import Collapse from "@/components/Collapse";
 import Show from "@/components/Show";
 import useGetCompaniesCount from "@/hooks/endpoints/companies/useGetCompaniesCount";
 import useAppNavigation from "@/hooks/helpers/useAppNavigation";
-import { useMemo, useState } from "react";
+import {  useState } from "react";
 import FilterTags from "./FilterTags";
-import Button from "@/components/Button";
 import { twMerge } from "tailwind-merge";
 import { jsonParse, jsonStringify, returnArray } from "@/utils/common";
 
@@ -323,7 +322,7 @@ const Filter = ({
           </div>
         </Collapse>
 
-        <Collapse header="Truck type">
+        {/* <Collapse header="Truck type">
           <div className="pb-4">
             {truckTypeList.map(({ label, count }, i) => (
               <div className="pr-4 py-2.5 flex items-center gap-3" key={i}>
@@ -335,9 +334,9 @@ const Filter = ({
               </div>
             ))}
           </div>
-        </Collapse>
+        </Collapse> */}
 
-        <Collapse header="Load type">
+        {/* <Collapse header="Load type">
           <div className="pb-4">
             {loadTypeList.map(({ label, count }, i) => (
               <div className="pr-4 py-2.5 flex items-center gap-3" key={i}>
@@ -349,7 +348,7 @@ const Filter = ({
               </div>
             ))}
           </div>
-        </Collapse>
+        </Collapse> */}
 
         <Collapse header="Verification">
           <div className="pb-4">

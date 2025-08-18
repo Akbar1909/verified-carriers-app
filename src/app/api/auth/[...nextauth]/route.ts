@@ -13,6 +13,9 @@ const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         const { email, password, role } = credentials;
+
+     
+
         try {
           // Make a request to your standalone backend API
           const response = await fetch(
@@ -46,7 +49,7 @@ const authOptions: AuthOptions = {
             role, // Add the role
           };
         } catch (error) {
-          throw new Error(error.message || "Authentication failed");
+          return null
         }
       },
     }),
@@ -73,7 +76,7 @@ const authOptions: AuthOptions = {
       session.token = token.token;
       session.email = token.email;
       session.registrationStatus = token.registrationStatus;
-
+      
       return session;
     },
   },
@@ -85,9 +88,16 @@ const authOptions: AuthOptions = {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
+   jwt: {
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
   secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(authOptions);
+
+export{
+  authOptions
+}
 
 export { handler as GET, handler as POST };

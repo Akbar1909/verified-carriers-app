@@ -39,7 +39,9 @@ const PersonalInfoStep = () => {
                   params.delete(field.name);
                 }
 
-                pushToRouter(params);
+                field.onChange(e);
+
+                pushToRouter(params, {scroll:false});
               }}
             />
           )}
@@ -49,7 +51,7 @@ const PersonalInfoStep = () => {
           name="phone"
           render={({ field }) => (
             <PhoneField
-              placeholder={"Make"}
+              placeholder={"Phone"}
               containerClass="w-full"
               inputClass="!w-full"
               {...field}
@@ -62,7 +64,9 @@ const PersonalInfoStep = () => {
                   params.delete(field.name);
                 }
 
-                pushToRouter(params);
+                field.onChange(value);
+
+                pushToRouter(params, {scroll:false});
               }}
             />
           )}
@@ -86,7 +90,9 @@ const PersonalInfoStep = () => {
                     params.delete(field.name);
                   }
 
-                  pushToRouter(params);
+                  field.onChange(e);
+
+                  pushToRouter(params, {scroll:false});
                 }}
               />
               <HelperText>

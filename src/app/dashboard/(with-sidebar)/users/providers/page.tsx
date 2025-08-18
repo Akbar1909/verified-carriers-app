@@ -10,6 +10,10 @@ import {
 
 import ProvidersTable from "./_components/ProvdiersTable";
 import Show from "@/components/Show";
+import dynamic from "next/dynamic";
+
+
+const ReviewsTable=dynamic(()=>import('./_components/ReviewsTable'),{ssr:false})
 
 
 
@@ -71,6 +75,10 @@ const ProvidersPage = () => {
 
       <Show when={tab === 'providers'}>
          <ProvidersTable/>
+      </Show>
+
+      <Show when={tab === 'reviews'}>
+         <ReviewsTable/>
       </Show>
     </div>
   );

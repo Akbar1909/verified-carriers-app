@@ -12,11 +12,11 @@ const TrailerTypeStep = () => {
   const categories = [
     {
       label: "Open trailer",
-      value: "1",
+      value: 1,
     },
     {
       label: "Enclosed trailer",
-      value: "2",
+      value: 2,
     },
   ];
 

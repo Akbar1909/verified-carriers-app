@@ -1,15 +1,23 @@
-import Pagination from "@/components/Pagination"
-import ReviewCard from "./ReviewCard"
+import Pagination from "@/components/Pagination";
+import ReviewCard from "./ReviewCard";
 
-const ReviewList = () => {
-  return (
-    <div className="flex flex-col gap-6">
-        {
-            new Array(6).fill({}).map((_,i)=><ReviewCard key={i} />)
-        }
-        <Pagination totalPages={5}/>
-    </div>
-  )
+interface ReviewListProps {
+  list: Array<any>[];
+  pagination: {
+    totalPages: number;
+  };
+  inValidateQuery:()=>void;
 }
 
-export default ReviewList
+const ReviewList = ({ list, pagination, inValidateQuery }: ReviewListProps) => {
+  return (
+    <div className="flex flex-col gap-6">
+      {list.map((review, i) => (
+        <ReviewCard inValidateQuery={inValidateQuery} review={review} key={i} />
+      ))}
+      <Pagination totalPages={pagination.totalPages} />
+    </div>
+  );
+};
+
+export default ReviewList;

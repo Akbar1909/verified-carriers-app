@@ -60,4 +60,7 @@ export interface File {
     companyLogos: CompanyLogo[];
     services: Service[];
     contactInformation: ContactInformation[];
+    averageRating:number;
+    reviewCount:number;
+    isTopRated:boolean;
   }

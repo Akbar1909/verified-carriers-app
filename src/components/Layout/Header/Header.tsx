@@ -1,6 +1,10 @@
 "use client";
 import TextField from "@/components/TextField";
-import { CornerUpRightIcon, SearchIcon } from "@/components/SvgIcons";
+import {
+  CornerUpRightIcon,
+  LogoutIcon,
+  SearchIcon,
+} from "@/components/SvgIcons";
 import Link from "next/link";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
@@ -13,22 +17,41 @@ import useTabletOrMobile from "@/hooks/helpers/useTabletOrMobile";
 import MobileHeader from "./MobileHeader";
 import useGetMe from "@/hooks/endpoints/users/useGetMe";
 import useGetCurrentCompany from "@/hooks/endpoints/companies/useGetCurrentCompany";
+import Avatar from "@/components/Avatar";
+import { joinStrings } from "@/utils/common";
+import dynamic from "next/dynamic";
+import useAppToggle from "@/hooks/helpers/useAppToggle";
+
+const LogoutModal=dynamic(()=>import('./LogoutModal'),{ssr:false})
 
 const Header = () => {
   const { status, data } = useSession();
   const { pathname } = useAppNavigation();
   const { isTabletOrMobile } = useTabletOrMobile();
+
+  const {open,close,modal} = useAppToggle<'logout-modal'>()
+
   const companyAuthenticated =
     data?.role === "company" && status === "authenticated";
+
+  const userAuthenticated = data?.role === "user" && status === "authenticated";
+
   const { company } = useGetCurrentCompany({
     enabled: companyAuthenticated,
   });
+
+  
+
+  const { data: user } = useGetMe({ enabled: userAuthenticated });
+
+  console.log(company);
 
   return (
     <header
       className={twMerge(
         "py-4.5  border border-gray-200",
-        (pathname === "/about" || pathname === "/get-quote") && "lg:bg-orange-50"
+        (pathname === "/about" || pathname === "/get-quote") &&
+          "lg:bg-orange-50"
       )}
     >
       <Container className="flex items-center gap-10">
@@ -114,11 +137,56 @@ const Header = () => {
                     </Link>
                   </li>
                 </Show>
+
+                <Show when={status === "authenticated" && data?.role === 'user'}>
+                  <div className="flex items-center gap-3">
+                    <Avatar
+                      url={`${process.env.NEXT_PUBLIC_API_URL}/files/download/${user?.image?.id}`}
+                      size="lg"
+                    />
+
+                    <div className="flex flex-col">
+                      <span className="text-md-medium text-gray-900">
+                        {joinStrings([user?.firstName, user?.lastName])}
+                      </span>
+                      <span className="text-md text-gray-500">
+                        {user?.email}
+                      </span>
+                    </div>
+
+                    <button onClick={()=>open('logout-modal')} type="button">
+                      <LogoutIcon />
+                    </button>
+                  </div>
+                </Show>
+                <Show when={status === "authenticated" && data?.role === 'company'}>
+                  <div className="flex items-center gap-3">
+                    <Avatar
+                      url={`${process.env.NEXT_PUBLIC_API_URL}/files/download/${company?.companyLogos?.[0]?.file?.id}`}
+                      size="lg"
+                    />
+
+                    <div className="flex flex-col">
+                      <span className="text-md-medium text-gray-900">
+                        {company.name}
+                      </span>
+                      <span className="text-md text-gray-500">
+                        {company?.workEmail}
+                      </span>
+                    </div>
+
+                    <button onClick={()=>open('logout-modal')} type="button">
+                      <LogoutIcon />
+                    </button>
+                  </div>
+                </Show>
               </ul>
             </nav>
           </>
         </Show>
       </Container>
+
+      <LogoutModal isOpen={modal==='logout-modal'} onClose={close} handleSuccess={()=>{}} />
     </header>
   );
 };

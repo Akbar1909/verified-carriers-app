@@ -14,6 +14,7 @@ const useGetZipCodes = (params: { q: string }) => {
   });
 
   const options = returnArray(state.data).map((z) => ({
+    ...z,
     label: `${z.name} — ${z.primary_city}, ${z.state}${
       z.county ? ` (${z.county})` : ""
     }`,

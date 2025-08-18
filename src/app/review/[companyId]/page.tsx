@@ -6,17 +6,52 @@ import Datepicker from "@/components/Datepicker";
 import FileUploader from "@/components/FileUploader";
 import MainLayout from "@/components/Layout/MainLayout";
 import Select from "@/components/Select";
+import Show from "@/components/Show";
 import StarRating from "@/components/Stars";
 import { VerifiedIcon } from "@/components/SvgIcons";
 import Textarea from "@/components/Textarea";
 import TextField from "@/components/TextField";
+import useGetCompanyById from "@/hooks/endpoints/companies/useGetCompanyById";
+import useGetUsStates from "@/hooks/endpoints/locations/useGetUsStates";
+import useAppMutation from "@/hooks/helpers/useAppMutation";
+import useAppNavigation from "@/hooks/helpers/useAppNavigation";
+import { request } from "@/services/request";
+import { returnArray } from "@/utils/common";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const WriteReviewPage = () => {
-  const { handleSubmit, control, register } = useForm();
+  const { params, router } = useAppNavigation();
+  const { companyId } = params;
+  const { company, companyLogo } = useGetCompanyById(companyId as string);
 
-  const onSubmit = handleSubmit(() => {});
+  const { mutate, isPending } = useAppMutation({
+    mutationFn: (body) => request.post("/reviews", body),
+    onSuccess: (res) => {
+      toast.success("Review has been created successfully");
+
+      router.push(`/companies/${companyId}`);
+    },
+  });
+
+  const { handleSubmit, setValue, trigger, control, register } = useForm();
+
+  const { usStates, isLoading: usStatesLoading } = useGetUsStates();
+
+  const onSubmit = handleSubmit((values) => {
+    const { files, ...rest } = values;
+    const body = {
+      ...rest,
+      fileIds: returnArray(files).map((item) => item.id),
+      companyId,
+      pickupState: rest.pickupState?.value,
+      deliveryState: rest.deliveryState?.value,
+      orderId: rest.orderId,
+    };
+
+    mutate(body);
+  });
 
   return (
     <MainLayout>
@@ -24,36 +59,38 @@ const WriteReviewPage = () => {
         <Container maxWidth="lg" className="flex flex-col gap-8">
           <article className="flex items-start gap-4">
             <Avatar
-              url="/images/broadway.png"
+              url={`${process?.env?.NEXT_PUBLIC_API_URL}/files/download/${companyLogo?.file?.id}`}
               className="w-18 h-18 rounded-lg"
             />
 
             <div>
-              <h2 className="text-lg-semibold text-gray-900">
-                Broadway Auto Transport
-              </h2>
+              <h2 className="text-lg-semibold text-gray-900">{company.name}</h2>
 
               <div className="flex items-center gap-4">
-                <StarRating size="16px" rating={4} />
+                <StarRating size="16px" rating={Math.round(company.averageRating)} />
                 <span className='text-md-medium relative text-gray-500 after:content-[""] after:absolute after:h-5 after:w-[1px] after:bg-gray-300 after:-right-2 after:top-1/2 after:-translate-y-1/2'>
-                  4.9
+                  {company.averageRating}
                 </span>
                 <span className="text-md-medium text-gray-500 underline">
-                  165 reviews
+                  {company.reviewCount} reviews
                 </span>
               </div>
 
-              <div className="flex items-center gap-0.5">
-                <VerifiedIcon />
-                <span className="text-sm-medium text-gray-500">
-                  Verified company
-                </span>
-              </div>
+              <Show when={company.isVerified}>
+                <div className="flex items-center gap-0.5">
+                  <VerifiedIcon />
+                  <span className="text-sm-medium text-gray-500">
+                    Verified company
+                  </span>
+                </div>
+              </Show>
             </div>
 
-            <div className="ml-auto px-3.5 py-1 text-orange-700 text-sm-medium bg-orange-50 rounded-sm">
+            <Show when={company.isTopRated}>
+              <div className="ml-auto px-3.5 py-1 text-orange-700 text-sm-medium bg-orange-50 rounded-sm">
               Top Rated
             </div>
+            </Show>
           </article>
 
           <form
@@ -65,7 +102,18 @@ const WriteReviewPage = () => {
                 <label className="text-d-xs-semibold text-gray-900" htmlFor="">
                   Rate your experience
                 </label>
-                <StarRating size="48px" rating={4} />
+                <Controller
+                  control={control}
+                  name="rating"
+                  render={({ field }) => (
+                    <StarRating
+                      interactive
+                      size="48px"
+                      rating={field.value}
+                      {...field}
+                    />
+                  )}
+                />
               </div>
               <hr className="text-gray-200 my-6" />
 
@@ -80,43 +128,79 @@ const WriteReviewPage = () => {
                     write it.
                   </p>
                 </div>
+                <TextField
+                  {...register("orderId")}
+                  placeholder="Enter order ID"
+                  label="Order ID"
+                />
                 <Textarea
-                  {...register("d")}
+                  {...register("reviewText")}
                   label="Review"
                   placeholder="Write"
                 />
                 <Controller
                   control={control}
-                  name=""
+                  name="pickupState"
                   render={({ field }) => (
-                    <Select options={[]}  label="Pick up State" {...field} />
+                    <Select
+                      options={usStates}
+                      label="Pick up State"
+                      isLoading={usStatesLoading}
+                      {...field}
+                    />
                   )}
                 />
                 <Controller
                   control={control}
-                  name=""
+                  name="deliveryState"
                   render={({ field }) => (
-                    <Select options={[]}  label="Delivery State" {...field} />
+                    <Select
+                      options={usStates}
+                      label="Delivery State"
+                      isLoading={usStatesLoading}
+                      {...field}
+                    />
                   )}
                 />
-                <Controller control={control} name='date' render={({field})=><Datepicker/>} />
-                 <TextField
-                   startIcon={'$'}
-                   startIconProps={{
-                    className:'text-md text-gray-500'
-                   }}
-                  {...register("d")}
+                <Controller
+                  control={control}
+                  name="deliveryDate"
+                  render={({ field }) => (
+                    <Datepicker
+                      textFieldProps={{ label: "Date" }}
+                      {...field}
+                      selected={field.value}
+                    />
+                  )}
+                />
+                <TextField
+                  startIcon={"$"}
+                  startIconProps={{
+                    className: "text-md text-gray-500",
+                  }}
+                  {...register("transportationPrice")}
                   label="Transportation price"
-                  endIcon={'USD'}
+                  endIcon={"USD"}
                   placeholder="Write"
                 />
 
-                <FileUploader label="Upload photo reivew" name='files' />
+                <FileUploader
+                  name="files"
+                  setValue={setValue}
+                  trigger={trigger}
+                  rootClassName="lg:col-span-2"
+                />
               </div>
             </div>
 
             <div className="px-6 py-4 border-t border-gray-200">
-                 <Button  className='h-13 text-lg-semibold text-white' fullWidth>Submit review</Button> 
+              <Button
+                isPending={isPending}
+                className="h-13 text-lg-semibold text-white"
+                fullWidth
+              >
+                Submit review
+              </Button>
             </div>
           </form>
         </Container>

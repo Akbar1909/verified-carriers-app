@@ -10,7 +10,7 @@ const useGetCompanies = (filterDto: {
 }) => {
   const queryClient=useQueryClient()
   
-  const queryKey=[ ["companies", filterDto]]
+  const queryKey=[ "companies", filterDto]
 
   const state = useQuery({
     queryKey,

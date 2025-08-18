@@ -1,11 +1,16 @@
-import Avatar from "@/components/Avatar";
 import CompanyShortView from "@/components/CompanyShortView";
-import StarRating from "@/components/Stars";
-import { VerifiedIcon } from "@/components/SvgIcons";
-import Link from "next/link";
+import useGetCompaniesLookedAt from "@/hooks/endpoints/companies/useGetCompaniesLookedAt";
 import React from "react";
 
-const SimilarCompanies = () => {
+interface SimilarCompaniesProps{
+  companyId:string;
+} 
+
+const SimilarCompanies = ({companyId}:SimilarCompaniesProps) => {
+
+  const {companies} = useGetCompaniesLookedAt({companyId})
+
+
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-xl-medium text-gray-900 mb-4">
@@ -13,8 +18,8 @@ const SimilarCompanies = () => {
       </h3>
 
       <div className="flex flex-col gap-4">
-        {new Array(4).fill({}).map((_, i) => (
-          <CompanyShortView key={i} />
+        {companies.map((company, i) => (
+          <CompanyShortView company={company} key={i} />
         ))}
       </div>
     </div>

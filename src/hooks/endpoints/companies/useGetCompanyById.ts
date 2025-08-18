@@ -1,4 +1,5 @@
 import { request } from "@/services/request";
+import { returnArray } from "@/utils/common";
 import {
   useQuery,
   useQueryClient,
@@ -25,8 +26,12 @@ const useGetCompanyById = (
 
   const company=state.data || {}
 
+    const companyLogo = returnArray(company.companyLogos).at(0);
+  
+
   return {
     ...state,
+    companyLogo,
     company,
     inValidateQuery,
   };

@@ -11,8 +11,8 @@ const DeliveryStep = () => {
 
   const onSubmit = handleSubmit((values) => {});
 
-    const dropOffInput = watch("dropOffInput");
-    const debouncedDropOffInput = useAppDebounce(dropOffInput);
+  const dropOffInput = watch("dropOffInput");
+  const debouncedDropOffInput = useAppDebounce(dropOffInput);
 
   const { options, isLoading } = useGetZipCodes({ q: debouncedDropOffInput });
 
@@ -44,7 +44,7 @@ const DeliveryStep = () => {
               components={{ DropdownIndicator: null }}
               placeholder="ZIP or City"
               rootClassName="w-full lg:w-80"
-                inputValue={dropOffInput}
+              inputValue={dropOffInput}
               onInputChange={(e) => setValue("dropOffInput", e)}
               onChange={(e) => {
                 field.onChange(e);
@@ -63,13 +63,34 @@ const DeliveryStep = () => {
         />
         <Controller
           control={control}
-          name=""
+          name="dropOffType"
           render={({ field }) => (
             <Select
               {...field}
-              options={[]}
+              options={[
+                {
+                  label: "Business area",
+                  value: "BUSINESS_AREA",
+                },
+                {
+                  label: "Private area",
+                  value: "PRIVATE_AREA",
+                },
+              ]}
               placeholder="Choose type"
               rootClassName="w-full lg:w-80"
+              onChange={(e) => {
+                field.onChange(e);
+
+                const params = createQueryParams();
+                if (e) {
+                  params.set(field.name, jsonStringify(e) as string);
+                } else {
+                  params.delete(field.name);
+                }
+
+                pushToRouter(params);
+              }}
             />
           )}
         />

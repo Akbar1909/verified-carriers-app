@@ -1,6 +1,5 @@
 import { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import useAppNavigation from './useAppNavigation';
-import { joinStrings } from '@/utils/common';
 
 const DEFAULT_PAGE = 0;
 const DEFAULT_SIZE = 10;
@@ -73,6 +72,8 @@ const usePagination = ({
     const params = createQueryParams();
     params.delete(gotoKey);
     params.set(pageKey, String(page));
+
+ 
 
     pushToRouter(params, { scroll: false });
   };

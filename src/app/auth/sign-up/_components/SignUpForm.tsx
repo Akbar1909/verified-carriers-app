@@ -44,36 +44,58 @@ const SignUpForm = () => {
 
   const { mutate, isPending } = useAppMutation({
     mutationFn: (data: Record<string, any>) =>
-      request.post( mode === 'user' ? "/auth/register":'/auth/company/register', data),
+      request.post(
+        mode === "user"
+          ? "/auth/register"
+          : mode === "moderator"
+          ? "/auth/moderator/register"
+          : "/auth/company/register",
+        data
+      ),
     mutationKey: ["/auth/register"],
     onSuccess: async ({ data }, variables: SignUpFormValuesType) => {
       const res = await signIn("credentials", {
         redirect: false,
         email: variables.email,
         password: variables.password,
-        role:mode
+        role: mode,
       });
 
       if (res?.ok) {
-        router.push(mode === "user" ? "/dashboard/user/complete-profile" : "/dashboard/company/complete-profile");
+        router.push(
+          mode === "user"
+            ? "/dashboard/user/complete-profile"
+            : mode === "moderator"
+            ? "/dashboard/home"
+            : "/dashboard/company/complete-profile"
+        );
         return;
       }
     },
   });
 
   const onSubmit = handleSubmit((values) => {
-    mutate({...values, ...(mode === 'company' && {workEmail:values.email})});
+    const { name } = values;
+
+    const [firstName, lastName] = name.split(" ");
+
+    mutate({
+      ...values,
+      ...(mode === "company" && { workEmail: values.email }),
+      ...(mode === "moderator" && { firstName, lastName }),
+    });
   });
 
   return (
     <form onSubmit={onSubmit} className="w-90">
-      <h1 className="text-d-xs-semibold text-center lg:text-start lg:text-d-md-semibold text-gray-900 mb-3">Sign up</h1>
+      <h1 className="text-d-xs-semibold text-center lg:text-start lg:text-d-md-semibold text-gray-900 mb-3">
+        Sign up
+      </h1>
       <p className="text-center lg:text-start text-md text-gray-500">
         Find your perfect transporter based on genuine experience{" "}
       </p>
 
       <div className="mt-8">
-       
         <TextField
           label="Name"
           placeholder="Enter your name"

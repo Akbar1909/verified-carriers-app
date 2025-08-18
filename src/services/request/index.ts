@@ -17,7 +17,6 @@ request.interceptors.request.use(
   async config => {
     const session = await getSession(); // Get session (for client-side)
 
-    console.log(session)
 
     if (session?.token) {
       // Attach token to the request header

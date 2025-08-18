@@ -63,3 +63,5 @@ export {default as ReportsIcon} from './ReportsIcon'
 export {default as EmployeeIcon} from './EmployeeIcon'
 export {default as MoreVerticalIcon} from './MoreVerticalIcon'
 export {default as CheckMarkBadgeIcon} from './CheckMarkBadgeIcon'
+export {default as CalendarIcon} from './CalendarIcon';
+export {default as LogoutIcon} from './LogoutIcon';

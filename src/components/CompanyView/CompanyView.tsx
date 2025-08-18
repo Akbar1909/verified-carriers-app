@@ -53,7 +53,7 @@ const CompanyView = ({ className, saved, company = {} }: CompanyViewProps) => {
           </div>
 
           <div className="lg:flex hidden items-center gap-2">
-            <Show when={true}>
+            <Show when={company.isTopRated}>
               <div className="px-3.5 py-1 text-orange-700 text-sm-medium bg-orange-50 rounded-sm">
                 Top Rated
               </div>
@@ -79,7 +79,7 @@ const CompanyView = ({ className, saved, company = {} }: CompanyViewProps) => {
       </div>
 
       <div className="flex lg:hidden items-center gap-2">
-        <Show when={true}>
+        <Show when={company.isTopRated}>
           <div className="px-3.5 py-1 text-orange-700 text-sm-medium bg-orange-50 rounded-sm">
             Top Rated
           </div>

@@ -2,7 +2,7 @@ import { request } from "@/services/request";
 import { returnArray } from "@/utils/common";
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 
-const useGetUsStates = (options:Partial<UseQueryOptions<any,any>>) => {
+const useGetUsStates = (options?:Partial<UseQueryOptions<any,any>>) => {
   const url = "/locations/us-states";
   const queryKey = [url];
 

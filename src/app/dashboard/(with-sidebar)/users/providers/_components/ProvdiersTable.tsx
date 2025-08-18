@@ -160,25 +160,15 @@ const ProvidersTable = () => {
 
         const { isVerified } = row;
         return (
-          <>
-            <DropdownMenu
-              options={[
-                {
-                  children: "Verify",
-                  onClick: () => {
-                    open("verify-modal");
-                    setSelectedRow(row);
-                  },
-                  hidden: isVerified,
-                },
-              ]}
-              toggler={
-                <Button iconButton size="md" color="tertiary-gray">
-                  <MoreVerticalIcon />
-                </Button>
-              }
-            />
-          </>
+          <div className="flex items-center justify-center">
+               <Show when={!isVerified}>
+                <Button size="sm" onClick={()=>{
+                  setSelectedRow(row);
+                  open('verify-modal')
+                }}>Approve</Button>
+               </Show>
+               <Show when={isVerified}>-</Show>
+          </div>
         );
       },
     },
@@ -200,7 +190,7 @@ const ProvidersTable = () => {
           handleSuccess={() => {
             const params = createQueryParams();
             params.delete(pageKey);
-            pushToRouter(params);
+            pushToRouter(params, {scroll:false});
             inValidateQuery();
           }}
           row={selectedRow}

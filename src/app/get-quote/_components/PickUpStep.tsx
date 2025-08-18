@@ -64,13 +64,34 @@ const PickUpStep = () => {
         />
         <Controller
           control={control}
-          name=""
+          name="pickupType"
           render={({ field }) => (
             <Select
               {...field}
-              options={[]}
+              options={[
+                {
+                  label: "Business area",
+                  value: "BUSINESS_AREA",
+                },
+                {
+                  label: "Private area",
+                  value: "PRIVATE_AREA",
+                },
+              ]}
               placeholder="Choose type"
               rootClassName="w-full lg:w-80"
+              onChange={(e) => {
+                field.onChange(e);
+
+                const params = createQueryParams();
+                if (e) {
+                  params.set(field.name, jsonStringify(e) as string);
+                } else {
+                  params.delete(field.name);
+                }
+
+                pushToRouter(params);
+              }}
             />
           )}
         />

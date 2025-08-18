@@ -4,12 +4,25 @@ import AboutCompany from "./AboutCompany";
 import Services from "./Services";
 import OtherReviews from "./OtherReviews";
 import SimilarCompanies from "./SimilarCompanies";
+import useGetReviews from "@/hooks/endpoints/reviews/useGetReviews";
+import useAppNavigation from "@/hooks/helpers/useAppNavigation";
 
 interface ReviewTabProps {
   companyId: string;
 }
 
 const ReviewTab = ({ companyId }: ReviewTabProps) => {
+
+  const {searchParams} = useAppNavigation()
+
+  const page=Number(searchParams.get('page') ?? 0)
+
+  const { reviews, pagination, inValidateQuery } = useGetReviews({
+    companyId,
+    page:page+1,
+    size:10
+  });
+
 
 
   return (
@@ -18,19 +31,27 @@ const ReviewTab = ({ companyId }: ReviewTabProps) => {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-1">
             <h2 className="text-xl-medium text-gray-900">Reviews</h2>
-            <span className="text-xl-medium text-gray-400">(428)</span>
+            <span className="text-xl-medium text-gray-400">
+              ({pagination.totalCount})
+            </span>
           </div>
           <Select options={[]} rootClassName="w-40" />
         </div>
 
-        <ReviewList />
+        <ReviewList
+          pagination={{
+            totalPages: pagination.totalPages,
+          }}
+          inValidateQuery={inValidateQuery}
+          list={reviews}
+        />
       </section>
       <section>
         <aside className="flex flex-col gap-6">
           <AboutCompany companyId={companyId} />
           <Services companyId={companyId} />
-          <OtherReviews />
-          <SimilarCompanies />
+          <OtherReviews companyId={companyId} />
+          <SimilarCompanies companyId={companyId} />
         </aside>
       </section>
     </div>

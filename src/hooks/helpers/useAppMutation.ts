@@ -4,9 +4,7 @@ import { toast } from "react-hot-toast";
 const useAppMutation = (options: UseMutationOptions<any, any, any>) =>
   useMutation({
     onError: (err) => {
-      console.log(err);
 
-      debugger
 
       toast.error(err?.response?.data?.message);
     },

@@ -45,7 +45,7 @@ const Pagination = ({
       className={twMerge("flex items-center justify-between pl-6", className)}
     >
       <span className="text-gray-500 text-md-medium">
-        Page {currentPage + 1} of 10
+        Page {currentPage + 1} of {totalPages}
       </span>
 
       <div className="flex items-center gap-3">

@@ -1,4 +1,4 @@
-import { ComponentProps, ComponentPropsWithoutRef, ReactNode } from "react";
+import { ComponentProps, ComponentPropsWithoutRef, ComponentPropsWithRef, forwardRef, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 import FormLabel from "../FormLabel";
 import HelperText from "../HelperText";
@@ -17,7 +17,9 @@ interface TextFieldProps extends ComponentPropsWithoutRef<"input"> {
   isUrl?: boolean;
 }
 
-const TextField = ({
+type InputRef=ComponentPropsWithRef<'input'>['ref'];
+
+const TextField = forwardRef( ({
   rootClassName,
   className,
   startIcon,
@@ -31,7 +33,7 @@ const TextField = ({
   hasError,
   isUrl,
   ...computedProps
-}: TextFieldProps) => {
+}: TextFieldProps, ref:InputRef) => {
   const { className: startIconClassName, ...computedStartIconProps } =
     startIconProps || {};
   const { className: endIconClassName, ...computedEndIconProps } =
@@ -51,7 +53,7 @@ const TextField = ({
         {startIcon && !isUrl && (
           <div
             className={twMerge(
-              "absolute left-3.5 top-1/2 -translate-y-1/2 z-50",
+              "absolute left-3.5 top-1/2 -translate-y-1/2 z-10",
               startIconClassName
             )}
             {...computedStartIconProps}
@@ -63,7 +65,7 @@ const TextField = ({
         {isUrl && (
           <div
             className={twMerge(
-              "absolute top-1/2 h-full -translate-y-1/2 z-50 flex items-center justify-center",
+              "absolute top-1/2 h-full -translate-y-1/2 z-10 flex items-center justify-center",
               "text-md text-gray-500 pl-3.5 pr-2.5 border-r border-gray-300",
               startIconClassName
             )}
@@ -90,13 +92,14 @@ const TextField = ({
               "border-error-300 focus:border-error-300 !shadow-input-destructive-focus",
             className
           )}
+          ref={ref}
           {...computedProps}
         />
 
         {endIcon && (
           <div
             className={twMerge(
-              "absolute right-3.5 top-1/2 -translate-y-1/2 z-50",
+              "absolute right-3.5 top-1/2 -translate-y-1/2 z-10",
               hasError && "[&_path]:stroke-error-500 [&_path]:circle-error-500",
               endIconClassName
             )}
@@ -121,6 +124,8 @@ const TextField = ({
       </div>
     </div>
   );
-};
+})
+
+TextField.displayName='TextField';
 
 export default TextField;

@@ -15,7 +15,8 @@ import Show from "@/components/Show";
 import InfoTab from "./_components/InfoTab";
 import ServicesTab from "./_components/ServicesTab";
 import useGetCompanyById from "@/hooks/endpoints/companies/useGetCompanyById";
-import { returnArray } from "@/utils/common";
+import { request } from "@/services/request";
+import { useQuery } from "@tanstack/react-query";
 
 const CompanyProfilePage = () => {
   const { params } = useAppNavigation();
@@ -24,9 +25,12 @@ const CompanyProfilePage = () => {
 
   const tab = searchParams.get("tab") || "reviews";
 
-  const { company } = useGetCompanyById(companyId);
+  const { company, companyLogo } = useGetCompanyById(companyId);
 
-  const companyLogo = returnArray(company.companyLogos).at(0);
+  useQuery({
+    queryFn: () => request.get(`/companies/${companyId}/views/record`),
+    queryKey: ["record", { companyId }],
+  });
 
   return (
     <MainLayout>
@@ -49,16 +53,20 @@ const CompanyProfilePage = () => {
                 </Link>
 
                 <div className="flex items-center gap-2 mt-1 mb-2">
-                  <span className="text-md-medium text-gray-500">4.9</span>
-                  <StarRating rating={4} />
+                  <span className="text-md-medium text-gray-500">
+                    {company.averageRating}
+                  </span>
+                  <StarRating rating={Math.round(company.averageRating)} />
                   <span className="text-sm-medium text-gray-500 underline">
-                    165 reviews
+                    {company.reviewCount} reviews
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="px-3.5 py-1 text-orange-700 text-sm-medium bg-orange-50 rounded-sm">
-                    Top Rated
-                  </div>
+                  <Show when={company.isTopRated}>
+                    <div className="px-3.5 py-1 text-orange-700 text-sm-medium bg-orange-50 rounded-sm">
+                      Top Rated
+                    </div>
+                  </Show>
                   <Show when={company.isVerified}>
                     <div className="flex items-center gap-0.5">
                       <VerifiedIcon />
@@ -80,7 +88,9 @@ const CompanyProfilePage = () => {
                     {company.website}
                   </Button>
                 </Link>
-                <Button size="md">Write a review</Button>
+                <Link href={`/review/${company.id}`}>
+                  <Button size="md">Write a review</Button>
+                </Link>
               </div>
             </div>
           </article>
@@ -118,7 +128,7 @@ const CompanyProfilePage = () => {
             <ReviewTab companyId={companyId} />
           </Show>
           <Show when={tab === "info"}>
-            <InfoTab  companyId={companyId}/>
+            <InfoTab companyId={companyId} />
           </Show>
           <Show when={tab === "services"}>
             <ServicesTab />

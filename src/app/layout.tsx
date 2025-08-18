@@ -5,6 +5,7 @@ import "./globals.css";
 import GlobalProvider from "@/providers/GlobalProvider";
 import { getServerSession } from "next-auth";
 import MainLayoutClient from "@/components/MainLayoutClient";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -22,8 +23,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
-
+  const session = await getServerSession(authOptions);
 
   return (
     <html lang="en">
@@ -34,9 +34,7 @@ export default async function RootLayout({
         }}
       >
         <GlobalProvider session={session}>
-          <MainLayoutClient>
-          {children}
-          </MainLayoutClient>
+          <MainLayoutClient>{children}</MainLayoutClient>
         </GlobalProvider>
         <Toaster containerStyle={{ zIndex: 99999 }} />
       </body>

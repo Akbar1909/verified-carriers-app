@@ -12,10 +12,10 @@ const Services = ({ companyId }: ServicesProps) => {
 
   const services = returnArray(company.services).map((item) => ({
     label: item.service?.serviceLabel,
-    path:'#'
+    path: `/companies?serviceIds=${encodeURIComponent(
+      JSON.stringify([item?.service?.id])
+    )}`,
   }));
-
- 
 
   return (
     <div className="flex flex-col gap-4">

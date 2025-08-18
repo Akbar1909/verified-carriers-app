@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Container from "@/components/Container";
 import useGetMe from "@/hooks/endpoints/users/useGetMe";
 
@@ -7,10 +7,7 @@ interface UserLayoutProps {
 }
 
 const UserLayout = ({ children }: UserLayoutProps) => {
- useGetMe();
-
- 
-
+  useGetMe();
 
   return <Container>{children}</Container>;
 };
