@@ -1,12 +1,13 @@
 import Pagination from "@/components/Pagination";
 import ReviewCard from "./ReviewCard";
+import Show from "../Show";
 
 interface ReviewListProps {
   list: Array<any>[];
   pagination: {
     totalPages: number;
   };
-  inValidateQuery:()=>void;
+  inValidateQuery: () => void;
 }
 
 const ReviewList = ({ list, pagination, inValidateQuery }: ReviewListProps) => {
@@ -15,7 +16,9 @@ const ReviewList = ({ list, pagination, inValidateQuery }: ReviewListProps) => {
       {list.map((review, i) => (
         <ReviewCard inValidateQuery={inValidateQuery} review={review} key={i} />
       ))}
-      <Pagination totalPages={pagination.totalPages} />
+      <Show when={list.length > 0}>
+        <Pagination totalPages={pagination.totalPages} />
+      </Show>
     </div>
   );
 };

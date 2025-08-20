@@ -78,27 +78,30 @@ const CompanyDashboardPage = () => {
             </div>
 
             <div className="ml-auto flex items-center gap-1">
-                <Button color='tertiary'>Upgrade profile</Button>
-                <Button startIcon={<ExternalLinkIcon/>} color='secondary-gray'>Request review</Button>
+              <Button color="tertiary">Upgrade profile</Button>
+              <Button startIcon={<ExternalLinkIcon />} color="secondary-gray">
+                Request review
+              </Button>
             </div>
           </div>
         </Container>
 
-       <div className="mt-8">
-         <Container>
-             <div className="py-8">
-                  <div className='grid grid-cols-3 gap-6'>
-                      <StatCard/>
-                      <StatCard/>
-                      <StatCard/>
-                  </div>
+        <div className="mt-8">
+          <Container>
+            <div className="py-8">
+              <div className="grid grid-cols-3 gap-6">
+                <StatCard title="Impressions" />
+                <StatCard title="Profile views" />
 
-                  {/* <div className='grid grid-cols-2 gap-6 mt-8'>
+                <StatCard title="Website conversions" />
+              </div>
+
+              {/* <div className='grid grid-cols-2 gap-6 mt-8'>
                       <TrafficSourceCard/>
                   </div> */}
-             </div>
-         </Container>
-       </div>
+            </div>
+          </Container>
+        </div>
       </div>
     </MainLayout>
   );

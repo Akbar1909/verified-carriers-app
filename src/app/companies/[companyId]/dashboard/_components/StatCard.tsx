@@ -4,19 +4,19 @@ import { twMerge } from "tailwind-merge";
 
 interface StatCardProps {
   className?: string;
+  title:string;
 }
 
-const StatCard = ({ className }: StatCardProps) => {
+const StatCard = ({ className, title }: StatCardProps) => {
   const {
     chartData,
     gradientId,
     strokeColor,
     value,
-    title,
     isPositive,
     percentage,
   } = {
-    title: "Impressions",
+   
     value: 2420,
     percentage: 40,
     isPositive: true,
@@ -38,7 +38,7 @@ const StatCard = ({ className }: StatCardProps) => {
         className
       )}
     >
-      <h3 className="text-md-medium text-gray-900">Impressions</h3>
+      <h3 className="text-md-medium text-gray-900">{title}</h3>
 
       <div className="flex items-center gap-4">
         <div className="flex-2 flex flex-col gap-4">

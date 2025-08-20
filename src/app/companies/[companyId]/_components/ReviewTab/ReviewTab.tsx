@@ -6,6 +6,8 @@ import OtherReviews from "./OtherReviews";
 import SimilarCompanies from "./SimilarCompanies";
 import useGetReviews from "@/hooks/endpoints/reviews/useGetReviews";
 import useAppNavigation from "@/hooks/helpers/useAppNavigation";
+import Show from "@/components/Show";
+import Empty from "@/components/Empty";
 
 interface ReviewTabProps {
   companyId: string;
@@ -13,10 +15,11 @@ interface ReviewTabProps {
 
 const ReviewTab = ({ companyId }: ReviewTabProps) => {
   const { searchParams } = useAppNavigation();
+  const { router } = useAppNavigation();
 
   const page = Number(searchParams.get("page") ?? 0);
 
-  const { reviews, pagination, inValidateQuery } = useGetReviews({
+  const { reviews, pagination, inValidateQuery, isSuccess } = useGetReviews({
     companyId,
     page: page + 1,
     size: 10,
@@ -42,6 +45,15 @@ const ReviewTab = ({ companyId }: ReviewTabProps) => {
           inValidateQuery={inValidateQuery}
           list={reviews}
         />
+
+        <Show when={isSuccess && reviews.length === 0}>
+          <Empty
+            actionLabel="Write a review"
+            onAction={() => {
+              router.push(`/review/${companyId}`);
+            }}
+          />
+        </Show>
       </section>
       <section>
         <aside className="flex flex-col gap-6">

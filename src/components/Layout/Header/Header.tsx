@@ -59,7 +59,7 @@ const Header = () => {
         <Show when={!isTabletOrMobile}>
           <>
             <Logo />
-            <SearchField/>
+            <SearchField />
 
             <nav className="ml-auto">
               <ul className="flex items-center">
@@ -142,7 +142,10 @@ const Header = () => {
                     />
 
                     <div className="flex flex-col">
-                      <Link href={`/users/${user?.id}`} className="text-md-medium hover:underline text-gray-900">
+                      <Link
+                        href={`/users/${user?.id}`}
+                        className="text-md-medium hover:underline text-gray-900"
+                      >
                         {joinStrings([user?.firstName, user?.lastName])}
                       </Link>
                       <span className="text-md text-gray-500">
@@ -165,9 +168,12 @@ const Header = () => {
                     />
 
                     <div className="flex flex-col">
-                      <span className="text-md-medium text-gray-900">
+                      <Link
+                        href={`/companies/${company.id}/dashboard`}
+                        className="text-md-medium text-gray-900 hover:underline"
+                      >
                         {company.name}
-                      </span>
+                      </Link>
                       <span className="text-md text-gray-500">
                         {company?.workEmail}
                       </span>
