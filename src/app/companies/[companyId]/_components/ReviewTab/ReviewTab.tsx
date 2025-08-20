@@ -1,5 +1,5 @@
 import Select from "@/components/Select";
-import ReviewList from "./ReviewList";
+import ReviewList from "@/components/Review/ReviewList";
 import AboutCompany from "./AboutCompany";
 import Services from "./Services";
 import OtherReviews from "./OtherReviews";
@@ -12,18 +12,15 @@ interface ReviewTabProps {
 }
 
 const ReviewTab = ({ companyId }: ReviewTabProps) => {
+  const { searchParams } = useAppNavigation();
 
-  const {searchParams} = useAppNavigation()
-
-  const page=Number(searchParams.get('page') ?? 0)
+  const page = Number(searchParams.get("page") ?? 0);
 
   const { reviews, pagination, inValidateQuery } = useGetReviews({
     companyId,
-    page:page+1,
-    size:10
+    page: page + 1,
+    size: 10,
   });
-
-
 
   return (
     <div className="grid grid-cols-[1fr_352px] gap-8">

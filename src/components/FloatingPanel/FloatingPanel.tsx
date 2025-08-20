@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ReactNode, useRef, useState } from 'react';
+import { ComponentPropsWithoutRef, ReactNode, useRef, useState } from "react";
 import {
   offset,
   useFloating,
@@ -8,16 +8,16 @@ import {
   autoUpdate,
   arrow,
   FloatingPortal,
-} from '@floating-ui/react';
-import { twMerge } from 'tailwind-merge';
-
+  size,
+} from "@floating-ui/react";
+import { twMerge } from "tailwind-merge";
 
 export interface FloatingPanelProps {
-  floatingOptions?: Partial<Parameters<typeof useFloating>['0']>;
+  floatingOptions?: Partial<Parameters<typeof useFloating>["0"]>;
   children?: ReactNode;
   toggler?: ReactNode;
-  floatingPanelProps?: ComponentPropsWithoutRef<'div'>;
-  mode?: 'hover' | 'click';
+  floatingPanelProps?: ComponentPropsWithoutRef<"div">;
+  mode?: "hover" | "click";
   enableArrow?: boolean;
   disableMouseLeave?: boolean;
 }
@@ -43,31 +43,38 @@ const FloatingPanel = ({
   floatingPanelProps = {},
   toggler,
   children,
-  mode = 'click',
+  mode = "click",
   enableArrow = false,
 }: FloatingPanelProps) => {
-  
   const controllerState = useState(false);
   const arrowRef = useRef(null);
   const isOpen = floatingOptions?.open || controllerState[0];
   const setIsOpen = floatingOptions?.onOpenChange || controllerState[1];
 
   if (
-    Object.hasOwn(floatingOptions, 'open') &&
-    !Object.hasOwn(floatingOptions, 'onOpenChange')
+    Object.hasOwn(floatingOptions, "open") &&
+    !Object.hasOwn(floatingOptions, "onOpenChange")
   ) {
     throw new Error(
-      t(
-        "floatingOptions open keyni o'z ichiga olgani sababli, onOpenChange ham majburiy bo'ldi"
-      )
+      "floatingOptions open keyni o'z ichiga olgani sababli, onOpenChange ham majburiy bo'ldi"
     );
   }
 
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
     onOpenChange: setIsOpen,
-    placement: 'bottom-end',
-    middleware: [offset(5), arrow({ element: arrowRef })],
+    placement: "bottom-end",
+    middleware: [
+      offset(5),
+      size({
+        apply({ rects, elements }) {
+          Object.assign(elements.floating.style, {
+            width: `${rects.reference.width}px`,
+          });
+        },
+      }),
+      arrow({ element: arrowRef }),
+    ],
     whileElementsMounted: autoUpdate,
 
     ...floatingOptions,
@@ -84,14 +91,13 @@ const FloatingPanel = ({
       <span
         role="button"
         ref={refs.setReference}
-        className="w-fit"
-        {...(mode === 'click' && {
+        {...(mode === "click" && {
           onClick: (e) => {
             e.stopPropagation();
             setIsOpen(!isOpen);
           },
         })}
-        {...(mode === 'hover' && {
+        {...(mode === "hover" && {
           onMouseEnter: () => setIsOpen(true),
           onMouseLeave: () => setIsOpen(false),
         })}
@@ -104,10 +110,10 @@ const FloatingPanel = ({
           <div
             ref={refs.setFloating}
             className={twMerge(
-              ' rounded-lg border border-stone-300 bg-v2-white shadow-3xl z-9999',
+              "w-full rounded-lg border border-stone-100 bg-v2-white shadow-3xl z-9999",
               className
             )}
-            style={{ ...floatingStyles, position: 'fixed' }}
+            style={{ ...floatingStyles }}
             {...getFloatingProps()}
             {...computedProps}
           >

@@ -5,6 +5,7 @@ import CompanyShortView from "@/components/CompanyShortView";
 import useAppNavigation from "@/hooks/helpers/useAppNavigation";
 import useGetCompanyById from "@/hooks/endpoints/companies/useGetCompanyById";
 import { returnArray } from "@/utils/common";
+import useGetCompaniesLookedAt from "@/hooks/endpoints/companies/useGetCompaniesLookedAt";
 
 const ServicesTab = () => {
 
@@ -14,6 +15,9 @@ const ServicesTab = () => {
   const {company} = useGetCompanyById(companyId)
 
   const services=returnArray(company.services)
+
+  const {companies:similarCompanies} = useGetCompaniesLookedAt({companyId})
+
 
   return (
     <section>
@@ -43,8 +47,8 @@ const ServicesTab = () => {
       <h2 className="text-xl-medium text-gray-900 mb-4 mt-6">People who looked at this company also looked at</h2>
 
       <div className="grid grid-cols-3 gap-x-4 gap-y-4">
-        {new Array(4).fill({}).map((_, i) => (
-          <CompanyShortView key={i} />
+        {similarCompanies.map((company, i) => (
+          <CompanyShortView company={company} key={i} />
         ))}
       </div>
     </section>

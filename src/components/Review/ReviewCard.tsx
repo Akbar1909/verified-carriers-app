@@ -31,9 +31,7 @@ interface ReviewCardProps {
 
 const ReviewCard = ({ review, inValidateQuery }: ReviewCardProps) => {
   const { createQueryParams, pushToRouter } = useAppNavigation();
-  const { data } = useSession({
-    required: true,
-  });
+  const { data } = useSession();
 
   const { open, close, modal } = useAppToggle<"delete-review-modal">();
 
@@ -62,14 +60,14 @@ const ReviewCard = ({ review, inValidateQuery }: ReviewCardProps) => {
             {joinStrings([review?.user?.firstName, review?.user?.lastName])}
           </span>
           {/* <span className="text-md text-gray-400">(12 reviews)</span> */}
-         <span className="ml-auto">
-           <ShareButton title="Share" url="review url">
-            <div role="button" className="flex items-center gap-2.5 ml-auto">
-              <ShareIcon width={20} height={20} />
-              <span className="text-md-medium text-gray-400">Share</span>
-            </div>
-          </ShareButton>
-         </span>
+          <span className="ml-auto">
+            <ShareButton title="Share" url="review url">
+              <div role="button" className="flex items-center gap-2.5 ml-auto">
+                <ShareIcon width={20} height={20} />
+                <span className="text-md-medium text-gray-400">Share</span>
+              </div>
+            </ShareButton>
+          </span>
         </div>
         <div className="pt-4">
           <div className="flex items-center">

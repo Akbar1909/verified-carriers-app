@@ -36,9 +36,9 @@ const OtherReviews = ({ companyId }: OtherReviewsProps) => {
               />
 
               <div className="flex flex-col gap-1.5">
-                <h3 className="text-md-semibold text-gray-900">
+                <Link href={`/companies/${companyId}`} className="text-md-semibold text-gray-900 hover:underline">
                   {company.name}
-                </h3>
+                </Link>
                 <div className="flex items-center gap-2">
                   <span className="text-md-medium text-gray-500">
                     {company.averageRating}

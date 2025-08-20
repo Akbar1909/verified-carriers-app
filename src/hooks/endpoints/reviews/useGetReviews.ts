@@ -7,6 +7,7 @@ const useGetReviews = (filterDto: {
   page: number;
   size: number;
   companyId?:string
+  userId?: string;
 }) => {
   const queryClient = useQueryClient();
 

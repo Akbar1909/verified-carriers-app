@@ -40,7 +40,7 @@ const Skeleton = ({
   ...rest
 }: SkeletonWrapperProps): JSX.Element => {
   if (isLoading) {
-    return <ReactSkeleton {...rest} />;
+    return <ReactSkeleton  {...rest} />;
   }
 
   return <>{children}</>;

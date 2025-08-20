@@ -1,8 +1,17 @@
 import CompanyView from "@/components/CompanyView";
 import PersonalInfo from "../PersonalInfo";
 import Stats from "../Stats";
+import useGetUserSavedCompanies from "@/hooks/endpoints/saved-companies/useGetUserSavedCompanies";
 
-const SavedTab = () => {
+interface SavedTabProps {
+  userId: string;
+}
+
+const SavedTab = ({ userId }: SavedTabProps) => {
+  const { companies, isLoading, inValidateQuery } = useGetUserSavedCompanies({ userId });
+
+  console.log(companies)
+
   return (
     <div className="grid grid-cols-[1fr_352px] gap-8">
       <section>
@@ -13,10 +22,11 @@ const SavedTab = () => {
         </div>
 
         <div className="flex flex-col gap-6">
-          {new Array(5).fill({}).map((_, i) => (
+          {(isLoading ? new Array(6).fill({}) : companies).map((company, i) => (
             <CompanyView
               key={i}
-              saved
+              company={company}
+              inValidateQuery={inValidateQuery}
               className="border-0 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,16,40,0.06),0px_1px_3px_0px_rgba(16,16,40,0.1)] bg-white"
             />
           ))}
@@ -24,8 +34,8 @@ const SavedTab = () => {
       </section>
       <section>
         <aside className="flex flex-col gap-6">
-          <Stats />
-          <PersonalInfo />
+          <Stats userId={userId} />
+          <PersonalInfo userId={userId} />
         </aside>
       </section>
     </div>

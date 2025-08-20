@@ -38,6 +38,7 @@ export interface File {
   
   export interface CompanyModel {
     id: string;
+    isSaved?:boolean;
     createdAt: string;
     updatedAt: string;
     name: string;

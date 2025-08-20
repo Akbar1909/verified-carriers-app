@@ -21,18 +21,21 @@ const Footer = () => {
           </h2>
 
           <div className="flex flex-col gap-2">
-            <button
+            <Link href='/get-quote' className="flex-1">
+              <button
               type="button"
               className="rounded-[999px] bg-black text-white text-lg-medium py-3.5 px-7"
             >
               Get a Free Quote
             </button>
+            </Link>
+            <Link href='/companies' className="flex-1">
             <button
               type="button"
-              className="shadow-xs rounded-[999px] border-[0.8px] border-gray-300 py-3.5 px-7 text-lg-medium text-gray-500"
+              className="shadow-xs w-full rounded-[999px] border-[0.8px] border-gray-300 py-3.5 px-7 text-lg-medium text-gray-500"
             >
               All Companies
-            </button>
+            </button></Link>
           </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-5">
@@ -84,7 +87,7 @@ const Footer = () => {
                 <Link href="/companies">Companies</Link>
               </li>
               <li>
-                <Link href="#">Free Estimate</Link>
+                <Link href="/get-quote">Free Estimate</Link>
               </li>
               <li>
                 <Link href="#">Sign up</Link>

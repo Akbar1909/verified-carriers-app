@@ -21,15 +21,17 @@ import Avatar from "@/components/Avatar";
 import { joinStrings } from "@/utils/common";
 import dynamic from "next/dynamic";
 import useAppToggle from "@/hooks/helpers/useAppToggle";
+import FloatingPanel from "@/components/FloatingPanel";
+import SearchField from "./SearchField";
 
-const LogoutModal=dynamic(()=>import('./LogoutModal'),{ssr:false})
+const LogoutModal = dynamic(() => import("./LogoutModal"), { ssr: false });
 
 const Header = () => {
   const { status, data } = useSession();
   const { pathname } = useAppNavigation();
   const { isTabletOrMobile } = useTabletOrMobile();
 
-  const {open,close,modal} = useAppToggle<'logout-modal'>()
+  const { open, close, modal } = useAppToggle<"logout-modal">();
 
   const companyAuthenticated =
     data?.role === "company" && status === "authenticated";
@@ -40,11 +42,7 @@ const Header = () => {
     enabled: companyAuthenticated,
   });
 
-  
-
   const { data: user } = useGetMe({ enabled: userAuthenticated });
-
-  console.log(company);
 
   return (
     <header
@@ -61,11 +59,7 @@ const Header = () => {
         <Show when={!isTabletOrMobile}>
           <>
             <Logo />
-            <TextField
-              placeholder="Company name"
-              startIcon={<SearchIcon />}
-              rootClassName="flex-1 max-w-[492px]"
-            />
+            <SearchField/>
 
             <nav className="ml-auto">
               <ul className="flex items-center">
@@ -138,7 +132,9 @@ const Header = () => {
                   </li>
                 </Show>
 
-                <Show when={status === "authenticated" && data?.role === 'user'}>
+                <Show
+                  when={status === "authenticated" && data?.role === "user"}
+                >
                   <div className="flex items-center gap-3">
                     <Avatar
                       url={`${process.env.NEXT_PUBLIC_API_URL}/files/download/${user?.image?.id}`}
@@ -146,20 +142,22 @@ const Header = () => {
                     />
 
                     <div className="flex flex-col">
-                      <span className="text-md-medium text-gray-900">
+                      <Link href={`/users/${user?.id}`} className="text-md-medium hover:underline text-gray-900">
                         {joinStrings([user?.firstName, user?.lastName])}
-                      </span>
+                      </Link>
                       <span className="text-md text-gray-500">
                         {user?.email}
                       </span>
                     </div>
 
-                    <button onClick={()=>open('logout-modal')} type="button">
+                    <button onClick={() => open("logout-modal")} type="button">
                       <LogoutIcon />
                     </button>
                   </div>
                 </Show>
-                <Show when={status === "authenticated" && data?.role === 'company'}>
+                <Show
+                  when={status === "authenticated" && data?.role === "company"}
+                >
                   <div className="flex items-center gap-3">
                     <Avatar
                       url={`${process.env.NEXT_PUBLIC_API_URL}/files/download/${company?.companyLogos?.[0]?.file?.id}`}
@@ -175,7 +173,7 @@ const Header = () => {
                       </span>
                     </div>
 
-                    <button onClick={()=>open('logout-modal')} type="button">
+                    <button onClick={() => open("logout-modal")} type="button">
                       <LogoutIcon />
                     </button>
                   </div>
@@ -186,7 +184,11 @@ const Header = () => {
         </Show>
       </Container>
 
-      <LogoutModal isOpen={modal==='logout-modal'} onClose={close} handleSuccess={()=>{}} />
+      <LogoutModal
+        isOpen={modal === "logout-modal"}
+        onClose={close}
+        handleSuccess={() => {}}
+      />
     </header>
   );
 };

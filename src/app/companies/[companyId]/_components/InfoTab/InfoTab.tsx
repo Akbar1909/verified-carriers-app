@@ -18,7 +18,7 @@ const InfoTab = ({ companyId }: InfoTabProps) => {
       </div>
 
       <GallerySection />
-      <OtherReviews />
+      <OtherReviews companyId={companyId}/>
     </section>
   );
 };

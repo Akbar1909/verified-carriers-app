@@ -4,9 +4,9 @@ import MainLayout from "@/components/Layout/MainLayout";
 
 import Container from "@/components/Container";
 import { SearchIcon } from "@/components/SvgIcons";
-import TextField from "@/components/TextField";
 import React from "react";
 import CompanyList from "./_components/CompanyList";
+import SearchField from "@/components/Layout/Header/SearchField";
 
 const CompaniesPage = () => {
   return (
@@ -19,11 +19,14 @@ const CompaniesPage = () => {
             </h1>
 
             <div className="flex flex-col gap-3 w-full lg:w-auto">
-              <TextField
-                className="w-full max-w-160 lg:w-160 h-12"
-                startIcon={<SearchIcon />}
-                placeholder="Company name or service"
-              />
+             
+
+              <SearchField textFieldProps={{
+                rootClassName:'',
+                className: "w-full max-w-160 lg:w-160 h-12",
+                startIcon: <SearchIcon />,
+                placeholder: "Company name or service",
+              }} />
               
             </div>
           </div>

@@ -1,7 +1,8 @@
 import { PolymorphicProps } from "@/utils/helper.types";
-import {  ElementType } from "react";
+import { ElementType } from "react";
 import { twMerge } from "tailwind-merge";
 import Link from "next/link";
+import Highlighter from "../Highlighter";
 
 export type RTruncatedTextProps<T extends ElementType> = PolymorphicProps<T> & {
   enabled?: boolean;
@@ -53,11 +54,17 @@ function TruncatedText<T extends ElementType = "p">({
         lines === 4 && "line-clamp-4",
         lines === 5 && "line-clamp-5",
         lines === 6 && "line-clamp-6",
-        lines === 7 && "line-clamp-7",
+        lines === 7 && "line-clamp-7"
       )}
       {...computedProps}
     >
-      {children}
+      {highlightWords.length > 0 ? (
+        <Highlighter highlightWords={highlightWords}>
+          {String(children)}
+        </Highlighter>
+      ) : (
+        children
+      )}
     </Component>
   );
 }

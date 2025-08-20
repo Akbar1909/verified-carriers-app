@@ -3,11 +3,10 @@ import MainLayout from "@/components/Layout/MainLayout";
 
 import Container from "@/components/Container";
 import Avatar from "@/components/Avatar";
-import {  LinkIcon  } from "@/components/SvgIcons";
+import { LinkIcon } from "@/components/SvgIcons";
 import Button from "@/components/Button";
 import Link from "next/link";
 import Tab from "@/components/Tab";
-
 
 import useAppNavigation from "@/hooks/helpers/useAppNavigation";
 import Show from "@/components/Show";
@@ -15,10 +14,22 @@ import ReviewTab from "./_components/ReviewTab";
 import SavedTab from "./_components/SavedTab";
 import NotificationTab from "./_components/NotificationTab";
 import OrdersTab from "./_components/OrdersTab";
-
+import useGetUserOne from "@/hooks/endpoints/users/useGetUserOne";
+import { joinStrings } from "@/utils/common";
+import useGetUserStatsById from "@/hooks/endpoints/users/useGetUserStatsById";
 
 const UserProfilePage = () => {
-  const { searchParams } = useAppNavigation();
+  const { searchParams, params } = useAppNavigation();
+
+  const { id } = params;
+
+  const { data } = useGetUserOne({ id });
+
+  useGetUserStatsById({
+    id
+  })
+
+ 
 
   const tab = searchParams.get("tab") || "reviews";
 
@@ -28,16 +39,18 @@ const UserProfilePage = () => {
         <Container maxWidth="xl">
           <article className="flex items-center gap-6">
             <div>
-              <Avatar className="w-24 h-24" url="/images/avatar.png" />
+              <Avatar
+                url={`${process?.env?.NEXT_PUBLIC_API_URL}/files/download/${data?.image?.id}`}
+                className="w-24 h-24"
+              />
             </div>
             <div className="flex items-center gap-4 flex-1">
               <div>
                 <h1 className="text-d-sm-medium text-gray-900">
-                  Broadway Auto Transport
+                  {joinStrings([data?.firstName, data?.lastName])}
                 </h1>
 
-              <span className='text-md text-gray-500'>olivia@untitledui.com</span>
-                
+                <span className="text-md text-gray-500">{data?.email}</span>
               </div>
 
               <div className="flex  gap-3 ml-auto">
@@ -50,9 +63,9 @@ const UserProfilePage = () => {
                     Share
                   </Button>
                 </Link>
-                <Button size="md">
-                    Find a company
-                </Button>
+                <Link href='/companies'>
+                   <Button size="md">Find a company</Button>
+                 </Link>
               </div>
             </div>
           </article>
@@ -95,16 +108,16 @@ const UserProfilePage = () => {
       <main className="bg-gray-50 pt-8 pb-24">
         <Container maxWidth="xl">
           <Show when={tab === "reviews"}>
-             <ReviewTab/>
+            <ReviewTab userId={id as string} />
           </Show>
           <Show when={tab === "saved"}>
-             <SavedTab/>
+            <SavedTab userId={id as string} />
           </Show>
           <Show when={tab === "notifications"}>
-             <NotificationTab/>
+            <NotificationTab />
           </Show>
-          <Show when={tab === 'orders'}>
-             <OrdersTab/>
+          <Show when={tab === "orders"}>
+            <OrdersTab />
           </Show>
         </Container>
       </main>

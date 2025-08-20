@@ -4,7 +4,7 @@ import Collapse from "@/components/Collapse";
 import Show from "@/components/Show";
 import useGetCompaniesCount from "@/hooks/endpoints/companies/useGetCompaniesCount";
 import useAppNavigation from "@/hooks/helpers/useAppNavigation";
-import {  useState } from "react";
+import { useState } from "react";
 import FilterTags from "./FilterTags";
 import { twMerge } from "tailwind-merge";
 import { jsonParse, jsonStringify, returnArray } from "@/utils/common";
@@ -15,6 +15,7 @@ interface FilterProps {
   withSave?: boolean;
   withFilterTags?: boolean;
   total: number;
+  filterDto: Record<string, any>;
 }
 
 const Filter = ({
@@ -23,55 +24,68 @@ const Filter = ({
   withFilterTags = false,
   withSave = false,
   total,
+  filterDto,
 }: FilterProps) => {
   const { searchParams, pushToRouter, createQueryParams } = useAppNavigation();
 
+  const topRated = searchParams.get("topRated");
+  const mostViewed = searchParams.get("mostViewed");
+  const isNew = searchParams.get("isNew");
   const selectedExperience = Number(searchParams.get("experience") ?? 0);
+  const selectedSortBy = searchParams.get("sortBy");
+  const ratings = jsonParse(searchParams.get("ratings")) || [];
+  const verification = searchParams.get("verification");
   const serviceIds = jsonParse(searchParams.get("serviceIds")) || [];
 
-  const [filterDto, setFilterDto] = useState({
-    experience: Number(selectedExperience),
-    serviceIds: returnArray(serviceIds) as string[],
+  const { preparedData, services } = useGetCompaniesCount(filterDto, {
+    enabled: false,
   });
 
-  const { preparedData, services } = useGetCompaniesCount({ enabled: false });
-
-  const { experience } = preparedData;
+  const { experience, ratingResult } = preparedData;
 
   const sortByList = [
     {
       label: "Relevancy",
+      value: "relevancy",
     },
     {
       label: "Highly Rated",
+      value: "highlyRated",
     },
     {
       label: "Most Reviewed",
+      value: "mostReviewed",
     },
     {
       label: "Experience",
+      value: "experience",
     },
     {
       label: "Verified first",
+      value: "verifiedFirst",
     },
   ];
 
   const ratingList = [
     {
       label: "4.5 & up",
-      count: 56,
+      count: ratingResult?.[4.5] || 0,
+      value: 4.5,
     },
     {
       label: "4 & up",
-      count: 80,
+      count: ratingResult?.[4] || 0,
+      value: 4,
     },
     {
       label: "3.5 & up",
-      count: 122,
+      count: ratingResult?.[3.5] || 0,
+      value: 3.5,
     },
     {
       label: "3 & up",
-      count: 175,
+      count: ratingResult?.[3] || 0,
+      value: 3,
     },
   ];
 
@@ -133,15 +147,21 @@ const Filter = ({
   const statusList = [
     {
       label: "Top rated",
-      count: 56,
+      count: preparedData?.topRatedCount,
+      value: topRated === "true" ? "checked" : "unchecked",
+      name: "topRated",
     },
     {
       label: "Most reviewed",
-      count: 80,
+      count: preparedData?.topRatedCount,
+      value: mostViewed === "true" ? "checked" : "unchecked",
+      name: "mostViewed",
     },
     {
       label: "New",
-      count: 112,
+      count: preparedData?.newCompaniesCount,
+      value: isNew === "true" ? "checked" : "unchecked",
+      name: "isNew",
     },
   ];
 
@@ -186,11 +206,13 @@ const Filter = ({
   const verificationList = [
     {
       label: "Verified only",
-      count: 56,
+      count: preparedData?.verifiedCount,
+      value: "verified",
     },
     {
       label: "All statues",
-      count: 80,
+      count: preparedData?.totalCount,
+      value: "all",
     },
   ];
 
@@ -207,9 +229,22 @@ const Filter = ({
         <Show when={withSort}>
           <Collapse header="Sort by">
             <div className="pb-4">
-              {sortByList.map(({ label }, i) => (
+              {sortByList.map(({ label, value }, i) => (
                 <div className="pr-4 py-2.5 flex items-center gap-3" key={i}>
-                  <Checkbox shape="round" size="md" />
+                  <Checkbox
+                    value={selectedSortBy === value ? "checked" : "unchecked"}
+                    onChange={() => {
+                      // setFilterDto((prev) => ({ ...prev, experience: value }));
+
+                      if (!withSave) {
+                        const params = createQueryParams();
+                        params.set("sortBy", String(value));
+                        pushToRouter(params, { scroll: false });
+                      }
+                    }}
+                    shape="round"
+                    size="md"
+                  />
                   <span className="text-sm text-gray-700">{label}</span>
                 </div>
               ))}
@@ -219,9 +254,25 @@ const Filter = ({
 
         <Collapse header="Rating">
           <div className="pb-4">
-            {ratingList.map(({ label, count }, i) => (
+            {ratingList.map(({ label, count, value }, i) => (
               <div className="pr-4 py-2.5 flex items-center gap-3" key={i}>
-                <Checkbox size="md" />
+                <Checkbox
+                  size="md"
+                  value={ratings.includes(value) ? "checked" : "unchecked"}
+                  onChange={() => {
+                    const params = createQueryParams();
+
+                    const nextValues = !ratings.includes(value)
+                      ? [...ratings, value]
+                      : ratings.filter((rating) => rating !== value);
+
+                    params.set("ratings", jsonStringify(nextValues));
+
+                    // setFilterDto(prev=>({...prev, serviceIds:nextValues}))
+
+                    pushToRouter(params, { scroll: false });
+                  }}
+                />
                 <div className="flex items-center gap-1">
                   <span className="text-sm text-gray-700">{label}</span>
                   <span className="text-gray-400">({count})</span>
@@ -237,9 +288,7 @@ const Filter = ({
                 <Checkbox
                   size="md"
                   value={
-                    serviceIds.includes(serviceId)
-                      ? "checked"
-                      : "unchecked"
+                    serviceIds.includes(serviceId) ? "checked" : "unchecked"
                   }
                   onChange={() => {
                     const params = createQueryParams();
@@ -286,16 +335,14 @@ const Filter = ({
                   size="md"
                   shape="round"
                   variant="circular"
-                  value={
-                    selectedExperience === value ? "checked" : "unchecked"
-                  }
+                  value={selectedExperience === value ? "checked" : "unchecked"}
                   onChange={() => {
                     // setFilterDto((prev) => ({ ...prev, experience: value }));
 
                     if (!withSave) {
                       const params = createQueryParams();
                       params.set("experience", String(value));
-                      pushToRouter(params, {scroll:false});
+                      pushToRouter(params, { scroll: false });
                     }
                   }}
                 />
@@ -310,9 +357,23 @@ const Filter = ({
 
         <Collapse header="Status">
           <div className="pb-4">
-            {statusList.map(({ label, count }, i) => (
+            {statusList.map(({ label, count, value, name }, i) => (
               <div className="pr-4 py-2.5 flex items-center gap-3" key={i}>
-                <Checkbox size="md" />
+                <Checkbox
+                  size="md"
+                  value={value}
+                  onChange={() => {
+                    const params = createQueryParams();
+
+                    if (value === "checked") {
+                      params.delete(name);
+                    } else {
+                      params.set(name, "true");
+                    }
+
+                    pushToRouter(params, { scroll: false });
+                  }}
+                />
                 <div className="flex items-center gap-1">
                   <span className="text-sm text-gray-700">{label}</span>
                   <span className="text-gray-400">({count})</span>
@@ -352,9 +413,22 @@ const Filter = ({
 
         <Collapse header="Verification">
           <div className="pb-4">
-            {verificationList.map(({ label, count }, i) => (
+            {verificationList.map(({ label, count, value }, i) => (
               <div className="pr-4 py-2.5 flex items-center gap-3" key={i}>
-                <Checkbox size="md" shape="round" />
+                <Checkbox
+                  size="md"
+                  shape="round"
+                  value={verification === value ? "checked" : "unchecked"}
+                  onChange={() => {
+                    // setFilterDto((prev) => ({ ...prev, experience: value }));
+
+                    if (!withSave) {
+                      const params = createQueryParams();
+                      params.set("verification", String(value));
+                      pushToRouter(params, { scroll: false });
+                    }
+                  }}
+                />
                 <div className="flex items-center gap-1">
                   <span className="text-sm text-gray-700">{label}</span>
                   <span className="text-gray-400">({count})</span>

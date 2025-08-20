@@ -1,3 +1,4 @@
+"use client";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import MainLayout from "@/components/Layout/MainLayout";
@@ -12,6 +13,7 @@ import Trust from "./_components/Trust";
 import Partners from "./_components/Partners";
 import Insights from "./_components/Insights";
 import Link from "next/link";
+import SearchField from "@/components/Layout/Header/SearchField";
 
 const HomePage = () => {
   return (
@@ -40,16 +42,23 @@ const HomePage = () => {
             </h1>
 
             <div className="flex flex-col gap-3 w-full lg:w-auto">
-              <TextField
+              {/* <TextField
                 className="w-full max-w-160 lg:w-160 h-12"
                 startIcon={<SearchIcon />}
                 placeholder="Find a trusted company"
+              /> */}
+              <SearchField
+                textFieldProps={{
+                  rootClassName:'',
+                  className: "w-full max-w-160 lg:w-160 h-12",
+                  startIcon: <SearchIcon />,
+                  placeholder: "Find a trusted company",
+                }}
               />
-            <Link href='/get-quote'>
-              
-            <Button fullWidth className="h-12 text-md-medium text-white">
-                Get a Free Quote
-              </Button>
+              <Link href="/get-quote">
+                <Button fullWidth className="h-12 text-md-medium text-white">
+                  Get a Free Quote
+                </Button>
               </Link>
             </div>
           </div>

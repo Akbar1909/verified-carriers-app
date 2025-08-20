@@ -16,11 +16,23 @@ const FilterTags = ({ total }: FilterTagsProps) => {
   const { options } = useGetServices({ enabled: false });
 
   const selectedExperience = searchParams.get("experience");
+  const selectedVerification = searchParams.get("verification");
+  const selectedRatings = jsonParse(searchParams.get("ratings")) || [];
   const selectedServiceIds = jsonParse(searchParams.get("serviceIds")) || [];
+  const selectedSortBy = searchParams.get("sortBy");
+
+  const topRated = searchParams.get("topRated") === "true";
+  const isNew = searchParams.get("isNew") === "true";
 
   const hasFilter =
+    searchParams.has("sortBy") ||
+    searchParams.has("ratings") ||
+    searchParams.has("topRated") ||
+    searchParams.has("isNew") ||
+    searchParams.has("mostViewed") ||
     searchParams.has("experience") ||
-    (searchParams.has("serviceIds") && selectedServiceIds.length > 0);
+    (searchParams.has("serviceIds") && selectedServiceIds.length > 0) ||
+    searchParams.has("verification");
 
   const tags = useMemo(() => {
     const list: Array<{ label: string; value?: number; property: string }> = [];
@@ -30,6 +42,15 @@ const FilterTags = ({ total }: FilterTagsProps) => {
         label: `${selectedExperience} & up`,
         value: Number(selectedExperience),
         property: "experience",
+      });
+    }
+    if (selectedRatings && selectedRatings.length > 0) {
+      selectedRatings.forEach((rating: number) => {
+        list.push({
+          label: `${rating} & up`,
+          value: rating,
+          property: "ratings",
+        });
       });
     }
 
@@ -47,8 +68,48 @@ const FilterTags = ({ total }: FilterTagsProps) => {
       });
     }
 
+    if (topRated) {
+      list.push({
+        label: "Top rated",
+        value: "",
+        property: "topRated",
+      });
+    }
+    if (isNew) {
+      list.push({
+        label: "New",
+        value: "",
+        property: "isNew",
+      });
+    }
+
+    if (selectedVerification) {
+      list.push({
+        label: `${selectedVerification}`,
+        value: selectedVerification,
+        property: "verification",
+      });
+    }
+
+    if (selectedSortBy) {
+      list.push({
+        label: "Sort by: " + selectedSortBy,
+        value: selectedSortBy,
+        property: "sortBy",
+      });
+    }
+
     return list;
-  }, [selectedExperience, selectedServiceIds, options]);
+  }, [
+    selectedExperience,
+    selectedServiceIds,
+    options,
+    topRated,
+    isNew,
+    selectedVerification,
+    selectedRatings,
+    selectedSortBy,
+  ]);
 
   return (
     <header className="flex px-4 lg:px-0 gap-6 lg:gap-0 flex-col lg:flex-row justify-between items-start lg:items-center pb-4">
@@ -66,6 +127,11 @@ const FilterTags = ({ total }: FilterTagsProps) => {
 
                 switch (property) {
                   case "experience":
+                  case "topRated":
+                  case "isNew":
+                  case "mostViewed":
+                  case "verification":
+                  case "sortBy":
                     {
                       params.delete(property);
                     }
@@ -77,6 +143,14 @@ const FilterTags = ({ total }: FilterTagsProps) => {
                       );
 
                       params.set("serviceIds", jsonStringify(updatedIds));
+                    }
+                  case "ratings":
+                    {
+                      const updatedIds = selectedRatings.filter(
+                        (item) => item !== value
+                      );
+
+                      params.set("ratings", jsonStringify(updatedIds));
                     }
                     break;
                 }
