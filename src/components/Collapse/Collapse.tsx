@@ -61,9 +61,9 @@ const Collapse: React.FC<CollapseProps> = ({
         exit={{ height: 0 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         style={{ overflow: 'hidden' }}
-        className='pl-4 border-b border-gray-300'
+        className={twMerge('pl-4 border-b border-gray-300', bodyClassName)}
       >
-        <div className={twMerge(bodyClassName)}>{children}</div>
+        <div>{children}</div>
       </motion.div>
     </div>
   );

@@ -11,7 +11,7 @@ import SearchField from "@/components/Layout/Header/SearchField";
 const CompaniesPage = () => {
   return (
     <MainLayout>
-      <div className="py-24 flex items-center justify-center relative">
+      <div className="py-24 flex items-center justify-center relative" id='hero'>
         <Container maxWidth="lg">
           <div className="flex items-center flex-col gap-8">
             <h1 className="text-d-xs-semibold lg:text-d-lg-semibold text-gray-900 text-center">

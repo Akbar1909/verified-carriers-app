@@ -383,35 +383,7 @@ const Filter = ({
           </div>
         </Collapse>
 
-        {/* <Collapse header="Truck type">
-          <div className="pb-4">
-            {truckTypeList.map(({ label, count }, i) => (
-              <div className="pr-4 py-2.5 flex items-center gap-3" key={i}>
-                <Checkbox size="md" />
-                <div className="flex items-center gap-1">
-                  <span className="text-sm text-gray-700">{label}</span>
-                  <span className="text-gray-400">({count})</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Collapse> */}
-
-        {/* <Collapse header="Load type">
-          <div className="pb-4">
-            {loadTypeList.map(({ label, count }, i) => (
-              <div className="pr-4 py-2.5 flex items-center gap-3" key={i}>
-                <Checkbox size="md" />
-                <div className="flex items-center gap-1">
-                  <span className="text-sm text-gray-700">{label}</span>
-                  <span className="text-gray-400">({count})</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Collapse> */}
-
-        <Collapse header="Verification">
+        <Collapse header="Verification" bodyClassName="border-b-0">
           <div className="pb-4">
             {verificationList.map(({ label, count, value }, i) => (
               <div className="pr-4 py-2.5 flex items-center gap-3" key={i}>
@@ -420,8 +392,6 @@ const Filter = ({
                   shape="round"
                   value={verification === value ? "checked" : "unchecked"}
                   onChange={() => {
-                    // setFilterDto((prev) => ({ ...prev, experience: value }));
-
                     if (!withSave) {
                       const params = createQueryParams();
                       params.set("verification", String(value));
@@ -438,12 +408,6 @@ const Filter = ({
           </div>
         </Collapse>
       </div>
-
-      {/* <Show when={withSave}>
-        <Button className="fixed bottom-2 w-[calc(100%-32px)]" size="lg">
-          Filter
-        </Button>
-      </Show> */}
     </div>
   );
 };
